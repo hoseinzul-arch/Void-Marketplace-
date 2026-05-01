@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VOID MARKET — Valorant Skins</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --void: #000;
+  --surface: #0a0a0a;
+  --surface2: #111;
+  --rim: #1e1e1e;
+  --rim2: #2a2a2a;
+  --text: #f0f0f0;
+  --text2: #888;
+  --text3: #444;
+  --white: #fff;
+  --blue: #4a6cf7;
+  --blue2: #6b8af9;
+  --purple: #7c3aed;
+  --glow: rgba(74,108,247,0.15);
+  --glow2: rgba(124,58,237,0.1);
+  --mono: 'DM Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:15px;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* VOID BACKGROUND */
+.void-bg{
+  position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%, #07091a 0%, #000 70%);
+  pointer-events:none;
+}
+.void-rings{
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:100vmax;height:100vmax;
+  pointer-events:none;z-index:0;
+}
+.ring{
+  position:absolute;top:50%;left:50%;
+  border-radius:50%;
+  border:1px solid;
+  transform:translate(-50%,-50%);
+  animation:pulse 6s ease-in-out infinite;
+}
+.ring:nth-child(1){width:20vmax;height:20vmax;border-color:rgba(74,108,247,0.25);animation-delay:0s;}
+.ring:nth-child(2){width:36vmax;height:36vmax;border-color:rgba(74,108,247,0.15);animation-delay:0.8s;}
+.ring:nth-child(3){width:52vmax;height:52vmax;border-color:rgba(124,58,237,0.1);animation-delay:1.6s;}
+.ring:nth-child(4){width:70vmax;height:70vmax;border-color:rgba(74,108,247,0.07);animation-delay:2.4s;}
+.ring:nth-child(5){width:90vmax;height:90vmax;border-color:rgba(124,58,237,0.04);animation-delay:3.2s;}
+@keyframes pulse{0%,100%{opacity:0.6;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.02);}}
+
+.void-glow{
+  position:fixed;top:40%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse at center, rgba(74,108,247,0.08) 0%, transparent 70%);
+  pointer-events:none;z-index:0;
+  animation:glowPulse 8s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{opacity:0.6;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1);}}
+
+/* LAYOUT */
+.page{position:relative;z-index:1;}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:64px;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-logo{
+  font-family:var(--display);
+  font-size:26px;
+  letter-spacing:0.12em;
+  color:var(--white);
+}
+.nav-logo span{color:var(--blue2);}
+.nav-links{display:flex;gap:4px;}
+.nav-link{
+  padding:6px 14px;
+  font-size:12px;
+  font-family:var(--mono);
+  color:var(--text2);
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:all 0.2s;
+  letter-spacing:0.05em;
+  background:none;
+}
+.nav-link:hover,.nav-link.active{
+  color:var(--text);
+  border-color:rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);
+}
+.nav-link{position:relative;overflow:hidden;}
+.nav-link::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:var(--blue2);transform:scaleX(0);transition:transform 0.2s;
+}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+.nav-badge{
+  font-size:10px;font-family:var(--mono);
+  color:var(--text3);padding:2px 10px;
+  border:1px solid var(--rim2);
+  letter-spacing:0.1em;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:100px 40px 60px;
+  position:relative;
+}
+.hero-eyebrow{
+  font-size:11px;font-family:var(--mono);
+  color:var(--blue2);letter-spacing:0.2em;
+  margin-bottom:20px;
+  opacity:0;animation:fadeUp 0.6s 0.2s forwards;
+}
+.hero-title{
+  font-family:var(--display);
+  font-size:clamp(60px,10vw,120px);
+  line-height:0.9;letter-spacing:0.05em;
+  color:var(--white);
+  margin-bottom:24px;
+  opacity:0;animation:fadeUp 0.6s 0.4s forwards;
+}
+.hero-title .dim{color:rgba(255,255,255,0.2);}
+.hero-title .glow-text{
+  background:linear-gradient(135deg,#fff 30%,var(--blue2) 70%,var(--purple) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:14px;color:var(--text2);
+  max-width:420px;margin:0 auto 40px;
+  line-height:1.7;
+  opacity:0;animation:fadeUp 0.6s 0.6s forwards;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTION */
+.section{padding:60px 40px;max-width:1280px;margin:0 auto;}
+.section-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--rim);
+  animation:fadeUp 0.5s ease both;
+}
+.section-title{
+  font-family:var(--display);
+  font-size:36px;letter-spacing:0.08em;
+  color:var(--white);
+}
+.section-title span{color:var(--blue2);}
+.section-meta{font-size:11px;font-family:var(--mono);color:var(--text3);letter-spacing:0.08em;}
+
+/* TIMER */
+.timer-bar{
+  display:flex;align-items:center;gap:20px;
+  padding:14px 20px;
+  background:rgba(74,108,247,0.06);
+  border:1px solid rgba(74,108,247,0.15);
+  margin-bottom:28px;
+}
+.timer-label{font-size:10px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.12em;}
+.timer-display{display:flex;gap:8px;align-items:center;}
+.timer-unit{
+  text-align:center;
+}
+.timer-num{
+  font-family:var(--display);font-size:32px;
+  color:var(--white);line-height:1;letter-spacing:0.05em;
+}
+.timer-sep{font-family:var(--display);font-size:28px;color:var(--rim2);margin-top:-4px;}
+.timer-label2{font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.08em;margin-top:2px;}
+.timer-bar-right{margin-left:auto;font-size:11px;font-family:var(--mono);color:var(--text3);}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.cards-grid .skin-card{animation:cardIn 0.4s ease both;}
+.cards-grid .skin-card:nth-child(1){animation-delay:0.05s;}
+.cards-grid .skin-card:nth-child(2){animation-delay:0.1s;}
+.cards-grid .skin-card:nth-child(3){animation-delay:0.15s;}
+.cards-grid .skin-card:nth-child(4){animation-delay:0.2s;}
+.cards-grid .skin-card:nth-child(5){animation-delay:0.25s;}
+.cards-grid .skin-card:nth-child(6){animation-delay:0.3s;}
+.cards-grid .skin-card:nth-child(7){animation-delay:0.35s;}
+.cards-grid .skin-card:nth-child(8){animation-delay:0.4s;}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* SKIN CARD */
+.skin-card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--rim);
+  transition:all 0.25s;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.skin-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(74,108,247,0.04) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.25s;
+}
+.skin-card:hover{border-color:rgba(74,108,247,0.3);transform:translateY(-2px);}
+.skin-card:hover::before{opacity:1;}
+.skin-card.sold{opacity:0.4;pointer-events:none;}
+
+.card-img{
+  width:100%;height:160px;
+  background:linear-gradient(135deg,#0d0f1a,#050508);
+  display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid var(--rim);
+  position:relative;overflow:hidden;
+}
+.card-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.04) 50%,transparent 60%);
+  transform:translateX(-100%);transition:transform 0.5s;
+}
+.skin-card:hover .card-img::after{transform:translateX(100%);}
+.card-img img{width:100%;height:100%;object-fit:cover;}
+.card-img-placeholder{
+  font-family:var(--display);font-size:48px;
+  color:rgba(255,255,255,0.04);letter-spacing:0.1em;
+}
+.card-badge{
+  position:absolute;top:10px;left:10px;
+  font-size:9px;font-family:var(--mono);
+  padding:3px 8px;letter-spacing:0.1em;
+}
+.badge-available{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);}
+.badge-sold{background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);}
+.badge-featured{background:rgba(74,108,247,0.15);color:var(--blue2);border:1px solid rgba(74,108,247,0.25);}
+.badge-daily{background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2);}
+
+.card-body{padding:14px;}
+.card-skin-name{font-size:15px;font-weight:500;color:var(--white);margin-bottom:4px;line-height:1.2;}
+.card-collection{font-size:11px;font-family:var(--mono);color:var(--text3);letter-spacing:0.05em;margin-bottom:10px;}
+.card-details{display:flex;flex-direction:column;gap:3px;margin-bottom:12px;}
+.card-detail{display:flex;justify-content:space-between;align-items:center;}
+.card-detail-label{font-size:11px;color:var(--text3);font-family:var(--mono);}
+.card-detail-val{font-size:11px;color:var(--text2);font-family:var(--mono);}
+.card-price{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:10px;border-top:1px solid var(--rim);
+}
+.card-price-pkr{font-size:18px;font-weight:500;color:var(--white);}
+.card-price-sub{font-size:10px;font-family:var(--mono);color:var(--text3);margin-top:1px;}
+.btn-order{
+  padding:7px 16px;
+  background:rgba(74,108,247,0.1);
+  border:1px solid rgba(74,108,247,0.3);
+  color:var(--blue2);
+  font-family:var(--mono);font-size:11px;
+  cursor:pointer;letter-spacing:0.06em;
+  transition:all 0.2s;
+}
+.btn-order:hover{background:rgba(74,108,247,0.2);border-color:var(--blue2);}
+
+/* VP SHOP */
+.vp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.vp-grid .vp-card{animation:cardIn 0.4s ease both;}
+.vp-grid .vp-card:nth-child(1){animation-delay:0.05s;}
+.vp-grid .vp-card:nth-child(2){animation-delay:0.1s;}
+.vp-grid .vp-card:nth-child(3){animation-delay:0.15s;}
+.vp-grid .vp-card:nth-child(4){animation-delay:0.2s;}
+.vp-grid .vp-card:nth-child(5){animation-delay:0.25s;}
+.vp-grid .vp-card:nth-child(6){animation-delay:0.3s;}
+.vp-card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--rim);
+  padding:20px;
+  text-align:center;
+  transition:all 0.2s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.vp-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  transform:scaleX(0);transition:transform 0.2s;
+}
+.vp-card:hover{border-color:rgba(74,108,247,0.2);}
+.vp-card:hover::after{transform:scaleX(1);}
+.vp-card-amount{font-family:var(--display);font-size:36px;color:var(--white);letter-spacing:0.05em;}
+.vp-card-label{font-size:10px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.15em;margin-bottom:12px;}
+.vp-card-price{font-size:18px;font-weight:500;color:var(--white);margin-bottom:4px;}
+.vp-card-sub{font-size:10px;font-family:var(--mono);color:var(--text3);}
+
+/* ORDER MODAL */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--surface);
+  border:1px solid var(--rim2);
+  max-width:480px;width:100%;
+  position:relative;
+  animation:modalIn 0.25s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(0.96);}to{opacity:1;transform:scale(1);}}
+.modal-head{
+  padding:20px 24px 16px;
+  border-bottom:1px solid var(--rim);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.modal-title{font-family:var(--display);font-size:22px;letter-spacing:0.08em;}
+.modal-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;font-family:var(--mono);}
+.modal-close:hover{color:var(--text);}
+.modal-body{padding:24px;}
+.modal-skin-info{
+  padding:12px;background:rgba(74,108,247,0.05);
+  border:1px solid rgba(74,108,247,0.1);
+  margin-bottom:20px;
+}
+.modal-skin-name{font-size:16px;font-weight:500;margin-bottom:4px;}
+.modal-skin-price{font-size:13px;font-family:var(--mono);color:var(--blue2);}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.form-label{font-size:10px;font-family:var(--mono);color:var(--text3);letter-spacing:0.08em;}
+.form-input{
+  background:var(--surface2);
+  border:1px solid var(--rim2);
+  color:var(--text);
+  padding:9px 12px;
+  font-family:var(--body);font-size:14px;
+  outline:none;transition:border-color 0.15s;width:100%;
+}
+.form-input:focus{border-color:rgba(74,108,247,0.4);}
+.form-input::placeholder{color:var(--text3);}
+.form-select{
+  background:var(--surface2);border:1px solid var(--rim2);color:var(--text);
+  padding:9px 12px;font-family:var(--body);font-size:14px;outline:none;width:100%;
+}
+textarea.form-input{resize:vertical;min-height:80px;}
+.btn-submit{
+  width:100%;padding:12px;
+  background:linear-gradient(135deg,rgba(74,108,247,0.2),rgba(124,58,237,0.2));
+  border:1px solid rgba(74,108,247,0.3);
+  color:var(--white);font-family:var(--mono);font-size:13px;
+  cursor:pointer;letter-spacing:0.08em;transition:all 0.2s;margin-top:4px;
+}
+.btn-submit:hover{background:linear-gradient(135deg,rgba(74,108,247,0.35),rgba(124,58,237,0.3));border-color:var(--blue2);}
+
+/* ADMIN PANEL */
+.admin-bar{
+  position:fixed;bottom:20px;right:20px;z-index:200;
+  display:flex;gap:8px;align-items:center;
+}
+.admin-btn{
+  padding:8px 16px;font-size:11px;font-family:var(--mono);
+  border:1px solid var(--rim2);background:rgba(0,0,0,0.9);
+  color:var(--text3);cursor:pointer;letter-spacing:0.06em;
+  backdrop-filter:blur(10px);transition:all 0.15s;
+}
+.admin-btn:hover{color:var(--text);border-color:var(--rim2);}
+.admin-btn.active{color:var(--blue2);border-color:rgba(74,108,247,0.3);}
+
+/* ADMIN FORM PANEL */
+.admin-panel{
+  position:fixed;bottom:60px;right:20px;z-index:300;
+  width:380px;
+  background:rgba(10,10,10,0.97);
+  border:1px solid var(--rim2);
+  backdrop-filter:blur(20px);
+  display:none;
+  max-height:80vh;overflow-y:auto;
+}
+.admin-panel.open{display:block;}
+.admin-panel-head{
+  padding:14px 16px;border-bottom:1px solid var(--rim);
+  font-size:11px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.1em;
+  display:flex;justify-content:space-between;
+}
+.admin-panel-body{padding:16px;display:flex;flex-direction:column;gap:10px;}
+.admin-tabs{display:flex;gap:4px;margin-bottom:4px;}
+.admin-tab{
+  padding:5px 12px;font-size:10px;font-family:var(--mono);
+  border:1px solid var(--rim);background:transparent;color:var(--text3);
+  cursor:pointer;letter-spacing:0.05em;transition:all 0.15s;
+}
+.admin-tab.active{border-color:rgba(74,108,247,0.3);color:var(--blue2);}
+.admin-section{display:none;}
+.admin-section.active{display:flex;flex-direction:column;gap:8px;}
+.listing-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 10px;background:var(--surface2);border:1px solid var(--rim);
+  font-size:12px;
+}
+.listing-item-name{font-weight:500;flex:1;}
+.listing-item-actions{display:flex;gap:6px;}
+.listing-btn{
+  padding:3px 8px;font-size:10px;font-family:var(--mono);
+  border:1px solid var(--rim2);background:transparent;color:var(--text3);cursor:pointer;transition:all 0.15s;
+}
+.listing-btn:hover{color:var(--text);}
+.listing-btn.toggle-sold{color:#22c55e;border-color:rgba(34,197,94,0.2);}
+.listing-btn.toggle-sold.is-sold{color:#ef4444;border-color:rgba(239,68,68,0.2);}
+.listing-btn.del{color:#ef4444;border-color:rgba(239,68,68,0.1);}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:40px;
+  border-top:1px solid var(--rim);
+  font-size:11px;font-family:var(--mono);color:var(--text3);
+  letter-spacing:0.08em;line-height:2;
+}
+
+/* EMPTY */
+.empty-grid{
+  grid-column:1/-1;
+  padding:60px 40px;text-align:center;
+  border:1px dashed var(--rim);
+  position:relative;overflow:hidden;
+  animation:emptyFade 1s ease forwards;
+}
+@keyframes emptyFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.empty-smiley{
+  font-family:var(--display);font-size:52px;
+  color:rgba(74,108,247,0.15);letter-spacing:0.1em;
+  margin-bottom:14px;
+  animation:floatSmiley 4s ease-in-out infinite;
+}
+@keyframes floatSmiley{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.empty-title{
+  font-family:var(--display);font-size:22px;letter-spacing:0.1em;
+  color:var(--text3);margin-bottom:6px;
+}
+.empty-sub{font-size:11px;font-family:var(--mono);color:var(--text3);letter-spacing:0.08em;opacity:0.7;}
+
+/* TOAST */
+.toast{
+  position:fixed;top:80px;right:20px;z-index:600;
+  padding:12px 20px;background:var(--surface);border:1px solid rgba(74,108,247,0.3);
+  font-size:12px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.06em;
+  opacity:0;transition:opacity 0.2s;pointer-events:none;
+}
+.toast.show{opacity:1;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--rim2);}
+</style>
+</head>
+<body>
+
+<div class="void-bg"></div>
+<div class="void-rings">
+  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  <div class="ring"></div><div class="ring"></div>
+</div>
+<div class="void-glow"></div>
+
+<div class="page">
+
+<nav>
+  <div class="nav-logo">VOID<span>MKT</span></div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="scrollTo('daily')">DAILY</button>
+    <button class="nav-link" onclick="scrollTo('shop')">SHOP</button>
+    <button class="nav-link" onclick="scrollTo('bundles')">BUNDLES</button>
+    <button class="nav-link" onclick="scrollTo('vp')">VP</button>
+  </div>
+  <div class="nav-badge">EST. 2025</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">## VALORANT SKIN MARKETPLACE ################</div>
+  <div class="hero-title">
+    <span class="dim">THE </span><span class="glow-text">VOID</span><br/>
+    <span class="dim">MARKET</span>
+  </div>
+  <div class="hero-sub">Premium Valorant skin accounts. Verified &amp; fast. Updated every single day. ############</div>
+</div>
+
+<!-- DAILY SHOP -->
+<div class="section" id="daily">
+  <div class="section-header">
+    <div>
+      <div class="section-title">DAILY <span>SHOP</span></div>
+      <div class="section-meta">// ROTATES EVERY 24 HOURS</div>
+    </div>
+    <div class="timer-bar" style="border:none;padding:0;margin:0;background:none;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:10px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.12em;">RESETS IN</div>
+      <div class="timer-display">
+        <div class="timer-unit"><div class="timer-num" id="t-h">00</div><div class="timer-label2">HRS</div></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><div class="timer-num" id="t-m">00</div><div class="timer-label2">MIN</div></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><div class="timer-num" id="t-s">00</div><div class="timer-label2">SEC</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="cards-grid" id="daily-grid"></div>
+</div>
+
+<!-- NORMAL SHOP -->
+<div class="section" id="shop">
+  <div class="section-header">
+    <div>
+      <div class="section-title">SKIN <span>SHOP</span></div>
+      <div class="section-meta">// ALWAYS AVAILABLE — NO TIMER</div>
+    </div>
+  </div>
+  <div class="cards-grid" id="shop-grid"></div>
+</div>
+
+<!-- BUNDLES -->
+<div class="section" id="bundles">
+  <div class="section-header">
+    <div>
+      <div class="section-title">BUNDLE <span>SHOP</span></div>
+      <div class="section-meta">// MULTIPLE SKINS FROM ONE ACCOUNT</div>
+    </div>
+  </div>
+  <div class="cards-grid" id="bundles-grid"></div>
+</div>
+
+<!-- VP SHOP -->
+<div class="section" id="vp">
+  <div class="section-header">
+    <div>
+      <div class="section-title">VP <span>SHOP</span></div>
+      <div class="section-meta">// TURKISH REGION — CHEAPEST RATES</div>
+    </div>
+  </div>
+  <div class="vp-grid">
+    <div class="vp-card" onclick="openVPOrder(375,800)">
+      <div class="vp-card-amount">375</div>
+      <div class="vp-card-label">VALORANT POINTS</div>
+      <div class="vp-card-price">PKR 800</div>
+      <div class="vp-card-sub">Turkish Region</div>
+    </div>
+    <div class="vp-card" onclick="openVPOrder(825,1700)">
+      <div class="vp-card-amount">825</div>
+      <div class="vp-card-label">VALORANT POINTS</div>
+      <div class="vp-card-price">PKR 1,700</div>
+      <div class="vp-card-sub">Turkish Region</div>
+    </div>
+    <div class="vp-card" onclick="openVPOrder(1700,3350)">
+      <div class="vp-card-amount">1,700</div>
+      <div class="vp-card-label">VALORANT POINTS</div>
+      <div class="vp-card-price">PKR 3,350</div>
+      <div class="vp-card-sub">Turkish Region</div>
+    </div>
+    <div class="vp-card" onclick="openVPOrder(2925,5600)">
+      <div class="vp-card-amount">2,925</div>
+      <div class="vp-card-label">VALORANT POINTS</div>
+      <div class="vp-card-price">PKR 5,600</div>
+      <div class="vp-card-sub">Turkish Region</div>
+    </div>
+    <div class="vp-card" onclick="openVPOrder(4325,8200)">
+      <div class="vp-card-amount">4,325</div>
+      <div class="vp-card-label">VALORANT POINTS</div>
+      <div class="vp-card-price">PKR 8,200</div>
+      <div class="vp-card-sub">Turkish Region</div>
+    </div>
+    <div class="vp-card" onclick="openVPOrder(8900,16000)">
+      <div class="vp-card-amount">8,900</div>
+      <div class="vp-card-label">VALORANT POINTS</div>
+      <div class="vp-card-price">PKR 16,000</div>
+      <div class="vp-card-sub">Turkish Region</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  VOID MARKET // VALORANT SKINS<br/>
+  ALL ACCOUNTS VERIFIED // FAST DELIVERY // DM FOR SUPPORT
+</footer>
+
+</div><!-- end .page -->
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">PLACE ORDER</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-skin-info">
+        <div class="modal-skin-name" id="modal-skin-name">Skin Name</div>
+        <div class="modal-skin-price" id="modal-skin-price">PKR 0</div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">// YOUR NAME</div>
+        <input class="form-input" id="order-name" placeholder="Enter your name"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">// CONTACT (Discord / WhatsApp / Email)</div>
+        <input class="form-input" id="order-contact" placeholder="e.g. username#1234 or +92..."/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">// PAYMENT METHOD</div>
+        <select class="form-select" id="order-payment">
+          <option value="">Select payment method</option>
+          <option>EasyPaisa</option>
+          <option>JazzCash</option>
+          <option>Bank Transfer</option>
+          <option>Crypto</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">// NOTES (optional)</div>
+        <textarea class="form-input" id="order-notes" placeholder="Any special requests..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitOrder()">SUBMIT ORDER</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL — hidden, triggered by pressing 7777 on keyboard -->
+<div class="admin-bar" style="display:none;">
+  <button class="admin-btn" id="admin-toggle-btn">ADMIN</button>
+</div>
+
+<div class="admin-panel" id="admin-panel">
+  <div class="admin-panel-head">
+    <span>// ADMIN PANEL</span>
+    <span id="admin-status" style="color:var(--text3);">LOCKED</span>
+  </div>
+  <div class="admin-panel-body" id="admin-body">
+    <div id="admin-login-section">
+      <div class="form-label" style="margin-bottom:6px;">PASSWORD</div>
+      <input class="form-input" id="admin-pass" type="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin()"/>
+      <button class="btn-submit" style="margin-top:8px;" onclick="adminLogin()">UNLOCK</button>
+    </div>
+    <div id="admin-main" style="display:none;">
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="adminTab('add',this)">ADD LISTING</button>
+        <button class="admin-tab" onclick="adminTab('manage',this)">MANAGE</button>
+      </div>
+      <div class="admin-section active" id="admin-add">
+        <div class="form-group">
+          <div class="form-label">SHOP SECTION</div>
+          <select class="form-select" id="a-section">
+            <option value="daily">Daily Shop</option>
+            <option value="shop">Normal Shop</option>
+            <option value="bundles">Bundle Shop</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">SKIN NAME</div>
+          <input class="form-input" id="a-name" placeholder="e.g. Reaver Vandal"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">COLLECTION</div>
+          <input class="form-input" id="a-collection" placeholder="e.g. Reaver"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">PRICE (PKR)</div>
+          <input class="form-input" id="a-price" placeholder="e.g. 4500" type="number"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">ACCOUNT TYPE</div>
+          <select class="form-select" id="a-account">
+            <option>FE (First Email)</option>
+            <option>Turkish Account</option>
+            <option>FE + Turkish</option>
+            <option>Changed Email</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">RANK</div>
+          <input class="form-input" id="a-rank" placeholder="e.g. Gold 2 / Unranked"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">IMAGE URL (optional)</div>
+          <input class="form-input" id="a-img" placeholder="https://..."/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">FEATURED?</div>
+          <select class="form-select" id="a-featured">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+        <button class="btn-submit" onclick="addListing()">ADD LISTING</button>
+      </div>
+      <div class="admin-section" id="admin-manage">
+        <div id="manage-list" style="display:flex;flex-direction:column;gap:6px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────
+let data = JSON.parse(localStorage.getItem('voidmkt') || 'null') || {
+  daily: [], shop: [], bundles: [],
+  lastReset: null
+};
+
+function save(){ localStorage.setItem('voidmkt', JSON.stringify(data)); }
+
+// ─── TIMER ─────────────────────────────────────────────────────────
+function updateTimer(){
+  const now = new Date();
+  const midnight = new Date();
+  midnight.setHours(24,0,0,0);
+  let diff = Math.floor((midnight - now) / 1000);
+  const h = Math.floor(diff/3600);
+  const m = Math.floor((diff%3600)/60);
+  const s = diff%60;
+  document.getElementById('t-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('t-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('t-s').textContent = String(s).padStart(2,'0');
+}
+setInterval(updateTimer,1000);updateTimer();
+
+// ─── RENDER ────────────────────────────────────────────────────────
+function renderCard(item, section){
+  const status = item.sold ? 'SOLD' : (item.featured?'FEATURED':'AVAILABLE');
+  const badgeClass = item.sold ? 'badge-sold' : (item.featured?'badge-featured':'badge-available');
+  const imgHtml = item.img
+    ? `<img src="${item.img}" alt="${item.name}" onerror="this.style.display='none'">`
+    : `<div class="card-img-placeholder">◈</div>`;
+  return `<div class="skin-card${item.sold?' sold':''}" onclick="${item.sold?'':'openOrder('+JSON.stringify(item)+')'}" >
+    <div class="card-img">${imgHtml}<span class="card-badge ${badgeClass}">${status}</span></div>
+    <div class="card-body">
+      <div class="card-skin-name">${item.name}</div>
+      <div class="card-collection">${item.collection||''}</div>
+      <div class="card-details">
+        ${item.account?`<div class="card-detail"><span class="card-detail-label">ACCOUNT</span><span class="card-detail-val">${item.account}</span></div>`:''}
+        ${item.rank?`<div class="card-detail"><span class="card-detail-label">RANK</span><span class="card-detail-val">${item.rank}</span></div>`:''}
+      </div>
+      <div class="card-price">
+        <div><div class="card-price-pkr">PKR ${parseInt(item.price||0).toLocaleString()}</div><div class="card-price-sub">Fast delivery</div></div>
+        ${item.sold?'<span style="font-size:11px;font-family:var(--mono);color:#ef4444;">SOLD</span>':'<button class="btn-order">ORDER →</button>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderAll(){
+  ['daily','shop','bundles'].forEach(sec=>{
+    const el = document.getElementById(sec+'-grid');
+    if(!data[sec].length){
+      el.innerHTML=`<div class="empty-grid">
+      <div class="empty-smiley">:)</div>
+      <div class="empty-title">NEW PRODUCTS SOON</div>
+      <div class="empty-sub">// SOMETHING GOOD IS COMING &mdash; CHECK BACK LATER :)</div>
+    </div>`;
+    } else {
+      el.innerHTML = data[sec].map(item=>renderCard(item,sec)).join('');
+    }
+  });
+}
+renderAll();
+
+// ─── SCROLL NAV ────────────────────────────────────────────────────
+function scrollTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ─── ORDER MODAL ───────────────────────────────────────────────────
+let currentOrder = null;
+function openOrder(item){
+  currentOrder = item;
+  document.getElementById('modal-skin-name').textContent = item.name;
+  document.getElementById('modal-skin-price').textContent = 'PKR '+parseInt(item.price||0).toLocaleString();
+  document.getElementById('modal').classList.add('open');
+}
+function openVPOrder(vp,pkr){
+  currentOrder = {name: vp.toLocaleString()+' Valorant Points', price: pkr};
+  document.getElementById('modal-skin-name').textContent = currentOrder.name;
+  document.getElementById('modal-skin-price').textContent = 'PKR '+pkr.toLocaleString();
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal'))
+    document.getElementById('modal').classList.remove('open');
+}
+function submitOrder(){
+  const name=document.getElementById('order-name').value.trim();
+  const contact=document.getElementById('order-contact').value.trim();
+  const payment=document.getElementById('order-payment').value;
+  if(!name||!contact||!payment){toast('Please fill all required fields','#ef4444');return;}
+  // Store order locally and show confirmation
+  const orders = JSON.parse(localStorage.getItem('voidmkt-orders')||'[]');
+  orders.push({
+    item: currentOrder?.name,
+    price: currentOrder?.price,
+    name, contact, payment,
+    notes: document.getElementById('order-notes').value,
+    time: new Date().toISOString()
+  });
+  localStorage.setItem('voidmkt-orders', JSON.stringify(orders));
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('order-name').value='';
+  document.getElementById('order-contact').value='';
+  document.getElementById('order-payment').value='';
+  document.getElementById('order-notes').value='';
+  toast('Order placed! We will contact you shortly.');
+}
+
+// ─── ADMIN ─────────────────────────────────────────────────────────
+const ADMIN_PASS = 'void2025'; // CHANGE THIS
+let adminUnlocked = false;
+
+function toggleAdmin(){ const p=document.getElementById('admin-panel'); p.classList.toggle('open'); }
+function adminLogin(){
+  const p=document.getElementById('admin-pass').value;
+  if(p===ADMIN_PASS){
+    adminUnlocked=true;
+    document.getElementById('admin-login-section').style.display='none';
+    document.getElementById('admin-main').style.display='block';
+    document.getElementById('admin-status').textContent='UNLOCKED';
+    document.getElementById('admin-status').style.color='var(--blue2)';
+    renderManage();
+  } else {
+    toast('Wrong password','#ef4444');
+  }
+}
+function adminTab(tab,btn){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('admin-'+tab).classList.add('active');
+  if(tab==='manage')renderManage();
+}
+function addListing(){
+  if(!adminUnlocked)return;
+  const sec=document.getElementById('a-section').value;
+  const name=document.getElementById('a-name').value.trim();
+  const price=document.getElementById('a-price').value;
+  if(!name||!price){toast('Name and price required','#ef4444');return;}
+  const item={
+    id:Date.now(),
+    name,
+    collection:document.getElementById('a-collection').value.trim(),
+    price:parseInt(price),
+    account:document.getElementById('a-account').value,
+    rank:document.getElementById('a-rank').value.trim(),
+    img:document.getElementById('a-img').value.trim(),
+    featured:document.getElementById('a-featured').value==='1',
+    sold:false
+  };
+  data[sec].push(item);
+  save();renderAll();renderManage();
+  document.getElementById('a-name').value='';
+  document.getElementById('a-price').value='';
+  document.getElementById('a-img').value='';
+  document.getElementById('a-rank').value='';
+  toast('Listing added!');
+}
+function renderManage(){
+  const list=document.getElementById('manage-list');
+  const all=[
+    ...data.daily.map(i=>({...i,_sec:'daily'})),
+    ...data.shop.map(i=>({...i,_sec:'shop'})),
+    ...data.bundles.map(i=>({...i,_sec:'bundles'})),
+  ];
+  if(!all.length){list.innerHTML='<div style="font-size:11px;font-family:var(--mono);color:var(--text3);padding:10px;">No listings yet.</div>';return;}
+  list.innerHTML=all.map(item=>`
+    <div class="listing-item">
+      <div>
+        <div class="listing-item-name">${item.name}</div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text3);">${item._sec.toUpperCase()} // PKR ${item.price?.toLocaleString()}</div>
+      </div>
+      <div class="listing-item-actions">
+        <button class="listing-btn toggle-sold${item.sold?' is-sold':''}" onclick="toggleSold('${item._sec}',${item.id})">${item.sold?'UNSELL':'SELL'}</button>
+        <button class="listing-btn del" onclick="deleteListing('${item._sec}',${item.id})">DEL</button>
+      </div>
+    </div>`).join('');
+}
+function toggleSold(sec,id){
+  const item=data[sec].find(i=>i.id===id);
+  if(item){item.sold=!item.sold;save();renderAll();renderManage();}
+}
+function deleteListing(sec,id){
+  data[sec]=data[sec].filter(i=>i.id!==id);
+  save();renderAll();renderManage();toast('Deleted');
+}
+
+// ─── SECRET ADMIN TRIGGER — type 7777 anywhere ─────────────────────
+let secretSeq='';
+document.addEventListener('keydown',e=>{
+  secretSeq+=e.key;
+  if(secretSeq.length>4)secretSeq=secretSeq.slice(-4);
+  if(secretSeq==='7777'){
+    const p=document.getElementById('admin-panel');
+    p.classList.toggle('open');
+    secretSeq='';
+  }
+});
+
+// ─── TOAST ─────────────────────────────────────────────────────────
+function toast(msg,color='var(--blue2)'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.color=color;
+  t.style.borderColor=color==='var(--blue2)'?'rgba(74,108,247,0.3)':color;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+</script>
+</body>
+</html>
