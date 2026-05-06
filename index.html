@@ -239,20 +239,32 @@ textarea.fi{resize:vertical;min-height:60px;}
 
 @keyframes cIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 .grid .card,.vp-grid .vpc{animation:cIn 0.3s ease both;}
+.grid .card:nth-child(1),.vp-grid .vpc:nth-child(1){animation-delay:.04s;}
+.grid .card:nth-child(2),.vp-grid .vpc:nth-child(2){animation-delay:.08s;}
+.grid .card:nth-child(3),.vp-grid .vpc:nth-child(3){animation-delay:.12s;}
+.grid .card:nth-child(4),.vp-grid .vpc:nth-child(4){animation-delay:.16s;}
+.grid .card:nth-child(5),.vp-grid .vpc:nth-child(5){animation-delay:.20s;}
+.grid .card:nth-child(6),.vp-grid .vpc:nth-child(6){animation-delay:.24s;}
 </style>
 </head>
 <body>
 
+<!-- CORNER DECORATIONS -->
+<svg class="corner corner-tl" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 36V2H36" stroke="rgba(79,112,255,0.2)" stroke-width="1"/><circle cx="2" cy="2" r="2" fill="rgba(79,112,255,0.35)"/><circle cx="2" cy="18" r="1" fill="rgba(79,112,255,0.15)"/><circle cx="18" cy="2" r="1" fill="rgba(79,112,255,0.15)"/></svg>
+<svg class="corner corner-tr" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M70 36V2H36" stroke="rgba(79,112,255,0.2)" stroke-width="1"/><circle cx="70" cy="2" r="2" fill="rgba(79,112,255,0.35)"/><circle cx="70" cy="18" r="1" fill="rgba(79,112,255,0.15)"/><circle cx="54" cy="2" r="1" fill="rgba(79,112,255,0.15)"/></svg>
+<svg class="corner corner-bl" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 36V70H36" stroke="rgba(79,112,255,0.2)" stroke-width="1"/><circle cx="2" cy="70" r="2" fill="rgba(79,112,255,0.35)"/></svg>
+<svg class="corner corner-br" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M70 36V70H36" stroke="rgba(79,112,255,0.2)" stroke-width="1"/><circle cx="70" cy="70" r="2" fill="rgba(79,112,255,0.35)"/></svg>
+
 <canvas id="bg-canvas"></canvas>
 
 <div class="page">
+
 <nav>
   <a class="logo" href="#" onclick="window.showPage('home');return false;"><canvas id="logo-hole" width="28" height="28" style="display:block;"></canvas><span style="letter-spacing:0.06em;">VOID</span></a>
   <div class="nav-mid">
     <button class="nb on" onclick="showPage('home');setNav(this);">SHOP</button>
     <button class="nb" onclick="showPage('reps');setNav(this);">REPS</button>
-    <button class="nb" onclick="showPage('about');setNav(this);">ABOUT</button>
-    <button class="nb" onclick="showPage('track');setNav(this);">TRACK</button>
+    <button class="nb" onclick="showPage('about');setNav(this);">ABOUT</button><button class="nb" onclick="showPage('track');setNav(this);">TRACK</button>
   </div>
   <div class="nav-r"><span class="live-dot"></span>&nbsp;LIVE</div>
 </nav>
@@ -270,13 +282,20 @@ textarea.fi{resize:vertical;min-height:60px;}
     </div>
   </div>
 
+  <!-- NIGHT MARKET -->
   <div class="sec" id="night-market-sec" style="display:none;">
-    <div class="sec-head"><div class="sec-t">NIGHT MARKET</div><div class="sec-r">SPECIAL OFFERS</div></div>
+    <div class="sec-head">
+      <div class="sec-t">NIGHT MARKET</div>
+      <div class="sec-r">SPECIAL OFFERS</div>
+    </div>
     <div class="grid" id="night-grid"></div>
   </div>
 
   <div class="sec">
-    <div class="sec-head"><div class="sec-t">LIMITED SHOP</div><div id="limited-timer-display" class="sec-r">AVAILABLE FOR LIMITED TIME</div></div>
+    <div class="sec-head">
+      <div class="sec-t">LIMITED SHOP</div>
+      <div id="limited-timer-display" class="sec-r">AVAILABLE FOR LIMITED TIME</div>
+    </div>
     <div id="limited-timer-bar" class="timer-bar" style="display:none;">
       <span class="timer-bar-label">EXPIRES IN</span>
       <div class="tmr">
@@ -290,8 +309,15 @@ textarea.fi{resize:vertical;min-height:60px;}
     <div class="grid" id="daily-grid"></div>
   </div>
 
-  <div class="sec"><div class="sec-head"><div class="sec-t">SKIN SHOP</div><div class="sec-r">ALWAYS AVAILABLE</div></div><div class="grid" id="shop-grid"></div></div>
-  <div class="sec"><div class="sec-head"><div class="sec-t">BUNDLE SHOP</div><div class="sec-r">MULTI-SKIN ACCOUNTS</div></div><div class="grid" id="bundles-grid"></div></div>
+  <div class="sec">
+    <div class="sec-head"><div class="sec-t">SKIN SHOP</div><div class="sec-r">ALWAYS AVAILABLE</div></div>
+    <div class="grid" id="shop-grid"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-t">BUNDLE SHOP</div><div class="sec-r">MULTI-SKIN ACCOUNTS</div></div>
+    <div class="grid" id="bundles-grid"></div>
+  </div>
 
   <div class="sec">
     <div class="sec-head"><div class="sec-t">VP SHOP</div><div class="sec-r">TURKISH REGION RATES</div></div>
@@ -319,101 +345,259 @@ textarea.fi{resize:vertical;min-height:60px;}
   <div class="sec">
     <div class="about-hero">
       <div class="about-name" id="about-name-txt">VOID MARKET</div>
-      <div class="about-bio" id="about-bio-txt">Trusted Valorant skin account seller...</div>
+      <div class="about-bio" id="about-bio-txt">Trusted Valorant skin account seller. We check shops daily and bring you the best skins at the cheapest prices using Turkish region VP. Every account is verified before listing. Fast delivery, honest pricing, no scams.</div>
       <div class="srow">
         <div class="sblk"><div class="sn" id="as-ord">0</div><div class="sl">ORDERS DONE</div></div>
         <div class="sblk"><div class="sn" id="as-list">0</div><div class="sl">SKINS LISTED</div></div>
         <div class="sblk"><div class="sn" id="about-del-txt">24H</div><div class="sl">DELIVERY</div></div>
       </div>
     </div>
+    <div style="height:1px;"></div>
     <div class="about-grid">
-      <div class="abl"><div class="albl">PAYMENT METHODS</div><div class="aval">EasyPaisa, JazzCash, Bank Transfer</div></div>
-      <div class="abl"><div class="albl">REGION</div><div class="aval">Turkish Accounts available</div></div>
+      <div class="abl"><div class="albl">PAYMENT METHODS</div><div class="aval"><strong>EasyPaisa</strong> — Mobile wallet<br><strong>JazzCash</strong> — Mobile wallet<br><strong>Bank Transfer</strong> — Direct</div></div>
+      <div class="abl"><div class="albl">REGION</div><div class="aval"><strong>Turkish accounts</strong><br>Cheapest VP rates available.<br>FE and changed email options.</div></div>
+      <div class="abl"><div class="albl">HOW IT WORKS</div><div class="aval">Browse a skin, place an order, pay, and receive account credentials within 24 hours.</div></div>
+      <div class="abl"><div class="albl">CONTACT</div><div class="aval" id="about-contact-txt">Place an order and include your Discord or WhatsApp — we will reach out to you directly.</div></div>
     </div>
-  </div>
-</div>
-
-<!-- PRODUCT PAGE -->
-<div class="pg" id="pg-product">
-  <div style="max-width:900px;margin:0 auto;padding:28px;">
-    <button onclick="showPage(window._prevPage||'home');" style="background:none;border:none;color:var(--t3);font-family:var(--mono);cursor:pointer;margin-bottom:24px;">← BACK</button>
-    <div id="prod-content"></div>
-  </div>
-</div>
-
-<!-- TRACK PAGE -->
-<div class="pg" id="pg-track">
-  <div class="sec" style="max-width:520px;">
-    <div class="sec-head"><div class="sec-t">TRACK ORDER</div></div>
-    <div style="display:flex;gap:8px;margin-bottom:16px;">
-      <input class="fi" id="track-input" placeholder="#VM-XXXXXX" style="flex:1;"/>
-      <button class="btn-m" style="width:auto;" onclick="showTracker()">TRACK</button>
-    </div>
-    <div id="track-result"></div>
   </div>
 </div>
 
 </div><!-- end .page -->
 
-<!-- MODALS -->
+<!-- ORDER MODAL -->
 <div class="overlay" id="omodal">
   <div class="modal">
     <div class="mh"><div class="mt">PLACE ORDER</div><button class="mc" onclick="closeOv('omodal')">✕</button></div>
     <div class="mb">
       <div class="mi"><div class="mi-n" id="mo-n"></div><div class="mi-p" id="mo-p"></div></div>
-      <div class="fg"><div class="fl">YOUR NAME</div><input class="fi" id="on"/></div>
-      <div class="fg"><div class="fl">CONTACT</div><input class="fi" id="oc"/></div>
+      <div class="fg"><div class="fl">YOUR NAME</div><input class="fi" id="on" placeholder="Enter your name"/></div>
+      <div class="fg"><div class="fl">CONTACT — Discord / WhatsApp</div><input class="fi" id="oc" placeholder="username#1234 or +92..."/></div>
       <div class="fg"><div class="fl">PAYMENT METHOD</div>
-        <select class="fs" id="op"><option value="">Select</option><option>EasyPaisa</option><option>JazzCash</option></select>
+        <select class="fs" id="op"><option value="">Select method</option><option>EasyPaisa</option><option>JazzCash</option><option>Bank Transfer</option></select>
       </div>
+      <div class="fg"><div class="fl">NOTES (optional)</div><textarea class="fi" id="onotes" placeholder="Any details..."></textarea></div>
       <button class="btn-m" onclick="submitOrder()">CONFIRM ORDER</button>
     </div>
   </div>
 </div>
 
+<!-- SUCCESS -->
 <div class="success-wrap" id="suc">
   <div class="success-box">
     <div class="sicon">✦</div>
-    <div class="stitle">Order Confirmed</div>
+    <div class="stag">ORDER CONFIRMED</div>
+    <div class="stitle">You're all set</div>
     <div class="snum" id="s-num">#VM-000000</div>
+    <div class="sdesc">We'll contact you via your provided details.</div><div style="font-size:9px;font-family:var(--mono);color:var(--red);padding:8px 10px;border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.04);margin-bottom:16px;letter-spacing:0.06em;">⚠ SAVE YOUR ORDER NUMBER — IT WILL ONLY BE SHOWN ONCE</div>
     <button class="btn-s" onclick="closeOv('suc')">CLOSE</button>
   </div>
 </div>
 
-<!-- ADMIN -->
+<!-- ADMIN — type 7777 to open -->
 <div class="admin-w" id="admin">
   <div class="adh"><span class="adt">ADMIN PANEL</span><span class="ads" id="a-st">LOCKED</span></div>
-  <div id="a-login" style="padding:12px;">
-    <input class="fi" id="a-pw" type="password" placeholder="Password"/>
+  <div id="a-login" style="padding:12px;display:flex;flex-direction:column;gap:7px;">
+    <div class="fl">PASSWORD</div>
+    <input class="fi" id="a-pw" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')aLogin()"/>
     <button class="btn-m" onclick="aLogin()">UNLOCK</button>
   </div>
   <div id="a-main" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
     <div class="adb-row">
-        <button class="atb on" onclick="aTab('add',this)">ADD</button>
-        <button class="atb" onclick="aTab('manage',this)">MANAGE</button>
-        <button class="atb" onclick="aTab('orders',this)">ORDERS</button>
+      <button class="atb on" onclick="aTab('add',this)">ADD</button>
+      <button class="atb" onclick="aTab('manage',this)">MANAGE</button>
+      <button class="atb" onclick="aTab('orders',this)">ORDERS</button>
+      <button class="atb" onclick="aTab('reps-a',this)">REPS</button><button class="atb" onclick="aTab('about-a',this)">ABOUT</button><button class="atb" onclick="aTab('settings-a',this)">SITE</button>
     </div>
     <div class="adbody">
-        <div class="asec on" id="a-add">
-            <input class="fi" id="aa-n" placeholder="Name"/>
-            <input class="fi" id="aa-p" placeholder="Price"/>
-            <select class="fs" id="aa-s"><option value="daily">Daily</option><option value="shop">Shop</option></select>
-            <button class="btn-m" onclick="addL()">ADD</button>
+
+      <div class="asec on" id="a-add">
+        <div class="fg"><div class="fl">SECTION</div><select class="fs" id="aa-s"><option value="daily">Daily Shop</option><option value="shop">Normal Shop</option><option value="bundles">Bundle Shop</option><option value="night">Night Market</option></select></div>
+        <div class="fg"><div class="fl">SKIN NAME</div><input class="fi" id="aa-n" placeholder="e.g. Reaver Vandal"/></div>
+        <div class="fg"><div class="fl">COLLECTION</div><input class="fi" id="aa-c" placeholder="e.g. Reaver"/></div>
+        <div class="fg"><div class="fl">PRICE (PKR)</div><input class="fi" id="aa-p" type="number" placeholder="e.g. 4500"/></div>
+        <div class="fg"><div class="fl">ACCOUNT TYPE</div><select class="fs" id="aa-a"><option>FE (First Email)</option><option>Turkish Account</option><option>FE + Turkish</option><option>Changed Email</option></select></div>
+        <div class="fg"><div class="fl">REGION</div><select class="fs" id="aa-reg"><option value="TR">Turkish (TR)</option><option value="NA">North America (NA)</option><option value="EU">Europe (EU)</option><option value="AP">Asia Pacific (AP)</option><option value="LATAM">Latin America (LATAM)</option></select></div>
+        <div class="fg"><div class="fl">RANK</div><input class="fi" id="aa-r" placeholder="e.g. Gold 2 / Unranked"/></div>
+        <div class="fg"><div class="fl">ACCOUNT LEVEL</div><input class="fi" id="aa-lvl" placeholder="e.g. 87"/></div>
+        <div class="fg"><div class="fl">EXTRA SKINS (one per line)</div><textarea class="fi" id="aa-extra" placeholder="Reaver Vandal&#10;Prime Phantom" style="min-height:60px;"></textarea></div>
+        <div class="fg"><div class="fl">IMAGE URL (optional)</div><input class="fi" id="aa-i" placeholder="https://..."/></div>
+        <div class="fg"><div class="fl">FEATURED</div><select class="fs" id="aa-f"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <button class="btn-m" onclick="addL()">ADD LISTING</button>
+      </div>
+
+      <div class="asec" id="a-manage"><div id="ml" style="display:flex;flex-direction:column;gap:4px;"></div></div>
+
+      <div class="asec" id="a-edit">
+        <div style="font-size:9px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.1em;" id="e-lbl">EDITING</div>
+        <div class="fg"><div class="fl">SKIN NAME</div><input class="fi" id="e-n"/></div>
+        <div class="fg"><div class="fl">COLLECTION</div><input class="fi" id="e-c"/></div>
+        <div class="fg"><div class="fl">PRICE (PKR)</div><input class="fi" id="e-p" type="number"/></div>
+        <div class="fg"><div class="fl">ACCOUNT TYPE</div><input class="fi" id="e-a"/></div>
+        <div class="fg"><div class="fl">RANK</div><input class="fi" id="e-r"/></div>
+        <div class="fg"><div class="fl">IMAGE URL</div><input class="fi" id="e-i"/></div>
+        <div style="display:flex;gap:5px;">
+          <button class="btn-m" style="flex:1;" onclick="saveE()">SAVE CHANGES</button>
+          <button class="btn-s" style="padding:9px 12px;font-size:9px;" onclick="aTab('manage',document.querySelectorAll('.atb')[1])">CANCEL</button>
         </div>
-        <div class="asec" id="a-manage"><div id="ml"></div></div>
-        <div class="asec" id="a-orders"><div id="ol"></div></div>
+      </div>
+
+      <div class="asec" id="a-orders"><div id="ol" style="display:flex;flex-direction:column;gap:5px;"></div></div>
+
+      <div class="asec" id="a-settings-a">
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:4px;">LIMITED SHOP EXPIRY</div>
+        <div class="fg"><div class="fl">SET EXPIRY DATE &amp; TIME</div><input class="fi" id="st-expiry" type="datetime-local"/></div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin:6px 0 2px;">SITE SETTINGS</div>
+        <div class="fg"><div class="fl">SITE TITLE (browser tab)</div><input class="fi" id="st-title" placeholder="VOID MARKET — Valorant Skins"/></div>
+        <div class="fg"><div class="fl">HERO SUBTITLE TEXT</div><input class="fi" id="st-sub" placeholder="Verified &amp; trusted. Updated daily."/></div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin:6px 0 2px;">VP PRICES (PKR)</div>
+        <div class="fg"><div class="fl">375 VP</div><input class="fi" id="vp-375" placeholder="800" type="number"/></div>
+        <div class="fg"><div class="fl">825 VP</div><input class="fi" id="vp-825" placeholder="1700" type="number"/></div>
+        <div class="fg"><div class="fl">1700 VP</div><input class="fi" id="vp-1700" placeholder="3350" type="number"/></div>
+        <div class="fg"><div class="fl">2925 VP</div><input class="fi" id="vp-2925" placeholder="5600" type="number"/></div>
+        <div class="fg"><div class="fl">4325 VP</div><input class="fi" id="vp-4325" placeholder="8200" type="number"/></div>
+        <div class="fg"><div class="fl">8900 VP</div><input class="fi" id="vp-8900" placeholder="16000" type="number"/></div>
+        <button class="btn-m" onclick="saveSettings()">SAVE ALL SETTINGS</button>
+      </div>
+
+      <div class="asec" id="a-about-a">
+        <div class="fg"><div class="fl">SHOP NAME</div><input class="fi" id="ab-name" placeholder="VOID MARKET"/></div>
+        <div class="fg"><div class="fl">BIO TEXT</div><textarea class="fi" id="ab-bio" placeholder="About your shop..."></textarea></div>
+        <div class="fg"><div class="fl">CONTACT INFO</div><input class="fi" id="ab-contact" placeholder="e.g. Discord: void#0001"/></div>
+        <div class="fg"><div class="fl">DELIVERY TIME</div><input class="fi" id="ab-delivery" placeholder="e.g. 24H"/></div>
+        <button class="btn-m" onclick="saveAbout()">SAVE ABOUT PAGE</button>
+      </div>
+
+      <div class="asec" id="a-reps-a">
+        <div class="fg"><div class="fl">BUYER NAME / PLATFORM</div><input class="fi" id="r-f" placeholder="e.g. Ahmad — Discord"/></div>
+        <div class="fg"><div class="fl">REVIEW TEXT</div><textarea class="fi" id="r-t" placeholder="What they said..."></textarea></div>
+        <div class="fg"><div class="fl">STARS (1–5)</div><select class="fs" id="r-s"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="fg"><div class="fl">SCREENSHOT (optional)</div><div id="rep-img-box" style="border:1px dashed var(--rim2);background:var(--s2);height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.08em;" onclick="document.getElementById('r-img-inp').click()">+ ADD SCREENSHOT</div><input type="file" id="r-img-inp" accept="image/*" style="display:none" onchange="loadRepImg(event)"/><div id="rep-img-preview" style="display:none;margin-top:4px;"><img id="rep-img-thumb" style="width:100%;max-height:80px;object-fit:cover;"/><button onclick="clearRepImg()" style="font-size:9px;font-family:var(--mono);color:var(--t4);background:none;border:none;cursor:pointer;margin-top:2px;">REMOVE</button></div></div>
+        <button class="btn-m" onclick="addRep()">ADD REP</button>
+        <div id="r-list" style="display:flex;flex-direction:column;gap:4px;margin-top:4px;"></div>
+      </div>
+
     </div>
   </div>
 </div>
 
+
+<!-- PRODUCT PAGE -->
+<div class="pg" id="pg-product">
+  <div style="max-width:900px;margin:0 auto;padding:28px;">
+    <button onclick="showPage(window._prevPage||'home');" style="background:none;border:none;color:var(--t3);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;cursor:pointer;margin-bottom:24px;display:flex;align-items:center;gap:8px;">← BACK</button>
+    <div id="prod-content"></div>
+  </div>
+</div>
+<!-- TRACK PAGE -->
+<div class="pg" id="pg-track">
+  <div class="sec" style="max-width:520px;">
+    <div class="sec-head"><div class="sec-t">TRACK ORDER</div></div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <input class="fi" id="track-input" placeholder="#VM-394827" style="flex:1;" onkeydown="if(event.key==='Enter')showTracker()"/>
+      <button class="btn-m" style="width:auto;padding:8px 18px;white-space:nowrap;" onclick="showTracker()">TRACK</button>
+    </div>
+    <div id="track-result" style="font-size:11px;font-family:var(--mono);color:var(--t4);">Enter your order number above to check status.</div>
+  </div>
+</div>
+
+<!-- PROMO POPUP -->
+<style>
+@keyframes slideInRight{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+#promo-popup{animation:slideInRight 0.35s ease;}
+</style>
+<div id="promo-popup" style="display:none;position:fixed;bottom:24px;right:24px;z-index:800;width:300px;background:var(--s1);border:1px solid var(--rim2);box-shadow:0 8px 32px rgba(0,0,0,0.6);">
+  <div style="padding:10px 14px;border-bottom:1px solid var(--rim);display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-size:9px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.12em;">FEATURED LISTING</span>
+    <button onclick="document.getElementById('promo-popup').style.display='none'" style="background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;font-family:var(--mono);line-height:1;">✕</button>
+  </div>
+  <div id="popup-img-wrap" style="height:130px;background:linear-gradient(145deg,#07091a,#020204);overflow:hidden;border-bottom:1px solid var(--rim);display:flex;align-items:center;justify-content:center;">
+    <div style="font-family:var(--mono);font-size:36px;color:rgba(255,255,255,0.04);">◈</div>
+  </div>
+  <div style="padding:12px 14px;">
+    <div style="font-size:14px;font-weight:600;margin-bottom:3px;" id="popup-name"></div>
+    <div style="font-size:10px;font-family:var(--mono);color:var(--blue2);margin-bottom:10px;" id="popup-price"></div>
+    <div style="font-size:10px;font-family:var(--mono);color:var(--t3);margin-bottom:12px;" id="popup-desc"></div>
+    <button class="btn-m" id="popup-btn" style="width:100%;padding:8px;font-size:10px;">VIEW LISTING</button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
-<!-- FIREBASE & LOGIC -->
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
 <script>
-// Canvas logic omitted for brevity, same as original
+// CANVAS BG
+const cv=document.getElementById('bg-canvas');
+const ct=cv.getContext('2d');
+let W,H;
+const ptcls=[];
+const rngs=[];
+function rsz(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+rsz();window.addEventListener('resize',rsz);
+for(let i=0;i<5;i++)rngs.push({r:60+i*80,speed:0.00015*(i%2?1:-1),a:Math.random()*Math.PI*2,op:0.09-i*0.014});
+for(let i=0;i<80;i++)ptcls.push({ox:Math.random()*1800-900,oy:Math.random()*800-400,r:Math.random()*1.1+0.2,drift:Math.random()*Math.PI*2,sp:Math.random()*0.0004+0.0001,op:Math.random()*0.2+0.04});
+function drawBG(){
+  ct.clearRect(0,0,W,H);
+  const cx=W/2,cy=H*0.4;
+  const g=ct.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*0.5);
+  g.addColorStop(0,'rgba(10,14,50,0.65)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ct.fillStyle=g;ct.fillRect(0,0,W,H);
+  rngs.forEach(rg=>{
+    rg.a+=rg.speed;
+    ct.save();ct.translate(cx,cy);ct.rotate(rg.a);
+    ct.strokeStyle=`rgba(79,112,255,${rg.op})`;ct.lineWidth=0.8;
+    ct.beginPath();ct.ellipse(0,0,rg.r,rg.r*0.32,0,0,Math.PI*2);ct.stroke();
+    ct.restore();
+  });
+  ptcls.forEach(p=>{
+    p.drift+=p.sp;
+    const px=cx+Math.cos(p.drift)*p.ox*0.45;
+    const py=cy+Math.sin(p.drift*0.65)*p.oy*0.35;
+    ct.beginPath();ct.arc(px,py,p.r,0,Math.PI*2);
+    ct.fillStyle=`rgba(79,112,255,${p.op})`;ct.fill();
+  });
+  requestAnimationFrame(drawBG);
+}
+drawBG();
+
+// BLACK HOLE LOGO — minimal
+(function(){
+  const lc=document.getElementById('logo-hole');
+  if(!lc)return;
+  const lx=lc.getContext('2d');
+  let a=0;
+  function draw(){
+    lx.clearRect(0,0,28,28);
+    const cx=14,cy=14;
+    // single thin rotating ellipse ring
+    lx.save();
+    lx.translate(cx,cy);lx.rotate(a);
+    lx.strokeStyle='rgba(123,151,255,0.5)';
+    lx.lineWidth=0.8;
+    lx.beginPath();
+    lx.ellipse(0,0,9,3,0,0,Math.PI*2);
+    lx.stroke();
+    lx.restore();
+    // black centre circle
+    lx.beginPath();
+    lx.arc(cx,cy,4.5,0,Math.PI*2);
+    lx.fillStyle='#000';
+    lx.fill();
+    // thin white border on centre
+    lx.beginPath();
+    lx.arc(cx,cy,4.5,0,Math.PI*2);
+    lx.strokeStyle='rgba(255,255,255,0.12)';
+    lx.lineWidth=0.5;
+    lx.stroke();
+    a+=0.006;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<!-- Firebase SDKs (compat - no module needed, all functions global) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
 const firebaseConfig={
   apiKey:"AIzaSyCOV8pCSeovIOv7KEUff58npE10KiBBbCU",
   authDomain:"void-market-33ffa.firebaseapp.com",
@@ -427,128 +611,630 @@ const fdb=firebase.firestore();
 const DOC=fdb.collection('voidmarket').doc('data');
 
 const PW='void2025';
+let cur=null,eSec=null,eId=null;
+
+// DEFAULT DATA STRUCTURE
 let db={daily:[],shop:[],bundles:[],night:[],orders:[],reps:[],settings:{},about:{}};
-let cur=null;
 
+// SAVE to Firebase
 async function sv(){
-  try{ await DOC.set(db); }catch(e){ toast('Save failed'); }
+  try{
+    var saveData={
+      daily:db.daily||[],
+      shop:db.shop||[],
+      bundles:db.bundles||[],
+      night:db.night||[],
+      orders:db.orders||[],
+      reps:db.reps||[],
+      settings:db.settings||{},
+      about:db.about||{}
+    };
+    await DOC.set(saveData);
+  }catch(e){
+    console.error('Save failed:',e);
+    toast('Save failed - check connection');
+  }
 }
 
+// LOAD from Firebase once + listen for real-time updates
 async function initDB(){
-  const snap=await DOC.get();
-  if(snap.exists) db=Object.assign(db, snap.data());
-  renderAll();
-  DOC.onSnapshot(s=>{ if(s.exists){ db=s.data(); renderAll(); } });
+  document.querySelectorAll('.grid').forEach(function(g){
+    g.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;font-family:var(--mono);font-size:10px;color:var(--t4);letter-spacing:0.12em;">LOADING...</div>';
+  });
+  try{
+    const snap=await DOC.get();
+    if(snap.exists){
+      const d=snap.data();
+      db.daily=d.daily||[];
+      db.shop=d.shop||[];
+      db.bundles=d.bundles||[];
+      db.night=d.night||[];
+      db.orders=d.orders||[];
+      db.reps=d.reps||[];
+      db.settings=d.settings||{};
+      db.about=d.about||{};
+    }
+    renderAll();
+    renderReps();
+    renderAbout();
+    applySettings();
+    checkAutoPopup();
+    // real-time listener
+    DOC.onSnapshot(function(snap){
+      if(snap.exists){
+        const d=snap.data();
+        db.daily=d.daily||[];
+        db.shop=d.shop||[];
+        db.bundles=d.bundles||[];
+        db.night=d.night||[];
+        db.orders=d.orders||[];
+        db.reps=d.reps||[];
+        db.settings=d.settings||{};
+        db.about=d.about||{};
+        renderAll();
+        renderReps();
+        applySettings();
+      }
+    });
+  }catch(e){
+    console.error('Load failed:',e);
+    renderAll();
+    renderReps();
+    checkAutoPopup();
+  }
 }
 
+// TIMER
+function tick(){
+  const expiry=db.settings&&db.settings.limitedExpiry?new Date(db.settings.limitedExpiry):null;
+  const bar=document.getElementById('limited-timer-bar');
+  const disp=document.getElementById('limited-timer-display');
+  if(expiry&&expiry>new Date()){
+    if(bar)bar.style.display='flex';
+    const d=Math.max(0,Math.floor((expiry-new Date())/1000));
+    const h=Math.floor(d/3600),m=Math.floor((d%3600)/60),s=d%60;
+    document.getElementById('t-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('t-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('t-s').textContent=String(s).padStart(2,'0');
+    if(disp)disp.textContent='EXPIRES IN';
+  } else {
+    if(bar)bar.style.display='none';
+    if(disp)disp.textContent='AVAILABLE FOR LIMITED TIME';
+  }
+}
+setInterval(tick,1000);tick();
+
+// NAV
 function showPage(id){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
   document.getElementById('pg-'+id).classList.add('on');
+  if(id==='reps')renderReps();
+  if(id==='about'){document.getElementById('as-ord').textContent=db.orders.length;document.getElementById('as-list').textContent=db.daily.length+db.shop.length+db.bundles.length;}
+  updateStats();
 }
+function setNav(el){document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
 
-function setNav(el){
-    document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-    el.classList.add('on');
+// RENDER
+function esc(s){if(s==null)return '';var t=String(s);t=t.split('&').join('&amp;');t=t.split('<').join('&lt;');t=t.split('>').join('&gt;');t=t.split('"').join('&quot;');return t;}
+
+function cardH(item){
+  const bc=item.sold?'bs':item.featured?'bf':'ba';
+  const bt=item.sold?'SOLD':item.featured?'FEATURED':'AVAILABLE';
+  var ih=item.img?'<img src="'+esc(item.img)+'" alt="" onerror="this.style.display=\'none\';"/>':'<div class="card-ph">◈</div>';
+  return '<div class="card'+(item.sold?' sold':'')+'" data-cid="'+item.id+'">'
+    +'<div class="card-shine"></div>'
+    +'<div class="card-img">'+ih+'<span class="card-badge '+bc+'">'+bt+'</span></div>'
+    +'<div class="card-body">'
+    +'<div class="cn">'+esc(item.name)+'</div>'
+    +'<div class="cc">'+esc(item.collection||'')+'</div>'
+    +'<div class="cr"><span>ACCOUNT</span><span class="crv">'+esc(item.account||'—')+'</span></div>'
+    +'<div class="cr"><span>RANK</span><span class="crv">'+esc(item.rank||'—')+'</span></div>'
+    +(item.level?'<div class="cr"><span>LEVEL</span><span class="crv">'+esc(String(item.level))+'</span></div>':'')+(item.extraSkins&&item.extraSkins.length?'<div class="cr"><span>+SKINS</span><span class="crv">'+item.extraSkins.length+' more</span></div>':'') 
+    +'<div class="cf">'
+    +'<div><div class="cp">PKR '+parseInt(item.price||0).toLocaleString()+'</div><div class="cps">Fast delivery</div></div>'
+    +(item.sold?'<span style="font-size:9px;font-family:var(--mono);color:var(--red);">SOLD</span>':'<button class="btn-buy card-order-btn" data-cid="'+item.id+'">ORDER</button>')
+    +'</div>'
+    +'</div>'
+    +'</div>';
 }
+function emptyH(){return '<div class="empty"><div class="empty-face">:)</div><div class="empty-t">NEW PRODUCTS SOON</div><div class="empty-s">Something good is coming — check back later</div></div>';}
 
 function renderAll(){
   window.cardMap={};
-  ['daily','shop','bundles','night'].forEach(s=>{
-    if(!db[s]) db[s]=[];
-    db[s].forEach(item=>{ window.cardMap[item.id]=item; });
-    const el=document.getElementById(s+'-grid');
-    if(el) el.innerHTML=db[s].length ? db[s].map(cardH).join('') : '<div class="empty">Empty</div>';
+  if(!db.night)db.night=[];
+  ['daily','shop','bundles','night'].forEach(function(s){
+    db[s].forEach(function(item){ window.cardMap[item.id]=item; });
+    var el=document.getElementById(s+'-grid');
+    if(el)el.innerHTML=db[s].length?db[s].map(cardH).join(''):emptyH();
   });
+  // show/hide night market section
+  var nm=document.getElementById('night-market-sec');
+  if(nm)nm.style.display=(db.night&&db.night.length)?'block':'none';
   updateStats();
 }
 
-function cardH(item){
-  return `<div class="card ${item.sold?'sold':''}" onclick="openProductPage(window.cardMap[${item.id}])">
-    <div class="card-img"><div class="card-ph">◈</div></div>
-    <div class="card-body">
-        <div class="cn">${item.name}</div>
-        <div class="cp">PKR ${item.price}</div>
-        <button class="btn-buy" onclick="event.stopPropagation(); openProductPage(window.cardMap[${item.id}])">VIEW</button>
-    </div>
-  </div>`;
+function updateStats(){
+  var tot=db.daily.length+db.shop.length+db.bundles.length+(db.night?db.night.length:0);
+  var all=[].concat(db.daily,db.shop,db.bundles,db.night||[]);
+  var sold=all.filter(function(i){return i.sold;}).length;
+  document.getElementById('hs-list').textContent=tot;
+  document.getElementById('hs-sold').textContent=sold;
+  var repsEl=document.getElementById('hs-reps');
+  if(repsEl)repsEl.textContent=db.reps?db.reps.length:0;
 }
 
-function openProductPage(item){
-    if(!item) return;
-    window._currentProduct=item;
-    document.getElementById('prod-content').innerHTML = `<h2>${item.name}</h2><p>Price: PKR ${item.price}</p><button class="btn-m" onclick="openOrder(window._currentProduct)">ORDER NOW</button>`;
-    showPage('product');
+// REPS
+function renderReps(){
+  var g=document.getElementById('reps-grid');
+  if(!g)return;
+  document.getElementById('rep-count').textContent=db.reps.length+' REVIEWS';
+  if(!db.reps.length){
+    g.innerHTML='<div style="grid-column:1/-1;padding:80px 20px;text-align:center;"><div style="font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.18em;">NO REVIEWS YET</div></div>';
+    return;
+  }
+  var html='';
+  for(var i=0;i<db.reps.length;i++){
+    var r=db.reps[i];
+    var stars='';for(var j=0;j<(r.stars||5);j++)stars+='<span class="rstar">&#9733;</span>';
+    var imgHtml=r.img?'<div style="margin-bottom:10px;height:100px;overflow:hidden;border:1px solid var(--rim);"><img src="'+r.img+'" style="width:100%;height:100%;object-fit:cover;"/></div>':'';
+    html+='<div class="rc">'+imgHtml+'<div class="rstars">'+stars+'</div><div class="rtxt">&quot;'+esc(r.text)+'&quot;</div><div class="rfrom">&#8212; <span>'+esc(r.from)+'</span></div></div>';
+  }
+  g.innerHTML=html;
 }
 
+// ORDER
 function openOrder(item){
-    cur=item;
-    document.getElementById('mo-n').textContent=item.name;
-    document.getElementById('mo-p').textContent='PKR '+item.price;
-    document.getElementById('omodal').classList.add('on');
+  if(!item)return;
+  cur=item;
+  document.getElementById('mo-n').textContent=cur.name||'';
+  document.getElementById('mo-p').textContent='PKR '+parseInt(cur.price||0).toLocaleString();
+  document.getElementById('omodal').classList.add('on');
+}
+function openVP(vp,pkr){openOrder({id:'vp_'+vp,name:vp.toLocaleString()+' Valorant Points',price:pkr});}
+function closeOv(id){document.getElementById(id).classList.remove('on');}
+
+function cancelOrder(oid){if(!confirm('Cancel this order?'))return;if(!confirm('Permanently remove? Cannot be undone.'))return;db.orders=db.orders.filter(function(o){return o.id!==oid;});sv();renderOrders();toast('Order removed');}
+// Delegated listener for all card clicks, order buttons, cancel, status
+document.addEventListener('click',function(e){
+  // cancel order button
+  if(e.target.classList.contains('cancel-ord-btn')){
+    var oid=parseInt(e.target.getAttribute('data-id'));
+    if(!confirm('Cancel this order?'))return;
+    if(!confirm('Permanently remove? Cannot be undone.'))return;
+    db.orders=db.orders.filter(function(o){return o.id!==oid;});
+    sv();renderOrders();toast('Order removed');
+    return;
+  }
+  // status update buttons
+  if(e.target.getAttribute('data-sid')){
+    var sid=parseInt(e.target.getAttribute('data-sid'));
+    var st=e.target.getAttribute('data-st');
+    updateOrderStatus(sid,st);
+    return;
+  }
+  // card order button - go to product page
+  var orderBtn=e.target.closest('.card-order-btn');
+  if(orderBtn){
+    e.stopPropagation();
+    var cid=parseInt(orderBtn.getAttribute('data-cid'));
+    var itm=window.cardMap&&window.cardMap[cid];
+    if(itm&&!itm.sold)openProductPage(itm);
+    return;
+  }
+  // whole card click - go to product page
+  var card=e.target.closest('.card');
+  if(card&&!card.classList.contains('sold')&&!e.target.closest('button')){
+    var cid2=parseInt(card.getAttribute('data-cid'));
+    var itm2=window.cardMap&&window.cardMap[cid2];
+    if(itm2&&!itm2.sold)openProductPage(itm2);
+  }
+});
+
+// PRODUCT PAGE
+function openProductPage(item){
+  window._prevPage='home';
+  window._currentProduct=item;
+  renderProductPage(item);
+  showPage('product');
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
+  window.scrollTo(0,0);
+}
+
+function renderProductPage(item){
+  var el=document.getElementById('prod-content');
+  if(!el)return;
+  var extraList='';
+  if(item.extraSkins&&item.extraSkins.length){
+    extraList='<div style="margin-top:16px;">'
+      +'<div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.12em;margin-bottom:8px;">ALSO INCLUDES</div>'
+      +'<div style="display:flex;flex-direction:column;gap:4px;">'
+      +item.extraSkins.map(function(s){
+        return '<div style="font-size:12px;font-family:var(--mono);color:var(--t2);padding:5px 10px;background:var(--s2);border:1px solid var(--rim);">+ '+esc(s)+'</div>';
+      }).join('')
+      +'</div></div>';
+  }
+    var imgHtml=item.img
+    ?'<img src="'+esc(item.img)+'" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src=\'\';this.parentElement.style.background=\'#07091a\';"/>'
+    :'<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--mono);font-size:48px;color:rgba(255,255,255,0.04);">◈</div>';
+  var badge=item.sold?'<span style="color:var(--red);border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">SOLD</span>'
+    :item.featured?'<span style="color:var(--blue2);border:1px solid rgba(79,112,255,0.25);background:rgba(79,112,255,0.07);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">FEATURED</span>'
+    :'<span style="color:var(--green);border:1px solid rgba(34,197,94,0.2);background:rgba(34,197,94,0.05);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">AVAILABLE</span>';
+  el.innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rim);">'
+    // left: big image
+    +'<div style="background:var(--s1);">'
+    +'<div style="height:340px;background:linear-gradient(145deg,#07091a,#020204);position:relative;overflow:hidden;">'+imgHtml+'</div>'
+    +(item.extraSkins&&item.extraSkins.length?extraList:'')
+    +'</div>'
+    // right: details
+    +'<div style="background:var(--s1);padding:28px;">'
+    +'<div style="margin-bottom:16px;">'+badge+'</div>'
+    +'<div style="font-size:28px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;">'+esc(item.name)+'</div>'
+    +'<div style="font-size:11px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;margin-bottom:24px;">'+esc(item.collection||'')+'</div>'
+    +'<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px;">'
+    +(item.account?'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">ACCOUNT</span><span style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(item.account)+'</span></div>':'')
+    +(item.region?'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">REGION</span><span style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(item.region)+'</span></div>':'')
+    +(item.rank?'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">RANK</span><span style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(item.rank)+'</span></div>':'')
+    +(item.level?'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">LEVEL</span><span style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(String(item.level))+'</span></div>':'')
+    +'</div>'
+    +'<div style="font-size:32px;font-weight:700;margin-bottom:4px;">PKR '+parseInt(item.price||0).toLocaleString()+'</div>'
+    +'<div style="font-size:10px;font-family:var(--mono);color:var(--t4);margin-bottom:20px;letter-spacing:0.06em;">FAST DELIVERY · VERIFIED ACCOUNT</div>'
+    +(item.sold?'<div style="font-size:12px;font-family:var(--mono);color:var(--red);">THIS ITEM HAS BEEN SOLD</div>'
+      :'<button class="btn-m" onclick="openOrder(window._currentProduct)" style="width:100%;padding:12px;font-size:12px;">PLACE ORDER</button>')
+    +'</div>'
+    +'</div>';
 }
 
 function submitOrder(){
-    const name=document.getElementById('on').value;
-    const num='VM-'+Math.floor(Math.random()*900000+100000);
-    db.orders.push({id:Date.now(), num, name, item:cur.name, price:cur.price, status:'Pending'});
-    sv();
-    closeOv('omodal');
-    document.getElementById('s-num').textContent='#'+num;
-    document.getElementById('suc').classList.add('on');
+  const name=document.getElementById('on').value.trim();
+  const contact=document.getElementById('oc').value.trim();
+  const pay=document.getElementById('op').value;
+  if(!name||!contact||!pay){toast('Fill all required fields');return;}
+  const num='VM-'+String(Date.now()).slice(-6);
+  db.orders.push({id:Date.now(),num,item:cur?.name,price:cur?.price,name,contact,payment:pay,notes:document.getElementById('onotes').value,time:new Date().toLocaleString()});
+  sv();closeOv('omodal');
+  ['on','oc','onotes'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('op').value='';
+  document.getElementById('s-num').textContent='#'+num;
+  document.getElementById('suc').classList.add('on');
 }
 
-function closeOv(id){ document.getElementById(id).classList.remove('on'); }
+// ADMIN
+let seq='';
+document.addEventListener('keydown',e=>{
+  if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
+  seq+=e.key;if(seq.length>4)seq=seq.slice(-4);
+  if(seq==='7777'){document.getElementById('admin').classList.toggle('on');seq='';}
+});
 
 function aLogin(){
-    if(document.getElementById('a-pw').value===PW){
-        document.getElementById('a-login').style.display='none';
-        document.getElementById('a-main').style.display='flex';
-        renderManage();
-    }
+  if(document.getElementById('a-pw').value===PW){
+    document.getElementById('a-login').style.display='none';
+    const m=document.getElementById('a-main');m.style.display='flex';m.style.flexDirection='column';
+    document.getElementById('a-st').textContent='UNLOCKED';
+    document.getElementById('a-st').style.color='var(--blue2)';
+    renderManage();renderOrders();renderRepsA();
+  }else toast('Wrong password');
 }
 
 function aTab(id,btn){
-    document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
-    btn.classList.add('on');
-    document.querySelectorAll('.asec').forEach(s=>s.classList.remove('on'));
-    document.getElementById('a-'+id).classList.add('on');
-    if(id==='manage') renderManage();
-    if(id==='orders') renderOrders();
+  document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  document.querySelectorAll('.asec').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const el=document.getElementById('a-'+id);
+  if(el){el.classList.add('on');el.style.display='flex';}
+  if(id==='manage')renderManage();
+  if(id==='orders')renderOrders();
+  if(id==='reps-a')renderRepsA();
+  if(id==='about-a')loadAboutAdmin();
+  if(id==='settings-a')loadSettings();
 }
 
 function addL(){
-    const name=document.getElementById('aa-n').value;
-    const price=document.getElementById('aa-p').value;
-    const sec=document.getElementById('aa-s').value;
-    db[sec].push({id:Date.now(), name, price, sold:false});
-    sv(); renderAll(); toast('Added');
+  const name=document.getElementById('aa-n').value.trim();
+  const price=document.getElementById('aa-p').value;
+  if(!name||!price){toast('Name and price required');return;}
+  const extraSkins=document.getElementById('aa-extra').value.trim();
+  var regEl=document.getElementById('aa-reg');
+  const item={
+    id:Date.now(),name,
+    collection:document.getElementById('aa-c').value.trim(),
+    price:parseInt(price),
+    account:document.getElementById('aa-a').value,
+    region:regEl?regEl.value:'TR',
+    rank:document.getElementById('aa-r').value.trim(),
+    level:document.getElementById('aa-lvl').value.trim(),
+    img:document.getElementById('aa-i').value.trim(),
+    featured:document.getElementById('aa-f').value==='1',
+    extraSkins:extraSkins?extraSkins.split('\n').map(s=>s.trim()).filter(Boolean):[],
+    sold:false
+  };
+  var targetSec=document.getElementById('aa-s').value;
+  db[targetSec].push(item);
+  sv();renderAll();renderManage();
+  ['aa-n','aa-c','aa-p','aa-r','aa-i','aa-lvl','aa-extra'].forEach(i=>document.getElementById(i).value='');
+  toast('Listing added');
 }
 
 function renderManage(){
-    const all=[...db.daily, ...db.shop];
-    document.getElementById('ml').innerHTML=all.map(i=>`<div class="arow">${i.name} <button onclick="delL('${i.id}')">DEL</button></div>`).join('');
+  const all=[...db.daily.map(i=>({...i,_s:'daily'})),...db.shop.map(i=>({...i,_s:'shop'})),...db.bundles.map(i=>({...i,_s:'bundles'}))];
+  const el=document.getElementById('ml');
+  el.innerHTML=all.length?all.map(item=>`<div class="arow"><div class="arow-i"><div class="arow-n">${esc(item.name)}</div><div class="arow-m">${item._s.toUpperCase()} · PKR ${parseInt(item.price||0).toLocaleString()} · ${item.sold?'SOLD':'LIVE'}</div></div><div class="aacts"><button class="ab e" onclick="startE('${item._s}',${item.id})">EDIT</button><button class="ab sv${item.sold?' sold':''}" onclick="togSold('${item._s}',${item.id})">${item.sold?'UNSELL':'SELL'}</button><button class="ab dl" onclick="delL('${item._s}',${item.id})">DEL</button></div></div>`).join(''):'<div style="font-size:10px;font-family:var(--mono);color:var(--t4);padding:8px;">No listings yet.</div>';
 }
+
+function startE(sec,id){
+  eSec=sec;eId=id;
+  const item=db[sec].find(i=>i.id===id);if(!item)return;
+  document.getElementById('e-lbl').textContent='EDITING: '+item.name;
+  document.getElementById('e-n').value=item.name||'';
+  document.getElementById('e-c').value=item.collection||'';
+  document.getElementById('e-p').value=item.price||'';
+  document.getElementById('e-a').value=item.account||'';
+  document.getElementById('e-r').value=item.rank||'';
+  document.getElementById('e-i').value=item.img||'';
+  // Hide all tabs and sections, show edit section
+  document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.asec').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const editSec=document.getElementById('a-edit');
+  editSec.style.display='flex';
+  editSec.classList.add('on');
+}
+
+function saveE(){
+  if(!eSec||!eId)return;
+  const item=db[eSec].find(i=>i.id===eId);if(!item)return;
+  item.name=document.getElementById('e-n').value.trim()||item.name;
+  item.collection=document.getElementById('e-c').value.trim();
+  item.price=parseInt(document.getElementById('e-p').value)||item.price;
+  item.account=document.getElementById('e-a').value.trim();
+  item.rank=document.getElementById('e-r').value.trim();
+  item.img=document.getElementById('e-i').value.trim();
+  sv();renderAll();
+  // restore manage view
+  document.querySelectorAll('.asec').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
+  const manSec=document.getElementById('a-manage');manSec.style.display='flex';manSec.classList.add('on');
+  document.querySelectorAll('.atb')[1].classList.add('on');
+  renderManage();
+  toast('Saved');
+}
+
+function togSold(sec,id){const item=db[sec].find(i=>i.id===id);if(item){item.sold=!item.sold;sv();renderAll();renderManage();}}
+function delL(sec,id){db[sec]=db[sec].filter(i=>i.id!==id);sv();renderAll();renderManage();toast('Deleted');}
 
 function renderOrders(){
-    document.getElementById('ol').innerHTML=db.orders.map(o=>`<div class="orow">#${o.num} - ${o.item} (${o.status})</div>`).join('');
+  const el=document.getElementById('ol');
+  if(!db.orders.length){
+    el.innerHTML='<div style="font-size:10px;font-family:var(--mono);color:var(--t4);padding:8px;">No orders yet.</div>';
+    return;
+  }
+  var html='';
+  var reversed=[].concat(db.orders).reverse();
+  for(var i=0;i<reversed.length;i++){
+    var o=reversed[i];
+    html+='<div class="orow" style="margin-bottom:6px;">'
+      +'<div class="orh"><span class="orn">#'+o.num+'</span><span class="ort">'+o.time+'</span></div>'
+      +'<div class="ori">'+esc(o.item||'')+'</div>'
+      +'<div class="ord">'
+      +'NAME: '+esc(o.name)+'<br>'
+      +'CONTACT: '+esc(o.contact)+'<br>'
+      +'PAYMENT: '+esc(o.payment)+'<br>'
+      +'PRICE: PKR '+parseInt(o.price||0).toLocaleString()
+      +(o.notes?'<br>NOTES: '+esc(o.notes):'')
+      +'</div>'
+      +'<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">'
+      +'<button class="ab cancel-ord-btn" style="padding:3px 6px;font-size:8px;" data-id="'+o.id+'">CANCEL</button>'
+      +'<button class="ab" style="padding:3px 6px;font-size:8px;color:var(--gold);border-color:rgba(245,158,11,0.2);" data-sid="'+o.id+'" data-st="Pending">PENDING</button>'
+      +'<button class="ab" style="padding:3px 6px;font-size:8px;color:var(--blue2);border-color:rgba(79,112,255,0.2);" data-sid="'+o.id+'" data-st="Processing">PROCESSING</button>'
+      +'<button class="ab" style="padding:3px 6px;font-size:8px;color:var(--green);border-color:rgba(34,197,94,0.2);" data-sid="'+o.id+'" data-st="Delivered">DELIVERED</button>'
+      +'</div>'
+      +'</div>';
+  }
+  el.innerHTML=html;
 }
 
-function toast(m){ 
-    const t=document.getElementById('toast'); 
-    t.textContent=m; t.classList.add('on'); 
-    setTimeout(()=>t.classList.remove('on'), 2000); 
+function updateOrderStatus(id,status){
+  const order=db.orders.find(o=>o.id===id);
+  if(order){order.status=status;sv();renderOrders();toast('Status: '+status);}
+}
+var _repImgData=null;
+function loadRepImg(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    _repImgData=ev.target.result;
+    document.getElementById('rep-img-thumb').src=_repImgData;
+    document.getElementById('rep-img-preview').style.display='block';
+    document.getElementById('rep-img-box').style.display='none';
+  };
+  r.readAsDataURL(f);
+}
+function clearRepImg(){
+  _repImgData=null;
+  document.getElementById('rep-img-preview').style.display='none';
+  document.getElementById('rep-img-box').style.display='flex';
+  document.getElementById('r-img-inp').value='';
+}
+function addRep(){
+  var from=document.getElementById('r-f').value.trim();
+  var text=document.getElementById('r-t').value.trim();
+  if(!from||!text){toast('Fill all fields');return;}
+  db.reps.push({id:Date.now(),from,text,stars:parseInt(document.getElementById('r-s').value)||5,img:_repImgData||null});
+  sv();renderRepsA();renderReps();
+  document.getElementById('r-f').value='';document.getElementById('r-t').value='';
+  clearRepImg();
+  toast('Rep added');
+}
+function renderRepsA(){
+  document.getElementById('r-list').innerHTML=db.reps.map(r=>`<div class="arow"><div class="arow-i"><div class="arow-n">${esc(r.from)}</div><div class="arow-m">${'★'.repeat(r.stars)} · ${esc(r.text.slice(0,38))}...</div></div><div class="aacts"><button class="ab dl" onclick="delRep(${r.id})">DEL</button></div></div>`).join('');
+}
+function delRep(id){db.reps=db.reps.filter(r=>r.id!==id);sv();renderRepsA();renderReps();}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);}
+
+// SETTINGS
+function loadSettings(){
+  const s=db.settings||{};
+  const exp=document.getElementById('st-expiry');
+  if(exp&&s.limitedExpiry){const d=new Date(s.limitedExpiry);exp.value=d.toISOString().slice(0,16);}
+  const ti=document.getElementById('st-title');if(ti)ti.value=s.title||'VOID MARKET — Valorant Skins';
+  const su=document.getElementById('st-sub');if(su)su.value=s.sub||'Verified & trusted. Updated daily.';
+  const vpDefs={375:800,825:1700,1700:3350,2925:5600,4325:8200,8900:16000};
+  const vp=s.vp||{};
+  Object.entries(vpDefs).forEach(([amt,def])=>{
+    const el=document.getElementById('vp-'+amt);
+    if(el)el.value=vp[amt]||def;
+  });
+}
+function saveSettings(){
+  const expVal=document.getElementById('st-expiry').value;
+  const vpDefs=[375,825,1700,2925,4325,8900];
+  const vp={};
+  vpDefs.forEach(amt=>{
+    const el=document.getElementById('vp-'+amt);
+    if(el&&el.value)vp[amt]=parseInt(el.value);
+  });
+  db.settings=Object.assign(db.settings||{},{
+    limitedExpiry:expVal?new Date(expVal).toISOString():null,
+    title:document.getElementById('st-title').value.trim()||'VOID MARKET — Valorant Skins',
+    sub:document.getElementById('st-sub').value.trim(),
+    vp,
+  });
+  sv();applySettings();applyVPPrices();toast('Settings saved');
+}
+function applySettings(){
+  const s=db.settings||{};
+  if(s.title)document.title=s.title;
+  const subEl=document.getElementById('hero-sub-txt');
+  if(subEl&&s.sub)subEl.innerHTML=s.sub;
+}
+function applyVPPrices(){
+  const s=db.settings||{};
+  const vp=s.vp||{};
+  const map={375:0,825:1,1700:2,2925:3,4325:4,8900:5};
+  const cards=document.querySelectorAll('.vpc');
+  Object.entries(map).forEach(([amt,idx])=>{
+    if(vp[amt]&&cards[idx]){
+      const priceEl=cards[idx].querySelector('.vp-p');
+      if(priceEl)priceEl.textContent='PKR '+parseInt(vp[amt]).toLocaleString();
+    }
+  });
 }
 
-function updateStats(){
-    document.getElementById('hs-list').textContent=db.daily.length + db.shop.length;
-    document.getElementById('hs-sold').textContent=db.orders.length;
+// ABOUT EDIT
+function loadAboutAdmin(){
+  const a=db.about||{};
+  document.getElementById('ab-name').value=a.name||'VOID MARKET';
+  document.getElementById('ab-bio').value=a.bio||'';
+  document.getElementById('ab-contact').value=a.contact||'';
+  document.getElementById('ab-delivery').value=a.delivery||'24H';
+}
+function saveAbout(){
+  db.about={
+    name:document.getElementById('ab-name').value.trim()||'VOID MARKET',
+    bio:document.getElementById('ab-bio').value.trim(),
+    contact:document.getElementById('ab-contact').value.trim(),
+    delivery:document.getElementById('ab-delivery').value.trim()||'24H',
+  };
+  sv();renderAbout();toast('About page updated');
+}
+function renderAbout(){
+  const a=db.about||{};
+  const nameEl=document.getElementById('about-name-txt');
+  const bioEl=document.getElementById('about-bio-txt');
+  const contactEl=document.getElementById('about-contact-txt');
+  const delEl=document.getElementById('about-del-txt');
+  if(nameEl)nameEl.textContent=a.name||'VOID MARKET';
+  if(bioEl)bioEl.textContent=a.bio||'Trusted Valorant skin account seller. We check shops daily and bring you the best skins at the cheapest prices using Turkish region VP. Every account is verified before listing.';
+  if(contactEl)contactEl.textContent=a.contact||'Place an order and include your Discord or WhatsApp — we will reach out to you directly.';
+  if(delEl)delEl.textContent=a.delivery||'24H';
 }
 
-// Global exposure
-window.showPage=showPage; window.openOrder=openOrder; window.openVP=(v,p)=>openOrder({name:v+' VP', price:p});
-window.submitOrder=submitOrder; window.closeOv=closeOv; window.aLogin=aLogin; window.aTab=aTab;
-window.addL=addL; window.openProductPage=openProductPage;
 
+// PROMO POPUP
+function showPopup(item){
+  if(!item)return;
+  document.getElementById('popup-name').textContent=item.name;
+  document.getElementById('popup-price').textContent='PKR '+parseInt(item.price||0).toLocaleString();
+  document.getElementById('popup-desc').textContent=item.collection?(item.collection+' Collection'):'';
+  // set image
+  var imgWrap=document.getElementById('popup-img-wrap');
+  if(imgWrap){
+    if(item.img){
+            imgWrap.innerHTML='<img src="'+esc(item.img)+'" style="width:100%;height:100%;object-fit:cover;">';
+    } else {
+      imgWrap.innerHTML='<div style="font-family:var(--mono);font-size:36px;color:rgba(255,255,255,0.04);">◈</div>';
+    }
+  }
+  var btn=document.getElementById('popup-btn');
+  btn.onclick=function(){document.getElementById('promo-popup').style.display='none';openProductPage(item);};
+  var p=document.getElementById('promo-popup');
+  p.style.display='block';
+  p.style.animation='none';
+  p.offsetHeight; // reflow
+  p.style.animation='slideInRight 0.35s ease';
+}
+function checkAutoPopup(){
+  const all=[...db.daily,...db.shop,...db.bundles];
+  const featured=all.find(i=>i.featured&&!i.sold);
+  if(featured){setTimeout(function(){showPopup(featured);},3000);}
+}
+
+// ORDER TRACKING
+function showTracker(){
+  const num=document.getElementById('track-input').value.trim().toUpperCase();
+  const result=document.getElementById('track-result');
+  if(!num){result.innerHTML='<div style="color:var(--t4);">Enter an order number</div>';return;}
+  const clean=num.replace('#','');
+  const order=db.orders.find(function(o){return o.num===clean||o.num===num;});
+  if(!order){
+    result.innerHTML='<div style="color:var(--t4);font-family:var(--mono);font-size:11px;">Order not found. Check your number.</div>';
+    return;
+  }
+  const st=order.status||'Pending';
+  const colors={Pending:'var(--gold)',Processing:'var(--blue2)',Delivered:'var(--green)',Cancelled:'var(--red)'};
+  const col=colors[st]||'var(--t2)';
+  result.innerHTML=
+    '<div style="border:1px solid var(--rim2);padding:14px;">'
+    +'<div style="font-size:9px;font-family:var(--mono);color:var(--t4);margin-bottom:8px;">ORDER FOUND</div>'
+    +'<div style="font-size:16px;font-weight:600;margin-bottom:4px;">'+esc(order.item||'')+'</div>'
+    +'<div style="font-size:11px;font-family:var(--mono);color:'+col+';margin-bottom:10px;letter-spacing:0.08em;">STATUS: '+st+'</div>'
+    +'<div style="font-size:10px;font-family:var(--mono);color:var(--t3);line-height:1.8;">'
+    +'ORDER: #'+order.num+'<br>'
+    +'NAME: '+esc(order.name)+'<br>'
+    +'PRICE: PKR '+parseInt(order.price||0).toLocaleString()+'<br>'
+    +'DATE: '+order.time
+    +'</div>'
+    +'</div>';
+}
+
+// EXPOSE functions to window so onclick="" attributes work
+window.showPage=showPage;
+window.setNav=setNav;
+window.openVP=openVP;
+window.openOrder=openOrder;
+window.closeOv=closeOv;
+window.submitOrder=submitOrder;
+window.closeSuccess=closeSuccess;
+window.aLogin=aLogin;
+window.aTab=aTab;
+window.addL=addL;
+window.startE=startE;
+window.saveE=saveE;
+window.togSold=togSold;
+window.delL=delL;
+window.updateOrderStatus=updateOrderStatus;
+window.addRep=addRep;
+window.delRep=delRep;
+window.saveAbout=saveAbout;
+window.saveSettings=saveSettings;
+window.showTracker=showTracker;
+window.loadRepImg=loadRepImg;
+window.clearRepImg=clearRepImg;
+window.openProductPage=openProductPage;
+window.scrollToSection=typeof scrollToSection!=="undefined"?scrollToSection:null;
+
+// INIT
 initDB();
 </script>
 </body>
