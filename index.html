@@ -720,7 +720,8 @@ function esc(s){if(s==null)return '';var t=String(s);t=t.split('&').join('&amp;'
 function cardH(item){
   const bc=item.sold?'bs':item.featured?'bf':'ba';
   const bt=item.sold?'SOLD':item.featured?'FEATURED':'AVAILABLE';
-  var ih=item.img?'<img src="'+esc(item.img)+'" alt="" onerror="this.style.display=\'none\';"/>':'<div class="card-ph">◈</div>';
+  // FIX: Accurate image URL display logic[cite: 1]
+  var ih=(item.img && item.img.trim() !== '') ? '<img src="'+esc(item.img)+'" alt="" onerror="this.parentElement.innerHTML=\'<div class=\\\'card-ph\\\'>◈</div>\';"/>' : '<div class="card-ph">◈</div>';
   return '<div class="card'+(item.sold?' sold':'')+'" data-cid="'+item.id+'">'
     +'<div class="card-shine"></div>'
     +'<div class="card-img">'+ih+'<span class="card-badge '+bc+'">'+bt+'</span></div>'
@@ -905,6 +906,13 @@ document.addEventListener('keydown',e=>{
   if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
   seq+=e.key;if(seq.length>4)seq=seq.slice(-4);
   if(seq==='7777'){document.getElementById('admin').classList.toggle('on');seq='';}
+  // FIX: Make tabs/modals closable by pressing Esc[cite: 1]
+  if (e.key === 'Escape') {
+    closeOv('omodal');
+    closeOv('suc');
+    document.getElementById('admin').classList.remove('on');
+    document.getElementById('promo-popup').style.display = 'none';
+  }
 });
 
 function aLogin(){
@@ -1215,7 +1223,7 @@ window.openVP=openVP;
 window.openOrder=openOrder;
 window.closeOv=closeOv;
 window.submitOrder=submitOrder;
-window.closeSuccess=closeSuccess;
+window.closeSuccess=typeof closeSuccess !== "undefined" ? closeSuccess : null;
 window.aLogin=aLogin;
 window.aTab=aTab;
 window.addL=addL;
