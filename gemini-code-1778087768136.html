@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VOID MARKET — Valorant Skins</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#000;--s1:#080808;--s2:#0f0f0f;--s3:#161616;
+  --rim:#1a1a1a;--rim2:#242424;--rim3:#303030;
+  --t1:#ffffff;--t2:#999;--t3:#555;--t4:#333;
+  --blue:#4f70ff;--blue2:#7b97ff;
+  --purple:#8b5cf6;
+  --green:#22c55e;--red:#ef4444;--gold:#f59e0b;
+  --mono:'Space Mono',monospace;
+  --sans:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:15px;min-height:100vh;overflow-x:hidden;}
+::selection{background:rgba(79,112,255,0.3);}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--rim3);}
+
+/* BACKGROUND */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* CORNER DECO */
+.corner{position:fixed;width:72px;height:72px;pointer-events:none;z-index:1;}
+.corner-tl{top:0;left:0;}
+.corner-tr{top:0;right:0;transform:scaleX(-1);}
+.corner-bl{bottom:0;left:0;transform:scaleY(-1);}
+.corner-br{bottom:0;right:0;transform:scale(-1);}
+
+/* PAGE */
+.page{position:relative;z-index:2;}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:54px;
+  background:rgba(0,0,0,0.95); /* Increased Opacity */
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--rim);
+}
+.logo{
+  font-family:var(--sans);font-weight:700;font-size:17px;
+  letter-spacing:0.04em;color:var(--t1);text-decoration:none;
+  display:flex;align-items:center;gap:8px;
+}
+
+@keyframes pip{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.nav-mid{display:flex;gap:0;}
+.nb{
+  padding:4px 14px;font-size:11px;font-family:var(--mono);
+  color:var(--t3);background:none;border:none;cursor:pointer;
+  letter-spacing:0.06em;transition:color 0.15s;position:relative;
+}
+.nb::after{content:'';position:absolute;bottom:-1px;left:14px;right:14px;height:1px;background:var(--blue2);transform:scaleX(0);transition:transform 0.2s;}
+.nb:hover{color:var(--t2);}
+.nb.on{color:var(--t1);}
+.nb.on::after,.nb:hover::after{transform:scaleX(1);}
+.nav-r{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.12em;display:flex;align-items:center;gap:6px;}
+.live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pip 1.5s ease-in-out infinite;}
+
+/* PAGES */
+.pg{display:none;animation:pgIn 0.25s ease;}
+.pg.on{display:block;}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* HERO */
+.hero{padding:72px 28px 48px;max-width:860px;margin:0 auto;}
+.hero-eyebrow{font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.22em;margin-bottom:22px;}
+.hero-h{font-size:clamp(44px,7.5vw,88px);font-weight:700;line-height:1.0;letter-spacing:-0.03em;margin-bottom:22px;}
+.hero-h .d{color:var(--t4);}
+.hero-h .l{background:linear-gradient(130deg,#fff 25%,var(--blue2) 65%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-p{font-size:13px;font-family:var(--mono);color:var(--t3);line-height:1.9;letter-spacing:0.02em;margin-bottom:32px;max-width:420px;}
+.hero-stats{display:flex;gap:28px;}
+.hstat{border-left:1px solid var(--rim2);padding-left:14px;}
+.hstat-n{font-size:20px;font-weight:600;}
+.hstat-l{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-top:3px;}
+
+/* SECTION */
+.sec{padding:36px 28px;max-width:1280px;margin:0 auto;}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--rim);}
+.sec-t{font-size:11px;font-family:var(--mono);color:var(--t3);letter-spacing:0.12em;display:flex;align-items:center;gap:8px;}
+.sec-t::before{content:'';display:inline-block;width:16px;height:1px;background:var(--blue);}
+.sec-r{font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;}
+.timer-bar{display:flex;align-items:center;gap:16px;padding:10px 14px;background:var(--s1);border:1px solid var(--rim);margin-bottom:12px;}
+.timer-bar-label{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.14em;flex-shrink:0;}
+
+/* TIMER */
+.tmr{display:flex;align-items:center;gap:3px;}
+.tblk{text-align:center;}
+.tnum{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--t1);line-height:1;}
+.tsep{font-family:var(--mono);font-size:16px;color:var(--rim3);padding:0 2px;}
+.tlbl{font-size:8px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--bg);}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--rim);position:relative;overflow:hidden;cursor:pointer;transition:background 0.18s;margin:-1px 0 0 -1px;}
+.card:hover{background:var(--s2);}
+.card.sold{opacity:0.3;pointer-events:none;}
+.card-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.025) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.55s;pointer-events:none;}
+.card:hover .card-shine{transform:translateX(100%);}
+.card-img{width:100%;height:140px;background:linear-gradient(145deg,#07091a,#020204);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid var(--rim);}
+.card-img img{width:100%;height:100%;object-fit:cover;}
+.card-ph{font-family:var(--mono);font-size:28px;color:rgba(255,255,255,0.025);letter-spacing:0.2em;}
+.card-badge{position:absolute;top:8px;left:8px;font-size:8px;font-family:var(--mono);padding:2px 6px;letter-spacing:0.1em;}
+.ba{color:var(--green);border:1px solid rgba(34,197,94,0.2);background:rgba(34,197,94,0.05);}
+.bs{color:var(--red);border:1px solid rgba(239,68,68,0.15);background:rgba(239,68,68,0.05);}
+.bf{color:var(--blue2);border:1px solid rgba(79,112,255,0.25);background:rgba(79,112,255,0.07);}
+.card-body{padding:12px;}
+.cn{font-size:13px;font-weight:600;margin-bottom:2px;letter-spacing:-0.01em;}
+.cc{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;margin-bottom:8px;}
+.cr{display:flex;justify-content:space-between;font-size:9px;font-family:var(--mono);color:var(--t4);margin-bottom:2px;}
+.crv{color:var(--t3);}
+.cf{display:flex;align-items:center;justify-content:space-between;padding-top:9px;margin-top:9px;border-top:1px solid var(--rim);}
+.cp{font-size:15px;font-weight:600;}
+.cps{font-size:8px;font-family:var(--mono);color:var(--t4);margin-top:1px;}
+.btn-buy{padding:5px 12px;font-size:9px;font-family:var(--mono);color:var(--blue2);border:1px solid rgba(79,112,255,0.22);background:rgba(79,112,255,0.05);cursor:pointer;letter-spacing:0.06em;transition:all 0.15s;}
+.btn-buy:hover{background:rgba(79,112,255,0.14);border-color:rgba(79,112,255,0.5);}
+
+/* VP GRID */
+.vp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--rim);overflow-x:auto;}
+.vpc{background:var(--s1);padding:18px 14px;text-align:center;cursor:pointer;transition:background 0.15s;position:relative;overflow:hidden;}
+.vpc:hover{background:var(--s2);}
+.vpc::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue),var(--purple));transform:scaleX(0);transition:transform 0.2s;}
+.vpc:hover::before{transform:scaleX(1);}
+.va{font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-0.02em;}
+.vl{font-size:8px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.14em;margin-bottom:12px;margin-top:1px;}
+.vp-p{font-size:15px;font-weight:600;margin-bottom:2px;}
+.vs{font-size:8px;font-family:var(--mono);color:var(--t4);}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.95); /* Denser Overlay */
+backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:20px;}
+.overlay.on{display:flex;}
+.modal{background:var(--s1);border:1px solid var(--rim2);width:100%;max-width:440px;animation:mIn 0.2s ease;}
+@keyframes mIn{from{opacity:0;transform:translateY(10px) scale(0.98);}to{opacity:1;transform:none;}}
+.mh{padding:16px 18px 12px;border-bottom:1px solid var(--rim);display:flex;justify-content:space-between;align-items:center;}
+.mt{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--t3);}
+.mc{background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;font-family:var(--mono);}
+.mc:hover{color:var(--t1);}
+.mb{padding:18px;}
+.mi{padding:10px 12px;background:rgba(79,112,255,0.05);border:1px solid rgba(79,112,255,0.1);margin-bottom:16px;}
+.mi-n{font-size:14px;font-weight:600;margin-bottom:3px;}
+.mi-p{font-size:11px;font-family:var(--mono);color:var(--blue2);}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.fl{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;}
+.fi{background:var(--s2);border:1px solid var(--rim2);color:var(--t1);padding:8px 10px;font-family:var(--sans);font-size:13px;outline:none;transition:border-color 0.15s;width:100%;}
+.fi:focus{border-color:rgba(79,112,255,0.4);}
+.fi::placeholder{color:var(--t4);}
+.fs{background:var(--s2);border:1px solid var(--rim2);color:var(--t1);padding:8px 10px;font-family:var(--sans);font-size:13px;outline:none;width:100%;}
+textarea.fi{resize:vertical;min-height:60px;}
+.btn-m{width:100%;padding:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--t1);background:rgba(79,112,255,0.1);border:1px solid rgba(79,112,255,0.28);cursor:pointer;transition:all 0.15s;margin-top:2px;}
+.btn-m:hover{background:rgba(79,112,255,0.2);border-color:rgba(79,112,255,0.55);}
+
+/* PRODUCT PAGE SPECIFIC */
+#pg-product .sec-wrap {
+  max-width: 1200px; /* Increased screen width */
+  margin: 0 auto;
+  padding: 28px;
+}
+.prod-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Better balance */
+  gap: 1px;
+  background: var(--rim);
+  border: 1px solid var(--rim);
+}
+.prod-img-box {
+  background: #050505; /* Less transparent */
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.prod-img-box img {
+  width: 95%;
+  height: 95%;
+  object-fit: contain; /* FIX: Prevents zooming/pixelation */
+}
+.prod-info-box {
+  background: #080808; /* Solid dark background */
+  padding: 40px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ALL PREVIOUS HTML STRUCTURE REMAINS SAME UNTIL PRODUCT PAGE -->
+
+<!-- PRODUCT PAGE -->
+<div class="pg" id="pg-product">
+  <div class="sec-wrap">
+    <button onclick="showPage(window._prevPage||'home');" style="background:none;border:none;color:var(--t3);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;cursor:pointer;margin-bottom:24px;display:flex;align-items:center;gap:8px;">← BACK TO MARKET</button>
+    <div id="prod-content"></div>
+  </div>
+</div>
+
+<!-- SCRIPTS REMAIN SAME, UPDATED RENDER FUNCTION BELOW -->
+
+<script>
+// ... [Previous Canvas and Firebase Code] ...
+
+function renderProductPage(item){
+  var el=document.getElementById('prod-content');
+  if(!el)return;
+  
+  var extraList='';
+  if(item.extraSkins&&item.extraSkins.length){
+    extraList='<div style="margin-top:24px;">'
+      +'<div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.12em;margin-bottom:12px;">ACCOUNT CONTENTS</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
+      +item.extraSkins.map(function(s){
+        return '<div style="font-size:11px;font-family:var(--mono);color:var(--t2);padding:8px 12px;background:var(--s2);border:1px solid var(--rim);">+ '+esc(s)+'</div>';
+      }).join('')
+      +'</div></div>';
+  }
+
+  var imgHtml=item.img
+    ?'<img src="'+esc(item.img)+'" onerror="this.src=\'\';this.parentElement.style.background=\'#07091a\';"/>'
+    :'<div style="font-family:var(--mono);font-size:48px;color:rgba(255,255,255,0.04);">◈</div>';
+
+  var badge=item.sold?'<span style="color:var(--red);border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">SOLD OUT</span>'
+    :item.featured?'<span style="color:var(--blue2);border:1px solid rgba(79,112,255,0.25);background:rgba(79,112,255,0.07);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">FEATURED ITEM</span>'
+    :'<span style="color:var(--green);border:1px solid rgba(34,197,94,0.2);background:rgba(34,197,94,0.05);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">INSTANT DELIVERY</span>';
+
+  el.innerHTML=
+    '<div class="prod-grid">'
+    +'<div class="prod-img-box">'+imgHtml+'</div>'
+    +'<div class="prod-info-box">'
+    +'<div style="margin-bottom:20px;">'+badge+'</div>'
+    +'<div style="font-size:36px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px;line-height:1.1;">'+esc(item.name)+'</div>'
+    +'<div style="font-size:12px;font-family:var(--mono);color:var(--t4);letter-spacing:0.08em;margin-bottom:32px;">'+esc(item.collection||'PREMIUM')+' COLLECTION</div>'
+    +'<div style="display:flex;flex-direction:column;gap:2px;margin-bottom:32px;">'
+    +(item.account?'<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">ACCESS TYPE</span><span style="font-size:12px;font-family:var(--mono);color:var(--t1);">'+esc(item.account)+'</span></div>':'')
+    +(item.region?'<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">SERVER REGION</span><span style="font-size:12px;font-family:var(--mono);color:var(--t1);">'+esc(item.region)+'</span></div>':'')
+    +(item.rank?'<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">COMPETITIVE RANK</span><span style="font-size:12px;font-family:var(--mono);color:var(--t1);">'+esc(item.rank)+'</span></div>':'')
+    +(item.level?'<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--rim);"><span style="font-size:10px;font-family:var(--mono);color:var(--t4);">ACCOUNT LEVEL</span><span style="font-size:12px;font-family:var(--mono);color:var(--t1);">'+esc(String(item.level))+'</span></div>':'')
+    +'</div>'
+    +'<div style="margin-bottom:28px;">'
+    +'<div style="font-size:10px;font-family:var(--mono);color:var(--blue2);margin-bottom:4px;letter-spacing:0.1em;">PRICE</div>'
+    +'<div style="font-size:42px;font-weight:700;">PKR '+parseInt(item.price||0).toLocaleString()+'</div>'
+    +'</div>'
+    +(item.sold?'<div style="background:rgba(239,68,68,0.1);border:1px solid var(--red);color:var(--red);padding:14px;text-align:center;font-family:var(--mono);font-size:11px;">THIS ITEM IS NO LONGER AVAILABLE</div>'
+      :'<button class="btn-m" onclick="openOrder(window._currentProduct)" style="width:100%;padding:16px;font-size:12px;background:var(--blue);border-color:var(--blue);font-weight:600;">PLACE ORDER NOW</button>')
+    +(item.extraSkins&&item.extraSkins.length?extraList:'')
+    +'</div>'
+    +'</div>';
+}
+
+// ... [Rest of the script remains identical] ...
+</script>
+</body>
+</html>
