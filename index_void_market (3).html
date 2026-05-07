@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VOID MARKET — Valorant Skins</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#000;--s1:#050505;--s2:#0a0a0a;--s3:#111111;
+  --rim:#141414;--rim2:#1e1e1e;--rim3:#282828;
+  --t1:#ffffff;--t2:#c8c8c8;--t3:#888;--t4:#555;
+  --blue:#4f70ff;--blue2:#7b97ff;
+  --purple:#8b5cf6;
+  --green:#22c55e;--red:#ef4444;--gold:#f59e0b;
+  --mono:'Space Mono',monospace;
+  --sans:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:15px;min-height:100vh;overflow-x:hidden;}
+::selection{background:rgba(79,112,255,0.3);}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--rim3);}
+
+/* VOID VIGNETTE — deep black corners + edge darkening */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:3;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 55% at 0% 0%,   rgba(0,0,0,0.72) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 55% at 100% 0%,  rgba(0,0,0,0.68) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 55% at 0% 100%,  rgba(0,0,0,0.72) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 55% at 100% 100%,rgba(0,0,0,0.68) 0%, transparent 65%),
+    radial-gradient(ellipse 100% 12% at 50% 0%,  rgba(0,0,0,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 100% 12% at 50% 100%,rgba(0,0,0,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 10% 100% at 0% 50%,  rgba(0,0,0,0.40) 0%, transparent 100%),
+    radial-gradient(ellipse 10% 100% at 100% 50%,rgba(0,0,0,0.40) 0%, transparent 100%);
+}
+
+/* BACKGROUND */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* CORNER DECO */
+.corner{position:fixed;width:110px;height:110px;pointer-events:none;z-index:1;}
+.corner-tl{top:0;left:0;}
+.corner-tr{top:0;right:0;transform:scaleX(-1);}
+.corner-bl{bottom:0;left:0;transform:scaleY(-1);}
+.corner-br{bottom:0;right:0;transform:scale(-1);}
+
+/* PAGE */
+.page{position:relative;z-index:2;}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:54px;
+  background:rgba(0,0,0,0.82);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--rim);
+}
+.logo{
+  font-family:var(--sans);font-weight:700;font-size:17px;
+  letter-spacing:0.04em;color:var(--t1);text-decoration:none;
+  display:flex;align-items:center;gap:8px;
+}
+
+@keyframes pip{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.nav-mid{display:flex;gap:0;}
+.nb{
+  padding:4px 14px;font-size:11px;font-family:var(--mono);
+  color:var(--t3);background:none;border:none;cursor:pointer;
+  letter-spacing:0.06em;transition:color 0.15s;position:relative;
+}
+.nb::after{content:'';position:absolute;bottom:-1px;left:14px;right:14px;height:1px;background:var(--blue2);transform:scaleX(0);transition:transform 0.2s;}
+.nb:hover{color:var(--t2);}
+.nb.on{color:var(--t1);}
+.nb.on::after,.nb:hover::after{transform:scaleX(1);}
+.nav-r{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.12em;display:flex;align-items:center;gap:6px;}
+.live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pip 1.5s ease-in-out infinite;}
+
+/* PAGES */
+.pg{display:none;animation:pgIn 0.25s ease;}
+.pg.on{display:block;}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* HERO */
+.hero{padding:72px 28px 48px;max-width:860px;margin:0 auto;}
+.hero-eyebrow{font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.22em;margin-bottom:22px;}
+.hero-h{font-size:clamp(44px,7.5vw,88px);font-weight:700;line-height:1.0;letter-spacing:-0.03em;margin-bottom:22px;}
+.hero-h .d{background:linear-gradient(130deg,#1a3aff 0%,#4f70ff 50%,#2a1a8a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-h .l{background:linear-gradient(130deg,#fff 25%,var(--blue2) 65%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-p{font-size:13px;font-family:var(--mono);color:var(--t3);line-height:1.9;letter-spacing:0.02em;margin-bottom:32px;max-width:420px;}
+.hero-stats{display:flex;gap:28px;}
+.hstat{border-left:1px solid var(--rim2);padding-left:14px;}
+.hstat-n{font-size:20px;font-weight:600;}
+.hstat-l{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-top:3px;}
+
+/* SECTION */
+.sec{padding:36px 28px;max-width:1280px;margin:0 auto;}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--rim);}
+.sec-t{font-size:11px;font-family:var(--mono);color:var(--t3);letter-spacing:0.12em;display:flex;align-items:center;gap:8px;}
+.sec-t::before{content:'';display:inline-block;width:16px;height:1px;background:var(--blue);}
+.sec-r{font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;}
+.timer-bar{display:flex;align-items:center;gap:16px;padding:10px 14px;background:var(--s1);border:1px solid var(--rim);margin-bottom:12px;}
+.timer-bar-label{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.14em;flex-shrink:0;}
+
+/* TIMER */
+.tmr{display:flex;align-items:center;gap:3px;}
+.tblk{text-align:center;}
+.tnum{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--t1);line-height:1;}
+.tsep{font-family:var(--mono);font-size:16px;color:var(--rim3);padding:0 2px;}
+.tlbl{font-size:8px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--bg);}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--rim);position:relative;overflow:hidden;cursor:pointer;transition:background 0.18s;margin:-1px 0 0 -1px;}
+.card:hover{background:var(--s2);}
+.card.sold{opacity:0.3;pointer-events:none;}
+.card-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.025) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.55s;pointer-events:none;}
+.card:hover .card-shine{transform:translateX(100%);}
+.card-img{width:100%;height:140px;background:linear-gradient(145deg,#07091a,#020204);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid var(--rim);}
+.card-img img{width:100%;height:100%;object-fit:cover;}
+.card-ph{font-family:var(--mono);font-size:28px;color:rgba(255,255,255,0.025);letter-spacing:0.2em;}
+.card-badge{position:absolute;top:8px;left:8px;font-size:8px;font-family:var(--mono);padding:2px 6px;letter-spacing:0.1em;}
+.ba{color:var(--green);border:1px solid rgba(34,197,94,0.2);background:rgba(34,197,94,0.05);}
+.bs{color:var(--red);border:1px solid rgba(239,68,68,0.15);background:rgba(239,68,68,0.05);}
+.bf{color:var(--blue2);border:1px solid rgba(79,112,255,0.25);background:rgba(79,112,255,0.07);}
+.card-body{padding:12px;}
+.cn{font-size:13px;font-weight:600;margin-bottom:2px;letter-spacing:-0.01em;}
+.cc{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;margin-bottom:8px;}
+.cr{display:flex;justify-content:space-between;font-size:9px;font-family:var(--mono);color:var(--t4);margin-bottom:2px;}
+.crv{color:var(--t3);}
+.cf{display:flex;align-items:center;justify-content:space-between;padding-top:9px;margin-top:9px;border-top:1px solid var(--rim);}
+.cp{font-size:15px;font-weight:600;}
+.cps{font-size:8px;font-family:var(--mono);color:var(--t4);margin-top:1px;}
+.btn-buy{padding:5px 12px;font-size:9px;font-family:var(--mono);color:var(--blue2);border:1px solid rgba(79,112,255,0.22);background:rgba(79,112,255,0.05);cursor:pointer;letter-spacing:0.06em;transition:all 0.15s;}
+.btn-buy:hover{background:rgba(79,112,255,0.14);border-color:rgba(79,112,255,0.5);}
+
+/* EMPTY */
+.empty{padding:64px 20px;text-align:center;background:var(--s1);grid-column:1/-1;animation:pgIn 0.3s ease;}
+.empty-face{font-family:var(--mono);font-size:28px;color:var(--t4);margin-bottom:14px;display:inline-block;animation:flt 4s ease-in-out infinite;}
+@keyframes flt{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-7px) rotate(-5deg);}}
+.empty-t{font-size:12px;font-family:var(--mono);color:var(--t3);letter-spacing:0.1em;margin-bottom:4px;}
+.empty-s{font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;}
+
+/* VP GRID */
+.vp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--rim);overflow-x:auto;}
+.vpc{background:var(--s1);padding:18px 14px;text-align:center;cursor:pointer;transition:background 0.15s;position:relative;overflow:hidden;}
+.vpc:hover{background:var(--s2);}
+.vpc::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue),var(--purple));transform:scaleX(0);transition:transform 0.2s;}
+.vpc:hover::before{transform:scaleX(1);}
+.va{font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-0.02em;}
+.vl{font-size:8px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.14em;margin-bottom:12px;margin-top:1px;}
+.vp-p{font-size:15px;font-weight:600;margin-bottom:2px;}
+.vs{font-size:8px;font-family:var(--mono);color:var(--t4);}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.9);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:20px;}
+.overlay.on{display:flex;}
+.modal{background:var(--s1);border:1px solid var(--rim2);width:100%;max-width:440px;animation:mIn 0.2s ease;}
+@keyframes mIn{from{opacity:0;transform:translateY(10px) scale(0.98);}to{opacity:1;transform:none;}}
+.mh{padding:16px 18px 12px;border-bottom:1px solid var(--rim);display:flex;justify-content:space-between;align-items:center;}
+.mt{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--t3);}
+.mc{background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;font-family:var(--mono);}
+.mc:hover{color:var(--t1);}
+.mb{padding:18px;}
+.mi{padding:10px 12px;background:rgba(79,112,255,0.05);border:1px solid rgba(79,112,255,0.1);margin-bottom:16px;}
+.mi-n{font-size:14px;font-weight:600;margin-bottom:3px;}
+.mi-p{font-size:11px;font-family:var(--mono);color:var(--blue2);}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.fl{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;}
+.fi{background:var(--s2);border:1px solid var(--rim2);color:var(--t1);padding:8px 10px;font-family:var(--sans);font-size:13px;outline:none;transition:border-color 0.15s;width:100%;}
+.fi:focus{border-color:rgba(79,112,255,0.4);}
+.fi::placeholder{color:var(--t4);}
+.fs{background:var(--s2);border:1px solid var(--rim2);color:var(--t1);padding:8px 10px;font-family:var(--sans);font-size:13px;outline:none;width:100%;}
+textarea.fi{resize:vertical;min-height:60px;}
+.btn-m{width:100%;padding:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--t1);background:rgba(79,112,255,0.1);border:1px solid rgba(79,112,255,0.28);cursor:pointer;transition:all 0.15s;margin-top:2px;}
+.btn-m:hover{background:rgba(79,112,255,0.2);border-color:rgba(79,112,255,0.55);}
+
+/* ORDER SUCCESS */
+.success-wrap{position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.94);backdrop-filter:blur(16px);}
+.success-wrap.on{display:flex;}
+.success-box{text-align:center;padding:44px 36px;background:var(--s1);border:1px solid var(--rim2);max-width:360px;width:100%;animation:mIn 0.3s ease;}
+.sicon{font-size:28px;margin-bottom:14px;animation:pop 0.4s 0.1s both cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+.stag{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.14em;margin-bottom:6px;}
+.stitle{font-size:18px;font-weight:600;margin-bottom:10px;}
+.snum{font-family:var(--mono);font-size:20px;color:var(--blue2);letter-spacing:0.1em;padding:10px;background:rgba(79,112,255,0.06);border:1px solid rgba(79,112,255,0.14);margin:12px 0;}
+.sdesc{font-size:11px;font-family:var(--mono);color:var(--t3);line-height:1.8;margin-bottom:18px;}
+.btn-s{padding:7px 18px;font-size:9px;font-family:var(--mono);letter-spacing:0.08em;color:var(--t3);background:none;border:1px solid var(--rim2);cursor:pointer;transition:all 0.15s;}
+.btn-s:hover{color:var(--t1);border-color:var(--rim3);}
+
+/* ADMIN */
+.admin-w{position:fixed;bottom:0;right:0;z-index:400;width:380px;max-height:82vh;background:rgba(5,5,5,0.97);border:1px solid var(--rim2);border-bottom:none;border-right:none;display:none;flex-direction:column;backdrop-filter:blur(20px);}
+.admin-w.on{display:flex;}
+.adh{padding:11px 14px;border-bottom:1px solid var(--rim);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.adt{font-size:9px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.14em;}
+.ads{font-size:9px;font-family:var(--mono);color:var(--t4);}
+.adb-row{display:flex;border-bottom:1px solid var(--rim);flex-shrink:0;}
+.atb{flex:1;padding:8px 2px;font-size:9px;font-family:var(--mono);color:var(--t4);background:none;border:none;border-right:1px solid var(--rim);cursor:pointer;letter-spacing:0.06em;transition:color 0.15s;}
+.atb:last-child{border-right:none;}
+.atb:hover{color:var(--t2);}
+.atb.on{color:var(--blue2);background:rgba(79,112,255,0.04);}
+.adbody{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;}
+.asec{display:none;flex-direction:column;gap:7px;}
+.asec.on{display:flex;}
+.arow{background:var(--s2);border:1px solid var(--rim);padding:7px 9px;display:flex;align-items:center;gap:7px;}
+.arow-i{flex:1;min-width:0;}
+.arow-n{font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.arow-m{font-size:9px;font-family:var(--mono);color:var(--t4);margin-top:1px;}
+.aacts{display:flex;gap:3px;flex-shrink:0;}
+.ab{padding:3px 6px;font-size:8px;font-family:var(--mono);border:1px solid var(--rim2);background:none;color:var(--t3);cursor:pointer;transition:all 0.12s;letter-spacing:0.04em;}
+.ab:hover{color:var(--t1);}
+.ab.e{color:var(--blue2);border-color:rgba(79,112,255,0.2);}
+.ab.sv{color:var(--green);border-color:rgba(34,197,94,0.18);}
+.ab.sv.sold{color:var(--red);border-color:rgba(239,68,68,0.15);}
+.ab.dl{color:var(--red);border-color:rgba(239,68,68,0.1);}
+.orow{background:var(--s2);border:1px solid var(--rim);padding:9px 11px;}
+.orh{display:flex;justify-content:space-between;margin-bottom:5px;}
+.orn{font-size:9px;font-family:var(--mono);color:var(--blue2);}
+.ort{font-size:8px;font-family:var(--mono);color:var(--t4);}
+.ori{font-size:12px;font-weight:500;margin-bottom:3px;}
+.ord{font-size:9px;font-family:var(--mono);color:var(--t3);line-height:1.9;}
+
+/* REPS */
+.reps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--rim);}
+.rc{background:var(--s1);padding:18px;}
+.rstars{display:flex;gap:2px;margin-bottom:8px;}
+.rstar{color:var(--gold);font-size:11px;}
+.rtxt{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:10px;font-style:italic;}
+.rfrom{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;}
+.rfrom span{color:var(--t3);}
+
+/* ABOUT */
+.about-hero{padding:32px 28px;border:1px solid var(--rim);margin-bottom:1px;background:var(--s1);}
+.about-name{font-size:28px;font-weight:700;letter-spacing:-0.02em;margin-bottom:7px;}
+.about-bio{font-size:13px;font-family:var(--mono);color:var(--t3);line-height:1.9;max-width:500px;}
+.srow{display:flex;gap:22px;margin-top:18px;}
+.sblk{border-left:2px solid var(--blue);padding-left:12px;}
+.sn{font-size:22px;font-weight:700;}
+.sl{font-size:8px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-top:2px;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rim);max-width:700px;}
+.abl{background:var(--s1);padding:22px 20px;}
+.albl{font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.12em;margin-bottom:8px;}
+.aval{font-size:13px;color:var(--t2);line-height:1.8;}
+.aval strong{color:var(--t1);font-weight:600;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:700;padding:9px 18px;background:var(--s2);border:1px solid var(--rim2);font-size:10px;font-family:var(--mono);color:var(--t2);letter-spacing:0.06em;opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap;}
+.toast.on{opacity:1;}
+
+@keyframes cIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.grid .card,.vp-grid .vpc{animation:cIn 0.3s ease both;}
+.grid .card:nth-child(1),.vp-grid .vpc:nth-child(1){animation-delay:.04s;}
+.grid .card:nth-child(2),.vp-grid .vpc:nth-child(2){animation-delay:.08s;}
+.grid .card:nth-child(3),.vp-grid .vpc:nth-child(3){animation-delay:.12s;}
+.grid .card:nth-child(4),.vp-grid .vpc:nth-child(4){animation-delay:.16s;}
+.grid .card:nth-child(5),.vp-grid .vpc:nth-child(5){animation-delay:.20s;}
+.grid .card:nth-child(6),.vp-grid .vpc:nth-child(6){animation-delay:.24s;}
+</style>
+</head>
+<body>
+
+
+
+<!-- INTRO SCREEN -->
+<div id="intro-screen" style="position:fixed;inset:0;z-index:9999;background:#000;overflow:hidden;">
+  <canvas id="intro-canvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  <div id="intro-text" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.4s ease;">
+    <div style="font-family:'Space Mono',monospace;font-size:clamp(28px,6vw,64px);font-weight:700;letter-spacing:0.08em;background:linear-gradient(135deg,#818cf8 0%,#a78bfa 35%,#c084fc 65%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">VOID MARKET</div>
+    <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.26em;color:rgba(129,140,248,0.9);margin-top:10px;">VALORANT SKIN MARKETPLACE</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var screen = document.getElementById('intro-screen');
+  var canvas = document.getElementById('intro-canvas');
+  var txt    = document.getElementById('intro-text');
+  var ctx    = canvas.getContext('2d');
+  var W, H, cx, cy;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cx = W/2; cy = H/2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // --- particles ---
+  var NUM = 340;
+  var particles = [];
+  function mkParticle(i){
+    var angle  = Math.random() * Math.PI * 2;
+    var radius = 80 + Math.random() * Math.max(W, H) * 0.6;
+    return {
+      x: cx + Math.cos(angle) * radius,
+      y: cy + Math.sin(angle) * radius,
+      angle: angle,
+      radius: radius,
+      speed: 0.3 + Math.random() * 0.8,
+      size:  0.5 + Math.random() * 2.0,
+      alpha: 0.3 + Math.random() * 0.7,
+      color: Math.random() < 0.45
+        ? 'rgba(139,92,246,' : (Math.random() < 0.5
+        ? 'rgba(99,102,241,' : 'rgba(192,132,252,'),
+      trail: []
+    };
+  }
+  for(var i=0;i<NUM;i++) particles.push(mkParticle(i));
+
+  // phases: 0=suck in, 1=hold, 2=explode, 3=reveal
+  var phase = 0;
+  var t0 = performance.now();
+  var SUCK_DUR   = 2400;
+  var HOLD_DUR   = 500;
+  var EXPLODE_DUR= 800;
+
+  var flashAlpha = 0;
+  var logoAlpha = 0;
+  var burst = [];
+  var discAngle = 0;
+
+  function mkBurst(){
+    burst = [];
+    for(var i=0;i<220;i++){
+      var a = Math.random()*Math.PI*2;
+      var spd = 2 + Math.random()*20;
+      burst.push({
+        x:cx, y:cy,
+        vx: Math.cos(a)*spd,
+        vy: Math.sin(a)*spd,
+        size: 0.5+Math.random()*3.0,
+        alpha: 0.8+Math.random()*0.2,
+        color: Math.random()<0.45
+          ?'rgba(192,132,252,': Math.random()<0.5 ? 'rgba(99,102,241,':'rgba(139,92,246,',
+        decay: 0.010+Math.random()*0.022
+      });
+    }
+  }
+
+  function easeIn(t){ return t*t*t; }
+  function easeOut(t){ return 1-Math.pow(1-t,3); }
+  function easeInOut(t){ return t<0.5?4*t*t*t:(1-Math.pow(-2*t+2,3)/2); }
+
+  var done = false;
+  var raf;
+
+  function drawInterstellarBH(cx,cy,ehR,pull,elapsed){
+    // ── WORMHOLE-STYLE OUTER GLOW (deep purple nebula) ──
+    var nebulaGrad = ctx.createRadialGradient(cx,cy,ehR*0.5,cx,cy,ehR*8);
+    nebulaGrad.addColorStop(0,'rgba(0,0,0,0)');
+    nebulaGrad.addColorStop(0.15,'rgba(88,28,135,'+(pull*0.35)+')');
+    nebulaGrad.addColorStop(0.4,'rgba(59,7,100,'+(pull*0.22)+')');
+    nebulaGrad.addColorStop(0.7,'rgba(20,4,40,'+(pull*0.1)+')');
+    nebulaGrad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath(); ctx.arc(cx,cy,ehR*8,0,Math.PI*2);
+    ctx.fillStyle=nebulaGrad; ctx.fill();
+
+    // ── INTERSTELLAR ACCRETION DISC — tilted, wide, bright ──
+    // The disc curves ABOVE and BELOW the black hole (like Interstellar)
+    // Draw as rotating ellipses with varying tilt
+    discAngle += 0.0005;
+    var discLayers = [
+      {rMul:5.5, tiltY:0.12, alpha:pull*0.28, c1:'rgba(216,180,254,', c2:'rgba(147,51,234,'},
+      {rMul:3.8, tiltY:0.16, alpha:pull*0.35, c1:'rgba(192,132,252,', c2:'rgba(109,40,217,'},
+      {rMul:2.6, tiltY:0.20, alpha:pull*0.40, c1:'rgba(233,213,255,', c2:'rgba(167,139,250,'},
+      {rMul:1.9, tiltY:0.24, alpha:pull*0.38, c1:'rgba(255,240,255,', c2:'rgba(196,148,255,'},
+    ];
+    discLayers.forEach(function(dl,idx){
+      var R = ehR * dl.rMul;
+      // top half of disc (bends over BH)
+      ctx.save();
+      ctx.translate(cx,cy);
+      ctx.rotate(discAngle*(idx%2?1:-1)*0.3);
+      ctx.scale(1, dl.tiltY);
+      var g = ctx.createRadialGradient(0,0,ehR*0.9,0,0,R);
+      g.addColorStop(0,'rgba(0,0,0,0)');
+      g.addColorStop(0.2, dl.c1+dl.alpha+')');
+      g.addColorStop(0.55, dl.c2+(dl.alpha*0.6)+')');
+      g.addColorStop(0.85, dl.c2+(dl.alpha*0.2)+')');
+      g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath(); ctx.arc(0,0,R,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+      ctx.restore();
+    });
+
+    // ── PHOTON SPHERE — bright thin glowing ring (Interstellar signature) ──
+    // Multiple concentric bright rings close to the event horizon
+    var photonRings = [
+      {r:1.50, lw:3.5, alpha:pull*0.90, c:'rgba(233,213,255,'},
+      {r:1.42, lw:2.2, alpha:pull*0.70, c:'rgba(216,180,254,'},
+      {r:1.35, lw:1.4, alpha:pull*0.55, c:'rgba(192,132,252,'},
+      {r:1.62, lw:0.8, alpha:pull*0.30, c:'rgba(255,255,255,'},
+      {r:1.72, lw:0.5, alpha:pull*0.18, c:'rgba(192,132,252,'},
+    ];
+    photonRings.forEach(function(pr){
+      ctx.save();
+      ctx.translate(cx,cy);
+      // slight tilt for Interstellar feel
+      ctx.scale(1, 0.38);
+      ctx.beginPath(); ctx.arc(0,0,ehR*pr.r,0,Math.PI*2);
+      ctx.strokeStyle = pr.c+pr.alpha+')';
+      ctx.lineWidth = pr.lw;
+      ctx.stroke();
+      ctx.restore();
+    });
+
+    // ── GRAVITATIONAL LENSING — ring of light bent around event horizon ──
+    var lensR = ehR * 1.55;
+    var lensGrad = ctx.createRadialGradient(cx,cy,ehR*0.9,cx,cy,lensR*1.3);
+    lensGrad.addColorStop(0,'rgba(0,0,0,0)');
+    lensGrad.addColorStop(0.3,'rgba(233,213,255,'+(pull*0.55)+')');
+    lensGrad.addColorStop(0.55,'rgba(192,132,252,'+(pull*0.35)+')');
+    lensGrad.addColorStop(0.75,'rgba(139,92,246,'+(pull*0.15)+')');
+    lensGrad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath(); ctx.arc(cx,cy,lensR*1.3,0,Math.PI*2);
+    ctx.fillStyle=lensGrad; ctx.fill();
+
+    // ── EVENT HORIZON — perfect black circle ──
+    ctx.beginPath(); ctx.arc(cx,cy,ehR,0,Math.PI*2);
+    ctx.fillStyle='#000'; ctx.fill();
+
+    // ── INNER SHADOW EDGE — soft purple edge of BH ──
+    var edgeGrad = ctx.createRadialGradient(cx,cy,ehR*0.85,cx,cy,ehR*1.05);
+    edgeGrad.addColorStop(0,'rgba(0,0,0,0)');
+    edgeGrad.addColorStop(0.6,'rgba(88,28,135,'+(pull*0.4)+')');
+    edgeGrad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath(); ctx.arc(cx,cy,ehR*1.05,0,Math.PI*2);
+    ctx.fillStyle=edgeGrad; ctx.fill();
+
+    // draw black center again to keep it pure black
+    ctx.beginPath(); ctx.arc(cx,cy,ehR*0.98,0,Math.PI*2);
+    ctx.fillStyle='#000'; ctx.fill();
+  }
+
+  function draw(now){
+    if(done) return;
+    raf = requestAnimationFrame(draw);
+    var elapsed = now - t0;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#000';
+    ctx.fillRect(0,0,W,H);
+
+    if(phase===0){
+      // --- SUCK IN ---
+      var p = Math.min(elapsed/SUCK_DUR, 1);
+      var pull = easeIn(p);
+      var ehR = 4 + pull*pull*80;
+
+      // ── PARTICLES spiral in ──
+      for(var i=0;i<particles.length;i++){
+        var pt = particles[i];
+        pt.angle += (0.005 + pull*0.065) * pt.speed;
+        pt.radius *= (1 - 0.006*pull*pt.speed - pull*0.004);
+        pt.x = cx + Math.cos(pt.angle)*pt.radius;
+        pt.y = cy + Math.sin(pt.angle)*pt.radius;
+        pt.trail.push({x:pt.x,y:pt.y});
+        if(pt.trail.length>18) pt.trail.shift();
+        var dist = pt.radius / (Math.max(W,H)*0.3);
+        var trailLen = pt.trail.length;
+        for(var j=1;j<trailLen;j++){
+          var frac = j/trailLen;
+          var ta = frac*pt.alpha*(1-pull*0.35)*0.55;
+          ctx.beginPath();
+          ctx.moveTo(pt.trail[j-1].x,pt.trail[j-1].y);
+          ctx.lineTo(pt.trail[j].x,pt.trail[j].y);
+          if(dist<0.15) ctx.strokeStyle='rgba(233,213,255,'+ta+')';
+          else if(dist<0.35) ctx.strokeStyle='rgba(192,132,252,'+ta+')';
+          else ctx.strokeStyle=pt.color+ta+')';
+          ctx.lineWidth = pt.size*(frac*0.8+0.2);
+          ctx.stroke();
+        }
+        if(pt.radius>ehR+2){
+          var da = pt.alpha*(1-pull*0.3);
+          ctx.beginPath();
+          ctx.arc(pt.x,pt.y,pt.size*(1-pull*0.2),0,Math.PI*2);
+          ctx.fillStyle=pt.color+da+')';
+          ctx.fill();
+        }
+      }
+
+      drawInterstellarBH(cx,cy,ehR,pull,elapsed);
+
+      if(p>=1){ phase=1; t0=now; }
+
+    } else if(phase===1){
+      // --- HOLD / COMPRESS ---
+      var p = Math.min(elapsed/HOLD_DUR,1);
+      var pulse = Math.sin(elapsed*0.02)*0.05;
+      var ehR = 80 + pulse*10;
+
+      // residual compressed particles
+      for(var i=0;i<particles.length;i++){
+        var pt=particles[i];
+        pt.angle += 0.04*pt.speed;
+        pt.radius = Math.max(pt.radius*0.9, 1);
+        pt.x = cx+Math.cos(pt.angle)*pt.radius;
+        pt.y = cy+Math.sin(pt.angle)*pt.radius;
+        var da=pt.alpha*(1-p)*0.3;
+        if(da<0.01) continue;
+        ctx.beginPath(); ctx.arc(pt.x,pt.y,pt.size*0.4,0,Math.PI*2);
+        ctx.fillStyle='rgba(192,132,252,'+da+')'; ctx.fill();
+      }
+
+      drawInterstellarBH(cx,cy,ehR,1.0,elapsed);
+
+      if(p>=1){ mkBurst(); phase=2; t0=now; }
+
+    } else if(phase===2){
+      // --- EXPLODE ---
+      var p = Math.min(elapsed/EXPLODE_DUR,1);
+      var ep = easeOut(p);
+
+      // purple flash at start
+      flashAlpha = Math.max(0, 0.85*(1 - p*3.5));
+      if(flashAlpha>0){
+        ctx.fillStyle='rgba(139,92,246,'+flashAlpha+')';
+        ctx.fillRect(0,0,W,H);
+      }
+
+      // shockwave rings — purple
+      var sMax=Math.max(W,H);
+      [[0.85,'rgba(216,180,254,'],[0.65,'rgba(99,102,241,'],[0.45,'rgba(139,92,246,']].forEach(function(rDef,ri){
+        if(p<ri*0.08) return;
+        var rp=Math.max(0,(p-ri*0.08)/(1-ri*0.08));
+        var rep=easeOut(rp);
+        var rA=Math.max(0,0.65*(1-rp));
+        ctx.beginPath();
+        ctx.arc(cx,cy,rep*sMax*rDef[0],0,Math.PI*2);
+        ctx.strokeStyle=rDef[1]+rA+')';
+        ctx.lineWidth = (3-ri*0.8)*(1-rep)+0.3;
+        ctx.stroke();
+      });
+
+      // burst particles
+      for(var i=0;i<burst.length;i++){
+        var b=burst[i];
+        b.x+=b.vx*(1+ep*2.5);
+        b.y+=b.vy*(1+ep*2.5);
+        b.alpha=Math.max(0,b.alpha-b.decay);
+        if(b.alpha<0.01) continue;
+        ctx.beginPath();
+        ctx.arc(b.x,b.y,b.size*(1+ep*0.8),0,Math.PI*2);
+        ctx.fillStyle=b.color+b.alpha+')';
+        ctx.fill();
+      }
+
+      // logo fades in mid-explode
+      logoAlpha = Math.max(0,(p-0.35)/0.65);
+      txt.style.opacity = logoAlpha;
+
+      if(p>=1){ phase=3; t0=now; }
+
+    } else if(phase===3){
+      // --- REVEAL + SLOW FADE OUT ---
+      var REVEAL_DUR = 2000;
+      var p = Math.min(elapsed/REVEAL_DUR, 1);
+
+      // remaining burst particles drift
+      for(var i=0;i<burst.length;i++){
+        var b=burst[i];
+        b.x+=b.vx*0.15; b.y+=b.vy*0.15;
+        b.vx*=0.97; b.vy*=0.97;
+        b.alpha=Math.max(0,b.alpha-b.decay*0.5);
+        if(b.alpha<0.01) continue;
+        ctx.beginPath(); ctx.arc(b.x,b.y,b.size,0,Math.PI*2);
+        ctx.fillStyle=b.color+b.alpha+')'; ctx.fill();
+      }
+
+      // smooth fade to black — starts at 25%, done at 100%
+      var fadeP = Math.max(0,(p-0.25)/0.75);
+      ctx.fillStyle='rgba(0,0,0,'+easeInOut(fadeP)+')';
+      ctx.fillRect(0,0,W,H);
+
+      // text lingers then fades
+      var textFadeP = Math.max(0,(p-0.5)/0.5);
+      txt.style.opacity = Math.max(0, 1 - easeOut(textFadeP));
+      txt.style.transition = 'none';
+
+      if(p>=1){
+        done=true;
+        cancelAnimationFrame(raf);
+        // Instant clean reveal — no double explosion delay
+        screen.style.display='none';
+        // skip startSpitOut to avoid delayed re-explosion effect
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+
+  // --- SYNTH SOUNDS (purple-themed, deeper, more cosmic) ---
+  (function(){
+    var AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if(!AudioCtx) return;
+    var ac = new AudioCtx();
+
+    function ramp(param, from, to, startT, dur){
+      param.setValueAtTime(from, startT);
+      param.linearRampToValueAtTime(to, startT+dur);
+    }
+    function expRamp(param, from, to, startT, dur){
+      param.setValueAtTime(Math.max(from,0.0001), startT);
+      param.exponentialRampToValueAtTime(Math.max(to,0.0001), startT+dur);
+    }
+
+    var now = ac.currentTime;
+
+    // 1. DEEP VOID RUMBLE — very low, massive gravitational presence
+    (function(){
+      var osc=ac.createOscillator(), gain=ac.createGain(), filt=ac.createBiquadFilter();
+      filt.type='lowpass'; filt.frequency.setValueAtTime(60,now);
+      ramp(filt.frequency,60,200,now,2.4);
+      osc.type='sawtooth';
+      osc.frequency.setValueAtTime(22,now);
+      expRamp(osc.frequency,22,44,now,2.4);
+      gain.gain.setValueAtTime(0,now);
+      ramp(gain.gain,0,0.22,now,0.8);
+      ramp(gain.gain,0.22,0.32,now+0.8,1.6);
+      ramp(gain.gain,0.32,0,now+2.2,0.25);
+      osc.connect(filt);filt.connect(gain);gain.connect(ac.destination);
+      osc.start(now);osc.stop(now+2.6);
+    })();
+
+    // 2. COSMIC WHISTLE — pitch spirals inward, haunting
+    (function(){
+      var osc=ac.createOscillator(), gain=ac.createGain(), filt=ac.createBiquadFilter();
+      filt.type='bandpass'; filt.frequency.setValueAtTime(2200,now); filt.Q.value=10;
+      osc.type='sine';
+      osc.frequency.setValueAtTime(2200,now);
+      expRamp(osc.frequency,2200,65,now,2.3);
+      gain.gain.setValueAtTime(0,now);
+      ramp(gain.gain,0,0.06,now,0.4);
+      ramp(gain.gain,0.06,0.14,now+0.4,1.6);
+      ramp(gain.gain,0.14,0,now+2.1,0.25);
+      osc.connect(filt);filt.connect(gain);gain.connect(ac.destination);
+      osc.start(now);osc.stop(now+2.5);
+    })();
+
+    // 3. QUANTUM STATIC — warping spacetime crackle
+    (function(){
+      var bufSize=Math.floor(ac.sampleRate*2.4);
+      var buf=ac.createBuffer(1,bufSize,ac.sampleRate);
+      var data=buf.getChannelData(0);
+      for(var i=0;i<bufSize;i++) data[i]=(Math.random()*2-1)*0.28;
+      var src=ac.createBufferSource(), filt=ac.createBiquadFilter(), gain=ac.createGain();
+      filt.type='bandpass'; filt.frequency.value=700; filt.Q.value=0.6;
+      src.buffer=buf;
+      gain.gain.setValueAtTime(0,now);
+      ramp(gain.gain,0,0.018,now,0.5);
+      ramp(gain.gain,0.018,0.042,now+0.5,1.6);
+      ramp(gain.gain,0.042,0,now+2.1,0.3);
+      src.connect(filt);filt.connect(gain);gain.connect(ac.destination);
+      src.start(now);src.stop(now+2.5);
+    })();
+
+    // 4. PURPLE RESONANCE — eerie harmonic swirl
+    (function(){
+      [110,165,220].forEach(function(f,idx){
+        var osc=ac.createOscillator(), gain=ac.createGain();
+        var del=idx*0.15;
+        osc.type='sine';
+        osc.frequency.setValueAtTime(f,now+del);
+        ramp(osc.frequency,f,f*0.7,now+del,2.2);
+        gain.gain.setValueAtTime(0,now+del);
+        ramp(gain.gain,0,0.035,now+del,0.5);
+        expRamp(gain.gain,0.035,0.0001,now+del+0.5,2.0);
+        osc.connect(gain);gain.connect(ac.destination);
+        osc.start(now+del);osc.stop(now+del+2.6);
+      });
+    })();
+
+    var blastAt = now + 2.7;
+
+    // 5. IMPACT THUD — massive low punch
+    (function(){
+      var osc=ac.createOscillator(), gain=ac.createGain();
+      osc.type='sine';
+      osc.frequency.setValueAtTime(100,blastAt);
+      expRamp(osc.frequency,100,22,blastAt,0.6);
+      gain.gain.setValueAtTime(0,blastAt);
+      ramp(gain.gain,0,0.65,blastAt,0.01);
+      expRamp(gain.gain,0.65,0.0001,blastAt+0.01,0.9);
+      osc.connect(gain);gain.connect(ac.destination);
+      osc.start(blastAt);osc.stop(blastAt+1.0);
+    })();
+
+    // 6. SHOCKWAVE SNAP — crackling transient
+    (function(){
+      var bufSize=Math.floor(ac.sampleRate*0.18);
+      var buf=ac.createBuffer(1,bufSize,ac.sampleRate);
+      var data=buf.getChannelData(0);
+      for(var i=0;i<bufSize;i++){
+        var env=Math.exp(-i/(bufSize*0.1));
+        data[i]=(Math.random()*2-1)*env;
+      }
+      var src=ac.createBufferSource(), filt=ac.createBiquadFilter(), gain=ac.createGain();
+      filt.type='bandpass'; filt.frequency.value=3200; filt.Q.value=0.3;
+      src.buffer=buf;
+      gain.gain.setValueAtTime(0.42,blastAt);
+      expRamp(gain.gain,0.42,0.0001,blastAt+0.15,0.12);
+      src.connect(filt);filt.connect(gain);gain.connect(ac.destination);
+      src.start(blastAt);
+    })();
+
+    // 7. VOID REVEAL CHORD — mystical purple arpegggio
+    (function(){
+      var revealAt=blastAt+0.25;
+      [196,247,294,392,494,587].forEach(function(f,idx){
+        var osc=ac.createOscillator(), gain=ac.createGain();
+        var del=idx*0.06;
+        osc.type='sine'; osc.frequency.setValueAtTime(f,revealAt+del);
+        gain.gain.setValueAtTime(0,revealAt+del);
+        ramp(gain.gain,0,0.05,revealAt+del,0.15);
+        expRamp(gain.gain,0.05,0.0001,revealAt+del+0.15,2.2);
+        osc.connect(gain);gain.connect(ac.destination);
+        osc.start(revealAt+del);osc.stop(revealAt+del+2.5);
+      });
+    })();
+
+    // 8. REVERB TAIL — deep resonant fade
+    (function(){
+      var osc=ac.createOscillator(), gain=ac.createGain();
+      osc.type='sine';
+      osc.frequency.setValueAtTime(44,blastAt+0.06);
+      ramp(osc.frequency,44,33,blastAt+0.06,3.0);
+      gain.gain.setValueAtTime(0,blastAt+0.06);
+      ramp(gain.gain,0,0.16,blastAt+0.06,0.09);
+      expRamp(gain.gain,0.16,0.0001,blastAt+0.16,3.2);
+      osc.connect(gain);gain.connect(ac.destination);
+      osc.start(blastAt+0.06);osc.stop(blastAt+3.5);
+    })();
+  })();
+
+})();
+</script>
+
+<!-- SPIT-OUT OVERLAY -->
+<canvas id="spitout-canvas" style="position:fixed;inset:0;z-index:9998;width:100%;height:100%;pointer-events:none;display:none;"></canvas>
+<script>
+function startSpitOut(){
+  var canvas = document.getElementById('spitout-canvas');
+  canvas.style.display = 'block';
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var cx = W/2, cy = H/2;
+
+  // burst particles that fly outward
+  var particles = [];
+  for(var i=0;i<220;i++){
+    var angle = Math.random()*Math.PI*2;
+    var spd   = 3 + Math.random()*22;
+    var col   = Math.random()<0.55 ? 'rgba(79,112,255,' :
+                Math.random()<0.5  ? 'rgba(139,92,246,' : 'rgba(180,200,255,';
+    particles.push({
+      x:cx, y:cy,
+      vx: Math.cos(angle)*spd,
+      vy: Math.sin(angle)*spd,
+      size: 0.6 + Math.random()*2.8,
+      alpha: 0.7 + Math.random()*0.3,
+      decay: 0.008 + Math.random()*0.018,
+      col: col
+    });
+  }
+
+  var TOTAL = 1600; // ms for full spit-out
+  var t0 = null;
+  var maxR = Math.sqrt(cx*cx + cy*cy) + 20; // diagonal to corner
+
+  function easeOut(t){ return 1 - Math.pow(1-t,3); }
+
+  // shockwave rings state
+  var rings = [
+    { delay:0,    speed:1.0, col:'rgba(79,112,255,',  lw:2.5  },
+    { delay:0.08, speed:0.7, col:'rgba(139,92,246,',  lw:1.5  },
+    { delay:0.18, speed:0.5, col:'rgba(180,200,255,', lw:0.8  }
+  ];
+
+  function draw(now){
+    if(!t0) t0 = now;
+    var elapsed = now - t0;
+    var p = Math.min(elapsed/TOTAL, 1);
+    var ep = easeOut(p);
+
+    ctx.clearRect(0,0,W,H);
+
+    // radial wipe: black circle shrinks inward, revealing site
+    // starts at maxR (full black cover), shrinks to 0
+    var maskR = maxR * (1 - ep);
+
+    // fill everything black first
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0,0,W,H);
+
+    // cut out a growing circle to reveal site beneath
+    // We use composite: draw solid black rect, then erase a circle
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(cx, cy, Math.max(0, maxR - maskR), 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // shockwave rings expand outward
+    rings.forEach(function(r){
+      var rp = Math.max(0, (p - r.delay) / (1 - r.delay));
+      if(rp <= 0) return;
+      var rep = easeOut(rp);
+      var ringR = rep * maxR * r.speed;
+      var alpha = Math.max(0, 0.75*(1 - rp));
+      ctx.beginPath();
+      ctx.arc(cx, cy, ringR, 0, Math.PI*2);
+      ctx.strokeStyle = r.col + alpha + ')';
+      ctx.lineWidth = r.lw * (1 - rep) + 0.3;
+      ctx.stroke();
+    });
+
+    // burst particles fly out from center
+    particles.forEach(function(pt){
+      if(p > 0){
+        pt.x += pt.vx * (1 + ep * 1.5);
+        pt.y += pt.vy * (1 + ep * 1.5);
+        pt.vx *= 0.97; pt.vy *= 0.97;
+        pt.alpha = Math.max(0, pt.alpha - pt.decay);
+      }
+      if(pt.alpha < 0.01) return;
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, pt.size * (1 + ep * 0.5), 0, Math.PI*2);
+      ctx.fillStyle = pt.col + pt.alpha + ')';
+      ctx.fill();
+    });
+
+    // brief flash at very start
+    if(p < 0.07){
+      var flashA = (0.07 - p) / 0.07 * 0.6;
+      ctx.fillStyle = 'rgba(255,255,255,' + flashA + ')';
+      ctx.fillRect(0,0,W,H);
+    }
+
+    if(p < 1){
+      requestAnimationFrame(draw);
+    } else {
+      canvas.style.display = 'none';
+    }
+  }
+
+  requestAnimationFrame(draw);
+
+  // spit-out sound: reverse whoosh + bright shimmer
+  (function(){
+    var AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if(!AudioCtx) return;
+    var ac = new AudioCtx();
+    var now = ac.currentTime;
+
+    function ramp(p,f,t,s,d){ p.setValueAtTime(f,s); p.linearRampToValueAtTime(t,s+d); }
+    function expR(p,f,t,s,d){ p.setValueAtTime(Math.max(f,0.0001),s); p.exponentialRampToValueAtTime(Math.max(t,0.0001),s+d); }
+
+    // rising whoosh — pitch goes UP (reverse of suck-in)
+    (function(){
+      var osc=ac.createOscillator(), gain=ac.createGain(), filt=ac.createBiquadFilter();
+      filt.type='bandpass'; filt.frequency.setValueAtTime(80,now); filt.Q.value=3;
+      ramp(filt.frequency,80,2200,now,1.2);
+      osc.type='sawtooth';
+      osc.frequency.setValueAtTime(38,now);
+      expR(osc.frequency,38,900,now,1.1);
+      gain.gain.setValueAtTime(0,now);
+      ramp(gain.gain,0,0.22,now,0.05);
+      expR(gain.gain,0.22,0.0001,now+0.05,1.3);
+      osc.connect(filt); filt.connect(gain); gain.connect(ac.destination);
+      osc.start(now); osc.stop(now+1.5);
+    })();
+
+    // bright open chord — major feel, airy
+    [261,392,523,659,784].forEach(function(f,i){
+      var osc=ac.createOscillator(), gain=ac.createGain();
+      var del=i*0.04;
+      osc.type='sine';
+      osc.frequency.setValueAtTime(f,now+del);
+      gain.gain.setValueAtTime(0,now+del);
+      ramp(gain.gain,0,0.055,now+del,0.12);
+      expR(gain.gain,0.055,0.0001,now+del+0.12,1.5);
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.start(now+del); osc.stop(now+del+1.8);
+    });
+
+    // soft high shimmer tail
+    (function(){
+      var osc=ac.createOscillator(), gain=ac.createGain();
+      osc.type='sine'; osc.frequency.setValueAtTime(1760,now+0.1);
+      expR(osc.frequency,1760,880,now+0.1,0.9);
+      gain.gain.setValueAtTime(0,now+0.1);
+      ramp(gain.gain,0,0.04,now+0.1,0.08);
+      expR(gain.gain,0.04,0.0001,now+0.18,1.1);
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.start(now+0.1); osc.stop(now+1.4);
+    })();
+  })();
+}
+</script>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+<nav>
+  <a class="logo" href="#" onclick="window.showPage('home');return false;"><span style="letter-spacing:0.06em;">VOID</span></a>
+  <div class="nav-mid">
+    <button class="nb on" onclick="showPage('home');setNav(this);">SHOP</button>
+    <button class="nb" onclick="showPage('reps');setNav(this);">REPS</button>
+    <button class="nb" onclick="showPage('about');setNav(this);">ABOUT</button><button class="nb" onclick="showPage('track');setNav(this);">TRACK</button>
+  </div>
+  
+</nav>
+
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <div class="hero">
+    <div class="hero-eyebrow">VALORANT SKIN MARKETPLACE</div>
+    <div class="hero-h"><span class="d">THE </span><span class="l">VOID</span><br><span class="d">MARKET</span></div>
+    <div class="hero-p" id="hero-sub-txt">Premium Valorant skin accounts.<br>Verified &amp; trusted. Updated daily.</div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n" id="hs-list">0</div><div class="hstat-l">LISTINGS</div></div>
+      <div class="hstat"><div class="hstat-n" id="hs-sold">0</div><div class="hstat-l">SOLD</div></div>
+      <div class="hstat"><div class="hstat-n" id="hs-reps">0</div><div class="hstat-l">REVIEWS</div></div>
+    </div>
+  </div>
+
+  <!-- NIGHT MARKET -->
+  <div class="sec" id="night-market-sec" style="display:none;">
+    <div class="sec-head">
+      <div class="sec-t">NIGHT MARKET</div>
+      <div class="sec-r">SPECIAL OFFERS</div>
+    </div>
+    <div class="grid" id="night-grid"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-t">LIMITED SHOP</div>
+      <div id="limited-timer-display" class="sec-r">AVAILABLE FOR LIMITED TIME</div>
+    </div>
+    <div id="limited-timer-bar" class="timer-bar" style="display:none;">
+      <span class="timer-bar-label">EXPIRES IN</span>
+      <div class="tmr">
+        <div class="tblk"><div class="tnum" id="t-h">00</div><div class="tlbl">HRS</div></div>
+        <div class="tsep">:</div>
+        <div class="tblk"><div class="tnum" id="t-m">00</div><div class="tlbl">MIN</div></div>
+        <div class="tsep">:</div>
+        <div class="tblk"><div class="tnum" id="t-s">00</div><div class="tlbl">SEC</div></div>
+      </div>
+    </div>
+    <div class="grid" id="daily-grid"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-t">SKIN SHOP</div><div class="sec-r">ALWAYS AVAILABLE</div></div>
+    <div class="grid" id="shop-grid"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-t">BUNDLE SHOP</div><div class="sec-r">MULTI-SKIN ACCOUNTS</div></div>
+    <div class="grid" id="bundles-grid"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-t">VP SHOP</div><div class="sec-r">TURKISH REGION RATES</div></div>
+    <div class="vp-grid">
+      <div class="vpc" onclick="openVP(375,800)"><div class="va">375</div><div class="vl">VALORANT POINTS</div><div class="vp-p">PKR 800</div><div class="vs">Turkish Region</div></div>
+      <div class="vpc" onclick="openVP(825,1700)"><div class="va">825</div><div class="vl">VALORANT POINTS</div><div class="vp-p">PKR 1,700</div><div class="vs">Turkish Region</div></div>
+      <div class="vpc" onclick="openVP(1700,3350)"><div class="va">1,700</div><div class="vl">VALORANT POINTS</div><div class="vp-p">PKR 3,350</div><div class="vs">Turkish Region</div></div>
+      <div class="vpc" onclick="openVP(2925,5600)"><div class="va">2,925</div><div class="vl">VALORANT POINTS</div><div class="vp-p">PKR 5,600</div><div class="vs">Turkish Region</div></div>
+      <div class="vpc" onclick="openVP(4325,8200)"><div class="va">4,325</div><div class="vl">VALORANT POINTS</div><div class="vp-p">PKR 8,200</div><div class="vs">Turkish Region</div></div>
+      <div class="vpc" onclick="openVP(8900,16000)"><div class="va">8,900</div><div class="vl">VALORANT POINTS</div><div class="vp-p">PKR 16,000</div><div class="vs">Turkish Region</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- REPS -->
+<div class="pg" id="pg-reps">
+  <div class="sec">
+    <div class="sec-head"><div class="sec-t">REPUTATION</div><div class="sec-r" id="rep-count">0 REVIEWS</div></div>
+    <div class="reps-grid" id="reps-grid"></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="pg" id="pg-about">
+  <div class="sec">
+    <div class="about-hero">
+      <div class="about-name" id="about-name-txt">VOID MARKET</div>
+      <div class="about-bio" id="about-bio-txt">Trusted Valorant skin account seller. We check shops daily and bring you the best skins at the cheapest prices using Turkish region VP. Every account is verified before listing. Fast delivery, honest pricing, no scams.</div>
+      <div class="srow">
+        <div class="sblk"><div class="sn" id="as-ord">0</div><div class="sl">ORDERS DONE</div></div>
+        <div class="sblk"><div class="sn" id="as-list">0</div><div class="sl">SKINS LISTED</div></div>
+        <div class="sblk"><div class="sn" id="about-del-txt">24H</div><div class="sl">DELIVERY</div></div>
+      </div>
+    </div>
+    <div style="height:1px;"></div>
+    <div class="about-grid">
+      <div class="abl"><div class="albl">PAYMENT METHODS</div><div class="aval"><strong>EasyPaisa</strong> — Mobile wallet<br><strong>JazzCash</strong> — Mobile wallet<br><strong>Bank Transfer</strong> — Direct</div></div>
+      <div class="abl"><div class="albl">REGION</div><div class="aval"><strong>Turkish accounts</strong><br>Cheapest VP rates available.<br>FE and changed email options.</div></div>
+      <div class="abl"><div class="albl">HOW IT WORKS</div><div class="aval">Browse a skin, place an order, pay, and receive account credentials within 24 hours.</div></div>
+      <div class="abl"><div class="albl">CONTACT</div><div class="aval" id="about-contact-txt">Place an order and include your Discord or WhatsApp — we will reach out to you directly.</div></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .page -->
+
+<!-- ORDER MODAL -->
+<div class="overlay" id="omodal">
+  <div class="modal">
+    <div class="mh"><div class="mt">PLACE ORDER</div><button class="mc" onclick="closeOv('omodal')">✕</button></div>
+    <div class="mb">
+      <div class="mi"><div class="mi-n" id="mo-n"></div><div class="mi-p" id="mo-p"></div></div>
+      <div class="fg"><div class="fl">YOUR NAME</div><input class="fi" id="on" placeholder="Enter your name"/></div>
+      <div class="fg"><div class="fl">CONTACT — Discord / WhatsApp</div><input class="fi" id="oc" placeholder="username#1234 or +92..."/></div>
+      <div class="fg"><div class="fl">PAYMENT METHOD</div>
+        <select class="fs" id="op"><option value="">Select method</option><option>EasyPaisa</option><option>JazzCash</option><option>Bank Transfer</option></select>
+      </div>
+      <div class="fg"><div class="fl">NOTES (optional)</div><textarea class="fi" id="onotes" placeholder="Any details..."></textarea></div>
+      <button class="btn-m" onclick="submitOrder()">CONFIRM ORDER</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-wrap" id="suc">
+  <div class="success-box">
+    <div class="sicon">✦</div>
+    <div class="stag">ORDER CONFIRMED</div>
+    <div class="stitle">You're all set</div>
+    <div class="snum" id="s-num">#VM-000000</div>
+    <div class="sdesc">We'll contact you via your provided details.</div><div style="font-size:9px;font-family:var(--mono);color:var(--red);padding:8px 10px;border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.04);margin-bottom:16px;letter-spacing:0.06em;">⚠ SAVE YOUR ORDER NUMBER — IT WILL ONLY BE SHOWN ONCE</div>
+    <button class="btn-s" onclick="closeOv('suc')">CLOSE</button>
+  </div>
+</div>
+
+<!-- ADMIN — type 7777 to open -->
+<div class="admin-w" id="admin">
+  <div class="adh"><span class="adt">ADMIN PANEL</span><span class="ads" id="a-st">LOCKED</span></div>
+  <div id="a-login" style="padding:12px;display:flex;flex-direction:column;gap:7px;">
+    <div class="fl">PASSWORD</div>
+    <input class="fi" id="a-pw" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')aLogin()"/>
+    <button class="btn-m" onclick="aLogin()">UNLOCK</button>
+  </div>
+  <div id="a-main" style="display:none;flex:1;overflow:hidden;flex-direction:column;">
+    <div class="adb-row">
+      <button class="atb on" onclick="aTab('add',this)">ADD</button>
+      <button class="atb" onclick="aTab('manage',this)">MANAGE</button>
+      <button class="atb" onclick="aTab('orders',this)">ORDERS</button>
+      <button class="atb" onclick="aTab('reps-a',this)">REPS</button><button class="atb" onclick="aTab('about-a',this)">ABOUT</button><button class="atb" onclick="aTab('settings-a',this)">SITE</button>
+    </div>
+    <div class="adbody">
+
+      <div class="asec on" id="a-add">
+        <div class="fg"><div class="fl">SECTION</div><select class="fs" id="aa-s"><option value="daily">Daily Shop</option><option value="shop">Normal Shop</option><option value="bundles">Bundle Shop</option><option value="night">Night Market</option></select></div>
+        <div class="fg"><div class="fl">SKIN NAME</div><input class="fi" id="aa-n" placeholder="e.g. Reaver Vandal"/></div>
+        <div class="fg"><div class="fl">COLLECTION</div><input class="fi" id="aa-c" placeholder="e.g. Reaver"/></div>
+        <div class="fg"><div class="fl">PRICE (PKR)</div><input class="fi" id="aa-p" type="number" placeholder="e.g. 4500"/></div>
+        <div class="fg"><div class="fl">ACCOUNT TYPE</div><select class="fs" id="aa-a"><option>FE (First Email)</option><option>Turkish Account</option><option>FE + Turkish</option><option>Changed Email</option></select></div>
+        <div class="fg"><div class="fl">REGION</div><select class="fs" id="aa-reg"><option value="TR">Turkish (TR)</option><option value="NA">North America (NA)</option><option value="EU">Europe (EU)</option><option value="AP">Asia Pacific (AP)</option><option value="LATAM">Latin America (LATAM)</option></select></div>
+        <div class="fg"><div class="fl">RANK</div><input class="fi" id="aa-r" placeholder="e.g. Gold 2 / Unranked"/></div>
+        <div class="fg"><div class="fl">ACCOUNT LEVEL</div><input class="fi" id="aa-lvl" placeholder="e.g. 87"/></div>
+        <div class="fg"><div class="fl">EXTRA SKINS (one per line)</div><textarea class="fi" id="aa-extra" placeholder="Reaver Vandal&#10;Prime Phantom" style="min-height:60px;"></textarea></div>
+        <div class="fg">
+          <div class="fl">CARD IMAGE URL <span style="color:var(--t4);font-size:8px;">— grid/card thumbnail</span></div>
+          <input class="fi" id="aa-i" placeholder="https://..." oninput="prevImg('aa-i','aa-prev-card')"/>
+          <div id="aa-prev-card" style="display:none;margin-top:5px;background:#05060f;border:1px solid var(--rim2);height:90px;overflow:hidden;position:relative;">
+            <img style="width:100%;height:100%;object-fit:cover;" src="" alt=""/>
+            <span style="position:absolute;bottom:4px;left:6px;font-size:8px;font-family:var(--mono);color:rgba(255,255,255,0.3);letter-spacing:0.08em;">CARD PREVIEW</span>
+          </div>
+        </div>
+        <div class="fg">
+          <div class="fl">PRODUCT PAGE IMAGE URL <span style="color:var(--t4);font-size:8px;">— 1000×560 banner</span></div>
+          <input class="fi" id="aa-ip" placeholder="https://..." oninput="prevImg('aa-ip','aa-prev-prod')"/>
+          <div id="aa-prev-prod" style="display:none;margin-top:5px;background:#05060f;border:1px solid var(--rim2);aspect-ratio:1000/560;overflow:hidden;position:relative;">
+            <img style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;" src="" alt=""/>
+            <span style="position:absolute;bottom:4px;left:6px;font-size:8px;font-family:var(--mono);color:rgba(255,255,255,0.3);letter-spacing:0.08em;">PRODUCT PAGE PREVIEW</span>
+          </div>
+        </div>
+        <div class="fg"><div class="fl">FEATURED</div><select class="fs" id="aa-f"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <button class="btn-m" onclick="addL()">ADD LISTING</button>
+      </div>
+
+      <div class="asec" id="a-manage"><div id="ml" style="display:flex;flex-direction:column;gap:4px;"></div></div>
+
+      <div class="asec" id="a-edit">
+        <div style="font-size:9px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.1em;" id="e-lbl">EDITING</div>
+        <div class="fg"><div class="fl">SKIN NAME</div><input class="fi" id="e-n"/></div>
+        <div class="fg"><div class="fl">COLLECTION</div><input class="fi" id="e-c"/></div>
+        <div class="fg"><div class="fl">PRICE (PKR)</div><input class="fi" id="e-p" type="number"/></div>
+        <div class="fg"><div class="fl">ACCOUNT TYPE</div><input class="fi" id="e-a"/></div>
+        <div class="fg"><div class="fl">RANK</div><input class="fi" id="e-r"/></div>
+        <div class="fg">
+          <div class="fl">CARD IMAGE URL <span style="color:var(--t4);font-size:8px;">— grid/card thumbnail</span></div>
+          <input class="fi" id="e-i" oninput="prevImg('e-i','e-prev-card')"/>
+          <div id="e-prev-card" style="display:none;margin-top:5px;background:#05060f;border:1px solid var(--rim2);height:90px;overflow:hidden;position:relative;">
+            <img style="width:100%;height:100%;object-fit:cover;" src="" alt=""/>
+            <span style="position:absolute;bottom:4px;left:6px;font-size:8px;font-family:var(--mono);color:rgba(255,255,255,0.3);letter-spacing:0.08em;">CARD PREVIEW</span>
+          </div>
+        </div>
+        <div class="fg">
+          <div class="fl">PRODUCT PAGE IMAGE URL <span style="color:var(--t4);font-size:8px;">— 1000×560 banner</span></div>
+          <input class="fi" id="e-ip" oninput="prevImg('e-ip','e-prev-prod')"/>
+          <div id="e-prev-prod" style="display:none;margin-top:5px;background:#05060f;border:1px solid var(--rim2);aspect-ratio:1000/560;overflow:hidden;position:relative;">
+            <img style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;" src="" alt=""/>
+            <span style="position:absolute;bottom:4px;left:6px;font-size:8px;font-family:var(--mono);color:rgba(255,255,255,0.3);letter-spacing:0.08em;">PRODUCT PAGE PREVIEW</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:5px;">
+          <button class="btn-m" style="flex:1;" onclick="saveE()">SAVE CHANGES</button>
+          <button class="btn-s" style="padding:9px 12px;font-size:9px;" onclick="aTab('manage',document.querySelectorAll('.atb')[1])">CANCEL</button>
+        </div>
+      </div>
+
+      <div class="asec" id="a-orders"><div id="ol" style="display:flex;flex-direction:column;gap:5px;"></div></div>
+
+      <div class="asec" id="a-settings-a">
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:4px;">LIMITED SHOP EXPIRY</div>
+        <div class="fg"><div class="fl">SET EXPIRY DATE &amp; TIME</div><input class="fi" id="st-expiry" type="datetime-local"/></div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin:6px 0 2px;">SITE SETTINGS</div>
+        <div class="fg"><div class="fl">SITE TITLE (browser tab)</div><input class="fi" id="st-title" placeholder="VOID MARKET — Valorant Skins"/></div>
+        <div class="fg"><div class="fl">HERO SUBTITLE TEXT</div><input class="fi" id="st-sub" placeholder="Verified &amp; trusted. Updated daily."/></div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin:6px 0 2px;">VP PRICES (PKR)</div>
+        <div class="fg"><div class="fl">375 VP</div><input class="fi" id="vp-375" placeholder="800" type="number"/></div>
+        <div class="fg"><div class="fl">825 VP</div><input class="fi" id="vp-825" placeholder="1700" type="number"/></div>
+        <div class="fg"><div class="fl">1700 VP</div><input class="fi" id="vp-1700" placeholder="3350" type="number"/></div>
+        <div class="fg"><div class="fl">2925 VP</div><input class="fi" id="vp-2925" placeholder="5600" type="number"/></div>
+        <div class="fg"><div class="fl">4325 VP</div><input class="fi" id="vp-4325" placeholder="8200" type="number"/></div>
+        <div class="fg"><div class="fl">8900 VP</div><input class="fi" id="vp-8900" placeholder="16000" type="number"/></div>
+        <button class="btn-m" onclick="saveSettings()">SAVE ALL SETTINGS</button>
+
+        <div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin:10px 0 6px;padding-top:10px;border-top:1px solid var(--rim);">COSMIC EVENTS</div>
+        <div style="font-size:8px;font-family:var(--mono);color:var(--t4);margin-bottom:8px;letter-spacing:0.04em;">Trigger or disable background space events</div>
+        <div style="display:flex;gap:4px;margin-bottom:6px;">
+          <button class="btn-m" style="flex:1;padding:7px 4px;font-size:8px;" onclick="cosmicTrigger('fleet')">⟩ FLEET</button>
+          <button class="btn-m" style="flex:1;padding:7px 4px;font-size:8px;" onclick="cosmicTrigger('supernova')">⟩ SUPERNOVA</button>
+          <button class="btn-m" style="flex:1;padding:7px 4px;font-size:8px;" onclick="cosmicTrigger('wormhole')">⟩ WORMHOLE</button>
+        </div>
+        <div style="display:flex;gap:4px;">
+          <button class="btn-m" style="flex:1;padding:7px 4px;font-size:8px;color:var(--green);border-color:rgba(34,197,94,0.28);" onclick="cosmicSetEnabled(true)" id="cosmic-enable-btn">EVENTS ON</button>
+          <button class="btn-m" style="flex:1;padding:7px 4px;font-size:8px;color:var(--red);border-color:rgba(239,68,68,0.20);" onclick="cosmicSetEnabled(false)" id="cosmic-disable-btn">EVENTS OFF</button>
+        </div>
+        <div id="cosmic-status" style="font-size:8px;font-family:var(--mono);color:var(--t4);margin-top:5px;letter-spacing:0.06em;">STATUS: AUTO</div>
+      </div>
+
+      <div class="asec" id="a-about-a">
+        <div class="fg"><div class="fl">SHOP NAME</div><input class="fi" id="ab-name" placeholder="VOID MARKET"/></div>
+        <div class="fg"><div class="fl">BIO TEXT</div><textarea class="fi" id="ab-bio" placeholder="About your shop..."></textarea></div>
+        <div class="fg"><div class="fl">CONTACT INFO</div><input class="fi" id="ab-contact" placeholder="e.g. Discord: void#0001"/></div>
+        <div class="fg"><div class="fl">DELIVERY TIME</div><input class="fi" id="ab-delivery" placeholder="e.g. 24H"/></div>
+        <button class="btn-m" onclick="saveAbout()">SAVE ABOUT PAGE</button>
+      </div>
+
+      <div class="asec" id="a-reps-a">
+        <div class="fg"><div class="fl">BUYER NAME / PLATFORM</div><input class="fi" id="r-f" placeholder="e.g. Ahmad — Discord"/></div>
+        <div class="fg"><div class="fl">REVIEW TEXT</div><textarea class="fi" id="r-t" placeholder="What they said..."></textarea></div>
+        <div class="fg"><div class="fl">STARS (1–5)</div><select class="fs" id="r-s"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="fg"><div class="fl">SCREENSHOT (optional)</div><div id="rep-img-box" style="border:1px dashed var(--rim2);background:var(--s2);height:80px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.08em;" onclick="document.getElementById('r-img-inp').click()">+ ADD SCREENSHOT</div><input type="file" id="r-img-inp" accept="image/*" style="display:none" onchange="loadRepImg(event)"/><div id="rep-img-preview" style="display:none;margin-top:4px;"><img id="rep-img-thumb" style="width:100%;max-height:80px;object-fit:cover;"/><button onclick="clearRepImg()" style="font-size:9px;font-family:var(--mono);color:var(--t4);background:none;border:none;cursor:pointer;margin-top:2px;">REMOVE</button></div></div>
+        <button class="btn-m" onclick="addRep()">ADD REP</button>
+        <div id="r-list" style="display:flex;flex-direction:column;gap:4px;margin-top:4px;"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- PRODUCT PAGE -->
+<div class="pg" id="pg-product">
+  <div style="max-width:1200px;margin:0 auto;padding:28px 20px;">
+    <button onclick="showPage(window._prevPage||'home');" style="background:none;border:none;color:var(--t3);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;cursor:pointer;margin-bottom:24px;display:flex;align-items:center;gap:8px;">← BACK</button>
+    <div id="prod-content"></div>
+  </div>
+</div>
+<!-- TRACK PAGE -->
+<div class="pg" id="pg-track">
+  <div class="sec" style="max-width:520px;">
+    <div class="sec-head"><div class="sec-t">TRACK ORDER</div></div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <input class="fi" id="track-input" placeholder="#VM-394827" style="flex:1;" onkeydown="if(event.key==='Enter')showTracker()"/>
+      <button class="btn-m" style="width:auto;padding:8px 18px;white-space:nowrap;" onclick="showTracker()">TRACK</button>
+    </div>
+    <div id="track-result" style="font-size:11px;font-family:var(--mono);color:var(--t4);">Enter your order number above to check status.</div>
+  </div>
+</div>
+
+<!-- PROMO POPUP -->
+<style>
+@keyframes slideInRight{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+#promo-popup{animation:slideInRight 0.35s ease;}
+</style>
+<div id="promo-popup" style="display:none;position:fixed;bottom:24px;right:24px;z-index:800;width:300px;background:var(--s1);border:1px solid var(--rim2);box-shadow:0 8px 32px rgba(0,0,0,0.6);">
+  <div style="padding:10px 14px;border-bottom:1px solid var(--rim);display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-size:9px;font-family:var(--mono);color:var(--blue2);letter-spacing:0.12em;">FEATURED LISTING</span>
+    <button onclick="document.getElementById('promo-popup').style.display='none'" style="background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;font-family:var(--mono);line-height:1;">✕</button>
+  </div>
+  <div id="popup-img-wrap" style="height:130px;background:linear-gradient(145deg,#07091a,#020204);overflow:hidden;border-bottom:1px solid var(--rim);display:flex;align-items:center;justify-content:center;">
+    <div style="font-family:var(--mono);font-size:36px;color:rgba(255,255,255,0.04);">◈</div>
+  </div>
+  <div style="padding:12px 14px;">
+    <div style="font-size:14px;font-weight:600;margin-bottom:3px;" id="popup-name"></div>
+    <div style="font-size:10px;font-family:var(--mono);color:var(--blue2);margin-bottom:10px;" id="popup-price"></div>
+    <div style="font-size:10px;font-family:var(--mono);color:var(--t3);margin-bottom:12px;" id="popup-desc"></div>
+    <button class="btn-m" id="popup-btn" style="width:100%;padding:8px;font-size:10px;">VIEW LISTING</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+
+<script>
+// CANVAS BG
+const cv=document.getElementById('bg-canvas');
+const ct=cv.getContext('2d');
+let W,H;
+function rsz(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+rsz();window.addEventListener('resize',rsz);
+
+// ── BACKGROUND BLACK HOLE ── top-right, half visible, far away
+(function(){
+  // dust particles orbiting the background BH
+  var bgDust=[];
+  for(var i=0;i<140;i++){
+    var angle=Math.random()*Math.PI*2;
+    var orbitR=140+Math.random()*380;
+    bgDust.push({
+      angle:angle,
+      orbitR:orbitR,
+      speed:(0.00006+Math.random()*0.00015)*(Math.random()<0.5?1:-1),
+      r:0.3+Math.random()*1.2,
+      alpha:0.04+Math.random()*0.14,
+      colorType:Math.floor(Math.random()*3)
+    });
+  }
+
+  // ring layers for accretion disc — all purple now, no orange/brown
+  var discRings=[
+    {tiltY:0.16, speed:0, angle:0,   color1:'rgba(216,180,254,', color2:'rgba(147,51,234,',  alpha:0.11, rMul:1.15},
+    {tiltY:0.20, speed:0, angle:1.2, color1:'rgba(192,132,252,', color2:'rgba(109,40,217,', alpha:0.12, rMul:1.40},
+    {tiltY:0.14, speed:0, angle:2.5, color1:'rgba(168,85,247,',  color2:'rgba(88,28,135,',  alpha:0.09, rMul:1.70},
+    {tiltY:0.18, speed:0, angle:0.7, color1:'rgba(139,92,246,',  color2:'rgba(67,20,120,',  alpha:0.07, rMul:2.10},
+    {tiltY:0.15, speed:0, angle:3.8, color1:'rgba(88,28,135,',   color2:'rgba(40,10,70,',   alpha:0.05, rMul:2.60},
+  ];
+
+  var discAngleBG = 0;
+  var ringBobT = 0;
+
+  function drawBG(now){
+    ct.clearRect(0,0,W,H);
+
+    // black hole center is off top-right corner — only bottom-left arc visible
+    var bhX = W + W*0.04;
+    var bhY = -H*0.10;
+    var bhR = Math.min(W,H)*0.58;
+
+    // ── BACKGROUND GRADIENT — near-black left, deep purple right ──
+    var bgBlend = ct.createLinearGradient(0, 0, W, 0);
+    bgBlend.addColorStop(0,    'rgba(0,0,0,0.92)');
+    bgBlend.addColorStop(0.18, 'rgba(2,4,14,0.80)');
+    bgBlend.addColorStop(0.40, 'rgba(4,6,22,0.60)');
+    bgBlend.addColorStop(0.62, 'rgba(18,5,42,0.45)');
+    bgBlend.addColorStop(0.82, 'rgba(35,6,68,0.40)');
+    bgBlend.addColorStop(1,    'rgba(50,4,80,0.44)');
+    ct.fillStyle=bgBlend;
+    ct.fillRect(0,0,W,H);
+
+    // ── OUTER SPACE GLOW — BH nebula (right-top) still purple ──
+    var spaceGlow=ct.createRadialGradient(bhX,bhY,bhR*0.5,bhX,bhY,bhR*4.2);
+    spaceGlow.addColorStop(0,'rgba(0,0,0,0)');
+    spaceGlow.addColorStop(0.2,'rgba(30,8,60,0.28)');
+    spaceGlow.addColorStop(0.5,'rgba(15,4,35,0.16)');
+    spaceGlow.addColorStop(0.8,'rgba(5,2,15,0.07)');
+    spaceGlow.addColorStop(1,'rgba(0,0,0,0)');
+    ct.fillStyle=spaceGlow;
+    ct.fillRect(0,0,W,H);
+
+    // ── LEFT DEEP VOID — crushes the left edge into pure black ──
+    var leftVoid=ct.createLinearGradient(0,0,W*0.45,0);
+    leftVoid.addColorStop(0,   'rgba(0,0,0,0.78)');
+    leftVoid.addColorStop(0.30,'rgba(0,0,0,0.40)');
+    leftVoid.addColorStop(0.65,'rgba(0,0,0,0.10)');
+    leftVoid.addColorStop(1,   'rgba(0,0,0,0)');
+    ct.fillStyle=leftVoid;
+    ct.fillRect(0,0,W,H);
+
+    // ── FAINT BLUE TRACE — just a whisper of blue so it reads "space" ──
+    var leftGlow=ct.createRadialGradient(0,H*0.5,0,0,H*0.5,W*0.40);
+    leftGlow.addColorStop(0,'rgba(8,20,90,0.10)');
+    leftGlow.addColorStop(0.5,'rgba(4,10,50,0.05)');
+    leftGlow.addColorStop(1,'rgba(0,0,0,0)');
+    ct.fillStyle=leftGlow;
+    ct.fillRect(0,0,W,H);
+
+    discAngleBG += 0; // frozen — no global rotation
+    ringBobT += 0.0008;
+
+    // ── DISC RINGS — elliptical, tilted, rotating, all purple ──
+    discRings.forEach(function(rg){
+      rg.angle += rg.speed;
+      var R = bhR * rg.rMul;
+      ct.save();
+      ct.translate(bhX, bhY);
+      ct.rotate(rg.angle + discAngleBG);
+      ct.scale(1, rg.tiltY);
+      var grd=ct.createRadialGradient(0,0,R*0.6,0,0,R*1.05);
+      grd.addColorStop(0,'rgba(0,0,0,0)');
+      grd.addColorStop(0.3, rg.color1+rg.alpha+')');
+      grd.addColorStop(0.65,rg.color1+(rg.alpha*0.5)+')');
+      grd.addColorStop(1, rg.color2+'0)');
+      ct.beginPath();
+      ct.arc(0,0,R,0,Math.PI*2);
+      ct.strokeStyle=rg.color1+rg.alpha+')';
+      ct.lineWidth=1.5;
+      ct.stroke();
+      ct.fillStyle=grd;
+      ct.fill();
+      ct.restore();
+    });
+
+    // ── INTERSTELLAR PHOTON RING — static, no rotation ──
+    var ringSpinAngle = 0; // no rotation — stays still
+    var ringTiltY = 0.30; // fixed tilt, no bob
+    var psR = bhR * 1.52;
+
+    ct.save();
+    ct.translate(bhX, bhY);
+    ct.rotate(ringSpinAngle);
+    ct.scale(1, ringTiltY);
+
+    // draw ring layers from outermost glow to sharpest inner line
+    [
+      {r:psR*1.18, lw:12,  alpha:0.04, c:'rgba(139,92,246,'},
+      {r:psR*1.10, lw:8,   alpha:0.09, c:'rgba(165,180,252,'},
+      {r:psR*1.04, lw:5,   alpha:0.18, c:'rgba(216,180,254,'},
+      {r:psR*1.00, lw:3.5, alpha:0.50, c:'rgba(233,213,255,'},
+      {r:psR*0.97, lw:2.0, alpha:0.70, c:'rgba(255,255,255,'},
+      {r:psR*0.94, lw:1.0, alpha:0.40, c:'rgba(192,132,252,'},
+    ].forEach(function(pr){
+      ct.beginPath(); ct.arc(0,0,pr.r,0,Math.PI*2);
+      ct.strokeStyle=pr.c+pr.alpha+')';
+      ct.lineWidth=pr.lw;
+      ct.stroke();
+    });
+    ct.restore();
+
+    // ── GRAVITATIONAL LENSING HALO — purple ──
+    var lensGrad=ct.createRadialGradient(bhX,bhY,bhR*0.88,bhX,bhY,bhR*1.7);
+    lensGrad.addColorStop(0,'rgba(0,0,0,0)');
+    lensGrad.addColorStop(0.22,'rgba(216,180,254,0.10)');
+    lensGrad.addColorStop(0.50,'rgba(139,92,246,0.07)');
+    lensGrad.addColorStop(0.75,'rgba(88,28,135,0.04)');
+    lensGrad.addColorStop(1,'rgba(0,0,0,0)');
+    ct.beginPath(); ct.arc(bhX,bhY,bhR*1.7,0,Math.PI*2);
+    ct.fillStyle=lensGrad; ct.fill();
+
+    // ── EVENT HORIZON — black with blue-to-black inner outline ──
+    ct.beginPath(); ct.arc(bhX,bhY,bhR,0,Math.PI*2);
+    ct.fillStyle='#000'; ct.fill();
+
+    // outer rim glow: blue fading to black
+    var outerRimGrad=ct.createRadialGradient(bhX,bhY,bhR*0.94,bhX,bhY,bhR*1.06);
+    outerRimGrad.addColorStop(0,'rgba(0,0,0,0)');
+    outerRimGrad.addColorStop(0.4,'rgba(30,80,220,0.32)');
+    outerRimGrad.addColorStop(0.7,'rgba(79,112,255,0.22)');
+    outerRimGrad.addColorStop(1,'rgba(0,0,30,0)');
+    ct.beginPath(); ct.arc(bhX,bhY,bhR*1.06,0,Math.PI*2);
+    ct.fillStyle=outerRimGrad; ct.fill();
+
+    // inner outline: blue rim just inside the event horizon edge fading to black
+    var outlineGrad=ct.createRadialGradient(bhX,bhY,bhR*0.82,bhX,bhY,bhR*0.98);
+    outlineGrad.addColorStop(0,'rgba(0,0,0,0)');
+    outlineGrad.addColorStop(0.5,'rgba(20,50,160,0.28)');
+    outlineGrad.addColorStop(0.8,'rgba(79,112,255,0.20)');
+    outlineGrad.addColorStop(1,'rgba(100,150,255,0.10)');
+    ct.beginPath(); ct.arc(bhX,bhY,bhR*0.98,0,Math.PI*2);
+    ct.fillStyle=outlineGrad; ct.fill();
+
+    // re-draw solid black center to keep it deep black
+    ct.beginPath(); ct.arc(bhX,bhY,bhR*0.82,0,Math.PI*2);
+    ct.fillStyle='#000'; ct.fill();
+
+    // ── INNER DISC GLOW — purple hot inner region ──
+    var innerGlow=ct.createRadialGradient(bhX,bhY,bhR,bhX,bhY,bhR*2.4);
+    innerGlow.addColorStop(0,'rgba(0,0,0,0)');
+    innerGlow.addColorStop(0.18,'rgba(192,132,252,0.07)');
+    innerGlow.addColorStop(0.45,'rgba(139,92,246,0.05)');
+    innerGlow.addColorStop(0.75,'rgba(88,28,135,0.03)');
+    innerGlow.addColorStop(1,'rgba(0,0,0,0)');
+    ct.beginPath(); ct.arc(bhX,bhY,bhR*2.4,0,Math.PI*2);
+    ct.fillStyle=innerGlow; ct.fill();
+
+    // ── ORBITING DUST — purple/violet tones ──
+    bgDust.forEach(function(d){
+      d.angle += d.speed;
+      var px = bhX + Math.cos(d.angle)*d.orbitR;
+      var py = bhY + Math.sin(d.angle)*d.orbitR*0.20;
+      if(px<-10||px>W+10||py<-10||py>H+10) return;
+      ct.beginPath();
+      ct.arc(px,py,d.r,0,Math.PI*2);
+      if(d.colorType===0) ct.fillStyle='rgba(192,132,252,'+d.alpha+')';
+      else if(d.colorType===1) ct.fillStyle='rgba(139,92,246,'+d.alpha+')';
+      else ct.fillStyle='rgba(216,180,254,'+d.alpha+')';
+      ct.fill();
+    });
+
+    requestAnimationFrame(drawBG);
+  }
+  requestAnimationFrame(drawBG);
+})();
+
+
+// ── AMBIENT FLOATING PARTICLES on main page ──
+(function(){
+  var NUM_AMB = 120;
+  var ambParticles = [];
+  function mkAmb(){
+    return {
+      x: Math.random()*W,
+      y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.18,
+      vy: -0.04 - Math.random()*0.12,
+      size: 0.3+Math.random()*1.5,
+      alpha: 0.04+Math.random()*0.12,
+      baseAlpha: 0.04+Math.random()*0.12,
+      twinkleSpeed: 0.005+Math.random()*0.015,
+      twinklePhase: Math.random()*Math.PI*2,
+      colorType: Math.floor(Math.random()*3)
+    };
+  }
+  for(var i=0;i<NUM_AMB;i++) ambParticles.push(mkAmb());
+
+  // We piggyback on bg-canvas tick by overriding clearRect to add our layer
+  // Instead, create a dedicated overlay canvas for ambient particles
+  var ambCanvas = document.createElement('canvas');
+  ambCanvas.style.cssText='position:fixed;inset:0;z-index:1;pointer-events:none;';
+  ambCanvas.width=W; ambCanvas.height=H;
+  document.body.appendChild(ambCanvas);
+  var ac2=ambCanvas.getContext('2d');
+  window.addEventListener('resize',function(){
+    ambCanvas.width=W; ambCanvas.height=H;
+  });
+
+  var ambT=0;
+  function drawAmb(){
+    ac2.clearRect(0,0,W,H);
+    ambT++;
+    ambParticles.forEach(function(p){
+      p.x+=p.vx; p.y+=p.vy;
+      p.twinklePhase+=p.twinkleSpeed;
+      p.alpha = p.baseAlpha*(0.5+0.5*Math.sin(p.twinklePhase));
+      // wrap
+      if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}
+      if(p.x<-5)p.x=W+5;
+      if(p.x>W+5)p.x=-5;
+      ac2.beginPath();
+      ac2.arc(p.x,p.y,p.size,0,Math.PI*2);
+      if(p.colorType===0) ac2.fillStyle='rgba(192,132,252,'+p.alpha+')';
+      else if(p.colorType===1) ac2.fillStyle='rgba(139,92,246,'+p.alpha+')';
+      else ac2.fillStyle='rgba(255,255,255,'+p.alpha+')';
+      ac2.fill();
+    });
+    requestAnimationFrame(drawAmb);
+  }
+  requestAnimationFrame(drawAmb);
+})();
+
+// ══════════════════════════════════════════════════════
+// ── COSMIC EVENTS ENGINE — DISTANT DEEP SPACE ──
+// Events appear far away on the LEFT half of screen,
+// small, dim, like watching space through a cockpit.
+// ══════════════════════════════════════════════════════
+(function(){
+  var evCanvas = document.createElement('canvas');
+  evCanvas.style.cssText = 'position:fixed;inset:0;z-index:2;pointer-events:none;';
+  evCanvas.width = W; evCanvas.height = H;
+  document.body.appendChild(evCanvas);
+  var ec = evCanvas.getContext('2d');
+  window.addEventListener('resize', function(){
+    evCanvas.width = W; evCanvas.height = H;
+  });
+
+  var activeEvents = [];
+  var eventsEnabled = true;
+
+  // All events anchor to the LEFT half, vertically centered-ish
+  function leftZone(){
+    return {
+      x: W * (0.04 + Math.random() * 0.38),
+      y: H * (0.15 + Math.random() * 0.60)
+    };
+  }
+
+  function scheduleNext(){
+    var delay = 35000 + Math.random() * 45000;
+    setTimeout(function(){ if(eventsEnabled) fireRandom(); scheduleNext(); }, delay);
+  }
+  function fireRandom(){
+    if(!eventsEnabled) return;
+    var r = Math.random();
+    if(r < 0.34)      launchFleet();
+    else if(r < 0.67) launchSupernova();
+    else              launchWormhole();
+  }
+  // first show after 6s
+  setTimeout(function(){ fireRandom(); scheduleNext(); }, 6000);
+
+  // ─────────────────────────────────────────
+  // EVENT 1 — FLEET HYPERJUMP
+  // Tiny wedge flagship + escorts drop out of
+  // hyperspace, cruise slowly, then jump away.
+  // Everything is distant — small and dim.
+  // ─────────────────────────────────────────
+  function launchFleet(){
+    var pos = leftZone();
+    var numEscorts = 2 + Math.floor(Math.random()*3);
+    var ships = [{ offX:0, offY:0, sc:1.0, delay:0 }];
+    for(var i=0;i<numEscorts;i++){
+      ships.push({
+        offX: (Math.random()-0.5)*38,
+        offY: (i%2===0?1:-1)*(12 + i*10 + Math.random()*8),
+        sc:   0.40 + Math.random()*0.35,
+        delay:0.04 + i*0.06 + Math.random()*0.03
+      });
+    }
+    activeEvents.push({
+      type:'fleet', start:performance.now(), dur:13000,
+      baseY: pos.y, ships: ships,
+      // travels LEFT → RIGHT across left zone, very slowly
+      x0: W * -0.02,
+      x1: W *  0.48,
+    });
+  }
+
+  function drawFleet(ev, t){
+    var p = t / ev.dur;
+    ec.save();
+    ev.ships.forEach(function(ship){
+      var lp = Math.max(0, (p - ship.delay) / (1 - ship.delay));
+      if(lp <= 0) return;
+
+      // alpha envelope: fade in 0–0.10, hold, fade out 0.88–1.0
+      var alpha;
+      if(lp < 0.10)      alpha = lp / 0.10;
+      else if(lp < 0.88) alpha = 1;
+      else               alpha = Math.max(0,(1-lp)/0.12);
+      alpha *= 0.72; // distant — never fully opaque
+
+      // hyperspace stretch on enter/exit
+      var stretch = 1;
+      if(lp < 0.10) stretch = 1 + (1 - lp/0.10) * 14;
+      if(lp > 0.88) stretch = 1 + ((lp-0.88)/0.12) * 16;
+
+      var tx = ev.x0 + (ev.x1 - ev.x0) * lp + ship.offX;
+      var ty = ev.baseY + ship.offY;
+
+      // scale: flagship ~30px wide at "distance", escorts smaller
+      var sc   = ship.sc;
+      var sW   = 32 * sc;   // ship width
+      var sH   = 7  * sc;   // ship height
+
+      ec.save();
+      ec.globalAlpha = alpha;
+      ec.translate(tx, ty);
+
+      // hyperspace STREAK
+      if(stretch > 1.5){
+        var sa = Math.min(0.55, (stretch-1)/16) * alpha;
+        var sg = ec.createLinearGradient(-sW*stretch, 0, sW*0.2, 0);
+        sg.addColorStop(0,'rgba(160,200,255,0)');
+        sg.addColorStop(0.5,'rgba(160,200,255,'+(sa*0.6)+')');
+        sg.addColorStop(1,'rgba(240,250,255,'+(sa)+')');
+        ec.fillStyle = sg;
+        ec.fillRect(-sW*stretch, -sH*0.4, sW*(stretch+0.25), sH*0.8);
+      }
+
+      // HULL — tiny wedge silhouette
+      ec.beginPath();
+      ec.moveTo( sW*0.5,  0);
+      ec.lineTo(-sW*0.35, -sH*0.5);
+      ec.lineTo(-sW*0.50, -sH*0.10);
+      ec.lineTo(-sW*0.50,  sH*0.10);
+      ec.lineTo(-sW*0.35,  sH*0.5);
+      ec.closePath();
+      var hg = ec.createLinearGradient(sW*0.5,0,-sW*0.5,0);
+      hg.addColorStop(0,  'rgba(210,225,255,0.90)');
+      hg.addColorStop(0.5,'rgba(130,150,200,0.80)');
+      hg.addColorStop(1,  'rgba(50,60,110,0.70)');
+      ec.fillStyle = hg;
+      ec.fill();
+
+      // bridge ridge — lighter strip on top third
+      ec.beginPath();
+      ec.moveTo(sW*0.3, 0);
+      ec.lineTo(-sW*0.2,-sH*0.28);
+      ec.lineTo(-sW*0.38,-sH*0.10);
+      ec.lineTo(-sW*0.12, 0);
+      ec.closePath();
+      ec.fillStyle = 'rgba(200,220,255,0.22)';
+      ec.fill();
+
+      // ENGINE GLOW — soft blue blob at rear
+      var eg = ec.createRadialGradient(-sW*0.50, 0, 0, -sW*0.50, 0, sW*0.38);
+      eg.addColorStop(0,  'rgba(140,190,255,0.85)');
+      eg.addColorStop(0.3,'rgba(80,130,255,0.40)');
+      eg.addColorStop(0.7,'rgba(40,80,200,0.12)');
+      eg.addColorStop(1,  'rgba(0,0,0,0)');
+      ec.fillStyle = eg;
+      ec.beginPath(); ec.ellipse(-sW*0.50, 0, sW*0.38, sH*0.9, 0, 0, Math.PI*2); ec.fill();
+
+      // engine core dots
+      [-sH*0.22, 0, sH*0.22].forEach(function(ey, idx){
+        if(idx===1 || sc > 0.65){
+          ec.beginPath(); ec.arc(-sW*0.50, ey*(sc), sH*0.10*sc, 0, Math.PI*2);
+          ec.fillStyle = 'rgba(200,230,255,0.90)'; ec.fill();
+        }
+      });
+
+      ec.restore();
+    });
+    ec.restore();
+  }
+
+  // ─────────────────────────────────────────
+  // EVENT 2 — SUPERNOVA
+  // A tiny star in the distance suddenly
+  // ignites and blooms — dim expanding rings,
+  // warm glow that fades into the dark.
+  // ─────────────────────────────────────────
+  function launchSupernova(){
+    var pos = leftZone();
+    activeEvents.push({
+      type:'supernova', start:performance.now(), dur:8500,
+      cx:pos.x, cy:pos.y,
+      hot: Math.random()<0.5,
+      debris: (function(){
+        var d=[];
+        for(var i=0;i<35;i++){
+          var a=Math.random()*Math.PI*2;
+          d.push({a:a, spd:0.3+Math.random()*1.4, sz:0.4+Math.random()*1.0});
+        }
+        return d;
+      })()
+    });
+  }
+
+  function drawSupernova(ev, t){
+    var p = t / ev.dur;
+    var cx = ev.cx, cy = ev.cy;
+    var hot = ev.hot;
+    // max radius is small — distant scale
+    var maxR = Math.min(W,H) * 0.09;
+    ec.save();
+
+    if(p < 0.20){
+      // PRE-FLASH: star brightens from a pinprick
+      var bp = p / 0.20;
+      var starR = 0.8 + bp * 3.5;
+      var g0 = ec.createRadialGradient(cx,cy,0,cx,cy,starR*5);
+      var c0 = hot ? 'rgba(255,210,90,' : 'rgba(170,205,255,';
+      g0.addColorStop(0, c0+'1)');
+      g0.addColorStop(0.25, c0+(bp*0.8)+')');
+      g0.addColorStop(0.6, (hot?'rgba(255,130,20,':'rgba(90,150,255,')+bp*0.3+')');
+      g0.addColorStop(1,'rgba(0,0,0,0)');
+      ec.fillStyle = g0;
+      ec.beginPath(); ec.arc(cx,cy,starR*5,0,Math.PI*2); ec.fill();
+    } else {
+      var xp = (p - 0.20) / 0.80;
+      var ease = 1 - Math.pow(1-xp, 2.2);
+
+      // brief screen-edge tint at ignition (very subtle)
+      if(xp < 0.06){
+        var fa = (0.06-xp)/0.06 * 0.08;
+        ec.fillStyle = (hot?'rgba(255,180,60,':'rgba(160,210,255,') + fa + ')';
+        ec.fillRect(0,0,W,H);
+      }
+
+      // shockwave rings — dim, thin, distant
+      var ringDefs = hot
+        ? [{dl:0,c:'rgba(255,245,180,',lw:1.4},{dl:0.05,c:'rgba(255,170,50,',lw:2.2},{dl:0.10,c:'rgba(220,80,15,',lw:1.6},{dl:0.18,c:'rgba(140,30,5,',lw:0.9}]
+        : [{dl:0,c:'rgba(210,235,255,',lw:1.4},{dl:0.05,c:'rgba(120,175,255,',lw:2.2},{dl:0.10,c:'rgba(60,110,240,',lw:1.6},{dl:0.18,c:'rgba(30,40,160,',lw:0.9}];
+
+      ringDefs.forEach(function(rd){
+        if(xp < rd.dl) return;
+        var rp = (xp-rd.dl)/(1-rd.dl);
+        var rEase = 1-Math.pow(1-rp,1.8);
+        var rA = Math.max(0, 0.55*(1-rp*rp));
+        ec.beginPath(); ec.arc(cx,cy,rEase*maxR,0,Math.PI*2);
+        ec.strokeStyle = rd.c+rA+')';
+        ec.lineWidth = rd.lw;
+        ec.stroke();
+      });
+
+      // debris — tiny dim sparks
+      ev.debris.forEach(function(d){
+        var dist = ease * maxR * 0.80 * d.spd;
+        var px = cx + Math.cos(d.a)*dist;
+        var py = cy + Math.sin(d.a)*dist;
+        var da = Math.max(0, 0.45 - xp*0.50);
+        if(da<0.02) return;
+        ec.beginPath(); ec.arc(px,py,d.sz,0,Math.PI*2);
+        ec.fillStyle=(hot?'rgba(255,170,40,':'rgba(130,190,255,')+da+')';
+        ec.fill();
+      });
+
+      // remnant glow
+      var remA = Math.max(0, 0.65 - xp*0.62);
+      var rg = ec.createRadialGradient(cx,cy,0,cx,cy,maxR*0.55+ease*maxR*0.35);
+      rg.addColorStop(0,(hot?'rgba(255,240,180,':'rgba(190,220,255,')+remA+')');
+      rg.addColorStop(0.45,(hot?'rgba(255,120,20,':'rgba(60,120,255,')+remA*0.4+')');
+      rg.addColorStop(1,'rgba(0,0,0,0)');
+      ec.fillStyle=rg;
+      ec.beginPath(); ec.arc(cx,cy,maxR*0.55+ease*maxR*0.35,0,Math.PI*2); ec.fill();
+    }
+    ec.restore();
+  }
+
+  // ─────────────────────────────────────────
+  // EVENT 3 — WORMHOLE
+  // A small iridescent tear in space opens,
+  // swirls softly, then closes. Far away,
+  // like a distant cosmic event you notice
+  // out of the corner of your eye.
+  // ─────────────────────────────────────────
+  function launchWormhole(){
+    var pos = leftZone();
+    var baseR = Math.min(W,H) * (0.045 + Math.random()*0.040);
+    var pts=[];
+    for(var i=0;i<55;i++){
+      pts.push({
+        angle:Math.random()*Math.PI*2,
+        radFrac:0.85+Math.random()*0.50,
+        speed:(0.006+Math.random()*0.014)*(Math.random()<0.5?1:-1),
+        size:0.4+Math.random()*1.2,
+        hue:Math.floor(Math.random()*360)
+      });
+    }
+    activeEvents.push({
+      type:'wormhole', start:performance.now(), dur:10000,
+      cx:pos.x, cy:pos.y, baseR:baseR,
+      spinT:0, pts:pts
+    });
+  }
+
+  function drawWormhole(ev, t){
+    var p = t / ev.dur;
+    var cx=ev.cx, cy=ev.cy;
+    ev.spinT += 0.010;
+
+    // envelope: open 0–0.14, hold 0.14–0.82, close 0.82–1.0
+    var envA = p<0.14 ? p/0.14 : p<0.82 ? 1 : Math.max(0,(1-p)/0.18);
+    var scE  = p<0.14 ? Math.pow(p/0.14,0.55) : p<0.82 ? 1 : Math.max(0,(1-p)/0.18);
+    var R = ev.baseR * scE;
+    if(R<1) return;
+
+    ec.save();
+    ec.globalAlpha = envA * 0.82; // distant — slightly dimmed overall
+
+    // outer nebula haze
+    var og = ec.createRadialGradient(cx,cy,R*0.4,cx,cy,R*2.6);
+    og.addColorStop(0,'rgba(0,0,0,0)');
+    og.addColorStop(0.3,'rgba(70,0,110,0.14)');
+    og.addColorStop(0.6,'rgba(30,0,70,0.07)');
+    og.addColorStop(1,'rgba(0,0,0,0)');
+    ec.fillStyle=og; ec.beginPath(); ec.arc(cx,cy,R*2.6,0,Math.PI*2); ec.fill();
+
+    // ring layers
+    [{r:R*1.45,lw:6,c:'rgba(90,0,180,',a:0.09},
+     {r:R*1.22,lw:5,c:'rgba(150,0,240,',a:0.16},
+     {r:R*1.07,lw:4,c:'rgba(195,70,255,',a:0.26},
+     {r:R*1.00,lw:2.5,c:'rgba(235,155,255,',a:0.42},
+     {r:R*0.94,lw:1.5,c:'rgba(255,210,255,',a:0.58},
+    ].forEach(function(rc){
+      ec.beginPath(); ec.arc(cx,cy,rc.r,0,Math.PI*2);
+      ec.strokeStyle=rc.c+rc.a+')'; ec.lineWidth=rc.lw; ec.stroke();
+    });
+
+    // clip interior
+    ec.save();
+    ec.beginPath(); ec.arc(cx,cy,R*0.93,0,Math.PI*2); ec.clip();
+    var cg=ec.createRadialGradient(cx,cy,0,cx,cy,R*0.93);
+    cg.addColorStop(0,'rgba(0,0,0,1)');
+    cg.addColorStop(0.40,'rgba(8,0,25,0.96)');
+    cg.addColorStop(0.75,'rgba(40,0,85,0.85)');
+    cg.addColorStop(1,'rgba(85,0,155,0.65)');
+    ec.fillStyle=cg; ec.fillRect(cx-R,cy-R,R*2,R*2);
+
+    // swirl arms
+    for(var arm=0;arm<5;arm++){
+      var aAng = ev.spinT*(arm%2===0?1:-0.65) + arm*(Math.PI*2/5);
+      ec.save(); ec.translate(cx,cy); ec.rotate(aAng);
+      var hue = (arm*72 + ev.spinT*25)%360;
+      var ag = ec.createLinearGradient(0,-R*0.80,0,R*0.80);
+      ag.addColorStop(0,'hsla('+hue+',100%,75%,0)');
+      ag.addColorStop(0.35,'hsla('+hue+',100%,68%,0.20)');
+      ag.addColorStop(0.5,'hsla('+((hue+35)%360)+',100%,62%,0.32)');
+      ag.addColorStop(0.65,'hsla('+hue+',100%,68%,0.18)');
+      ag.addColorStop(1,'hsla('+hue+',100%,75%,0)');
+      ec.fillStyle=ag;
+      ec.beginPath(); ec.ellipse(0,0,R*0.16,R*0.80,0,0,Math.PI*2); ec.fill();
+      ec.restore();
+    }
+    ec.restore(); // clip
+
+    // rim particles
+    ev.pts.forEach(function(sp){
+      sp.angle += sp.speed;
+      var pr = R * sp.radFrac;
+      var px = cx + Math.cos(sp.angle)*pr;
+      var py = cy + Math.sin(sp.angle)*pr*0.70;
+      var pa = 0.30 + 0.30*Math.sin(sp.angle*2.5 + ev.spinT*2);
+      ec.beginPath(); ec.arc(px,py,sp.size,0,Math.PI*2);
+      ec.fillStyle='hsla('+sp.hue+',100%,75%,'+pa+')'; ec.fill();
+    });
+
+    // inner edge crackle
+    ec.beginPath(); ec.arc(cx,cy,R*0.93,0,Math.PI*2);
+    ec.strokeStyle='rgba(240,190,255,0.45)'; ec.lineWidth=1.2; ec.stroke();
+
+    ec.restore();
+  }
+
+  // ─── RENDER LOOP ───
+  function renderEvents(){
+    ec.clearRect(0,0,W,H);
+    var now = performance.now();
+    activeEvents = activeEvents.filter(function(ev){
+      var t = now - ev.start;
+      if(t > ev.dur) return false;
+      if(ev.type==='fleet')     drawFleet(ev,t);
+      if(ev.type==='supernova') drawSupernova(ev,t);
+      if(ev.type==='wormhole')  drawWormhole(ev,t);
+      return true;
+    });
+    requestAnimationFrame(renderEvents);
+  }
+  requestAnimationFrame(renderEvents);
+
+  // ── EXPOSE CONTROLS TO ADMIN ──
+  window.CosmicEvents = {
+    trigger: function(type){
+      if(type==='fleet')     launchFleet();
+      else if(type==='supernova') launchSupernova();
+      else if(type==='wormhole')  launchWormhole();
+    },
+    setEnabled: function(on){
+      eventsEnabled = on;
+    },
+    isEnabled: function(){ return eventsEnabled; }
+  };
+
+})();
+// ══════════════════════════════════════════════════════
+
+// ── GLOBAL SOUND ENGINE ──
+window.VoidSFX = (function(){
+  var AudioCtx = window.AudioContext || window.webkitAudioContext;
+  var ac = null;
+  function getAC(){
+    if(!ac&&AudioCtx){
+      try{ ac=new AudioCtx(); }catch(e){}
+    }
+    return ac;
+  }
+  // unlock on first user gesture
+  document.addEventListener('click',function(){ getAC(); },{once:true});
+
+  function ramp(p,f,t,s,d){ p.setValueAtTime(f,s);p.linearRampToValueAtTime(t,s+d); }
+  function expR(p,f,t,s,d){ p.setValueAtTime(Math.max(f,0.0001),s);p.exponentialRampToValueAtTime(Math.max(t,0.0001),s+d); }
+
+  // HOVER TICK — crisp UI click sound
+  function tick(){
+    var a=getAC(); if(!a)return;
+    var now=a.currentTime;
+    // high freq click
+    var osc=a.createOscillator(), g=a.createGain(), filt=a.createBiquadFilter();
+    filt.type='bandpass'; filt.frequency.value=4800; filt.Q.value=1.2;
+    osc.type='sine'; osc.frequency.setValueAtTime(4800,now);
+    expR(osc.frequency,4800,3200,now,0.04);
+    g.gain.setValueAtTime(0,now);
+    ramp(g.gain,0,0.08,now,0.004);
+    expR(g.gain,0.08,0.0001,now+0.004,0.055);
+    osc.connect(filt);filt.connect(g);g.connect(a.destination);
+    osc.start(now);osc.stop(now+0.07);
+    // subtle low punch alongside
+    var osc2=a.createOscillator(),g2=a.createGain();
+    osc2.type='sine'; osc2.frequency.setValueAtTime(200,now);
+    expR(osc2.frequency,200,80,now,0.03);
+    g2.gain.setValueAtTime(0.04,now);
+    expR(g2.gain,0.04,0.0001,now+0.03,0.025);
+    osc2.connect(g2);g2.connect(a.destination);
+    osc2.start(now);osc2.stop(now+0.065);
+  }
+
+  // ORDER SUCCESS — triumphant little chord
+  function orderSuccess(){
+    var a=getAC(); if(!a)return;
+    var now=a.currentTime;
+    // rising arpeggio — major chord
+    [523,659,784,1047].forEach(function(f,i){
+      var del=i*0.1;
+      var osc=a.createOscillator(),g=a.createGain();
+      osc.type='sine'; osc.frequency.setValueAtTime(f,now+del);
+      g.gain.setValueAtTime(0,now+del);
+      ramp(g.gain,0,0.1,now+del,0.05);
+      expR(g.gain,0.1,0.0001,now+del+0.05,0.55);
+      osc.connect(g);g.connect(a.destination);
+      osc.start(now+del);osc.stop(now+del+0.65);
+    });
+    // sparkle shimmer on top
+    var osc3=a.createOscillator(),g3=a.createGain();
+    osc3.type='sine'; osc3.frequency.setValueAtTime(2093,now+0.3);
+    ramp(osc3.frequency,2093,2637,now+0.3,0.2);
+    g3.gain.setValueAtTime(0,now+0.3);
+    ramp(g3.gain,0,0.06,now+0.3,0.05);
+    expR(g3.gain,0.06,0.0001,now+0.35,0.45);
+    osc3.connect(g3);g3.connect(a.destination);
+    osc3.start(now+0.3);osc3.stop(now+0.85);
+  }
+
+  // MODAL OPEN — quick soft whoosh
+  function modalOpen(){
+    var a=getAC(); if(!a)return;
+    var now=a.currentTime;
+    var osc=a.createOscillator(),g=a.createGain(),filt=a.createBiquadFilter();
+    filt.type='bandpass'; filt.frequency.value=1200; filt.Q.value=2;
+    osc.type='sine'; osc.frequency.setValueAtTime(600,now);
+    ramp(osc.frequency,600,1200,now,0.12);
+    g.gain.setValueAtTime(0,now); ramp(g.gain,0,0.06,now,0.03);
+    expR(g.gain,0.06,0.0001,now+0.03,0.14);
+    osc.connect(filt);filt.connect(g);g.connect(a.destination);
+    osc.start(now);osc.stop(now+0.2);
+  }
+
+  // MODAL CLOSE — downward swipe
+  function modalClose(){
+    var a=getAC(); if(!a)return;
+    var now=a.currentTime;
+    var osc=a.createOscillator(),g=a.createGain();
+    osc.type='sine'; osc.frequency.setValueAtTime(900,now);
+    expR(osc.frequency,900,300,now,0.1);
+    g.gain.setValueAtTime(0,now); ramp(g.gain,0,0.05,now,0.02);
+    expR(g.gain,0.05,0.0001,now+0.02,0.1);
+    osc.connect(g);g.connect(a.destination);
+    osc.start(now);osc.stop(now+0.14);
+  }
+
+  // PAGE SWITCH — soft click
+  function pageSwitch(){
+    var a=getAC(); if(!a)return;
+    var now=a.currentTime;
+    var osc=a.createOscillator(),g=a.createGain();
+    osc.type='sine'; osc.frequency.setValueAtTime(1200,now);
+    expR(osc.frequency,1200,800,now,0.07);
+    g.gain.setValueAtTime(0,now); ramp(g.gain,0,0.05,now,0.01);
+    expR(g.gain,0.05,0.0001,now+0.01,0.09);
+    osc.connect(g);g.connect(a.destination);
+    osc.start(now);osc.stop(now+0.12);
+  }
+
+  return {tick:tick, orderSuccess:orderSuccess, modalOpen:modalOpen, modalClose:modalClose, pageSwitch:pageSwitch};
+})();
+
+// Hover sound removed
+</script>
+
+<!-- Firebase SDKs (compat - no module needed, all functions global) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={
+  apiKey:"AIzaSyCOV8pCSeovIOv7KEUff58npE10KiBBbCU",
+  authDomain:"void-market-33ffa.firebaseapp.com",
+  projectId:"void-market-33ffa",
+  storageBucket:"void-market-33ffa.firebasestorage.app",
+  messagingSenderId:"1006833284466",
+  appId:"1:1006833284466:web:8272d0a5cb0452c9dbd9eb"
+};
+firebase.initializeApp(firebaseConfig);
+const fdb=firebase.firestore();
+const DOC=fdb.collection('voidmarket').doc('data');
+
+const PW='void2025';
+let cur=null,eSec=null,eId=null;
+
+// DEFAULT DATA STRUCTURE
+let db={daily:[],shop:[],bundles:[],night:[],orders:[],reps:[],settings:{},about:{}};
+
+// SAVE to Firebase
+async function sv(){
+  try{
+    var saveData={
+      daily:db.daily||[],
+      shop:db.shop||[],
+      bundles:db.bundles||[],
+      night:db.night||[],
+      orders:db.orders||[],
+      reps:db.reps||[],
+      settings:db.settings||{},
+      about:db.about||{}
+    };
+    await DOC.set(saveData);
+  }catch(e){
+    console.error('Save failed:',e);
+    toast('Save failed - check connection');
+  }
+}
+
+// LOAD from Firebase once + listen for real-time updates
+async function initDB(){
+  document.querySelectorAll('.grid').forEach(function(g){
+    g.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;font-family:var(--mono);font-size:10px;color:var(--t4);letter-spacing:0.12em;">LOADING...</div>';
+  });
+  try{
+    const snap=await DOC.get();
+    if(snap.exists){
+      const d=snap.data();
+      db.daily=d.daily||[];
+      db.shop=d.shop||[];
+      db.bundles=d.bundles||[];
+      db.night=d.night||[];
+      db.orders=d.orders||[];
+      db.reps=d.reps||[];
+      db.settings=d.settings||{};
+      db.about=d.about||{};
+    }
+    renderAll();
+    renderReps();
+    renderAbout();
+    applySettings();
+    checkAutoPopup();
+    // real-time listener
+    DOC.onSnapshot(function(snap){
+      if(snap.exists){
+        const d=snap.data();
+        db.daily=d.daily||[];
+        db.shop=d.shop||[];
+        db.bundles=d.bundles||[];
+        db.night=d.night||[];
+        db.orders=d.orders||[];
+        db.reps=d.reps||[];
+        db.settings=d.settings||{};
+        db.about=d.about||{};
+        renderAll();
+        renderReps();
+        applySettings();
+      }
+    });
+  }catch(e){
+    console.error('Load failed:',e);
+    renderAll();
+    renderReps();
+    checkAutoPopup();
+  }
+}
+
+// TIMER
+function tick(){
+  const expiry=db.settings&&db.settings.limitedExpiry?new Date(db.settings.limitedExpiry):null;
+  const bar=document.getElementById('limited-timer-bar');
+  const disp=document.getElementById('limited-timer-display');
+  if(expiry&&expiry>new Date()){
+    if(bar)bar.style.display='flex';
+    const d=Math.max(0,Math.floor((expiry-new Date())/1000));
+    const h=Math.floor(d/3600),m=Math.floor((d%3600)/60),s=d%60;
+    document.getElementById('t-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('t-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('t-s').textContent=String(s).padStart(2,'0');
+    if(disp)disp.textContent='EXPIRES IN';
+  } else {
+    if(bar)bar.style.display='none';
+    if(disp)disp.textContent='AVAILABLE FOR LIMITED TIME';
+  }
+}
+setInterval(tick,1000);tick();
+
+// NAV
+function showPage(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  if(window.VoidSFX) window.VoidSFX.pageSwitch();
+  if(id==='reps')renderReps();
+  if(id==='about'){document.getElementById('as-ord').textContent=db.orders.length;document.getElementById('as-list').textContent=db.daily.length+db.shop.length+db.bundles.length;}
+  updateStats();
+}
+function setNav(el){document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+
+// RENDER
+function esc(s){if(s==null)return '';var t=String(s);t=t.split('&').join('&amp;');t=t.split('<').join('&lt;');t=t.split('>').join('&gt;');t=t.split('"').join('&quot;');return t;}
+
+function cardH(item){
+  const bc=item.sold?'bs':item.featured?'bf':'ba';
+  const bt=item.sold?'SOLD':item.featured?'FEATURED':'AVAILABLE';
+  // FIX: Accurate image URL display logic[cite: 1]
+  var ih=(item.img && item.img.trim() !== '') ? '<img src="'+esc(item.img)+'" alt="" onerror="this.parentElement.innerHTML=\'<div class=\\\'card-ph\\\'>◈</div>\';"/>' : '<div class="card-ph">◈</div>';
+  return '<div class="card'+(item.sold?' sold':'')+'" data-cid="'+item.id+'">'
+    +'<div class="card-shine"></div>'
+    +'<div class="card-img">'+ih+'<span class="card-badge '+bc+'">'+bt+'</span></div>'
+    +'<div class="card-body">'
+    +'<div class="cn">'+esc(item.name)+'</div>'
+    +'<div class="cc">'+esc(item.collection||'')+'</div>'
+    +'<div class="cr"><span>ACCOUNT</span><span class="crv">'+esc(item.account||'—')+'</span></div>'
+    +'<div class="cr"><span>RANK</span><span class="crv">'+esc(item.rank||'—')+'</span></div>'
+    +(item.level?'<div class="cr"><span>LEVEL</span><span class="crv">'+esc(String(item.level))+'</span></div>':'')+(item.extraSkins&&item.extraSkins.length?'<div class="cr"><span>+SKINS</span><span class="crv">'+item.extraSkins.length+' more</span></div>':'') 
+    +'<div class="cf">'
+    +'<div><div class="cp">PKR '+parseInt(item.price||0).toLocaleString()+'</div><div class="cps">Fast delivery</div></div>'
+    +(item.sold?'<span style="font-size:9px;font-family:var(--mono);color:var(--red);">SOLD</span>':'<button class="btn-buy card-order-btn" data-cid="'+item.id+'">ORDER</button>')
+    +'</div>'
+    +'</div>'
+    +'</div>';
+}
+function emptyH(){return '<div class="empty"><div class="empty-face">:)</div><div class="empty-t">NEW PRODUCTS SOON</div><div class="empty-s">Something good is coming — check back later</div></div>';}
+
+function renderAll(){
+  window.cardMap={};
+  if(!db.night)db.night=[];
+  ['daily','shop','bundles','night'].forEach(function(s){
+    db[s].forEach(function(item){ window.cardMap[item.id]=item; });
+    var el=document.getElementById(s+'-grid');
+    if(el)el.innerHTML=db[s].length?db[s].map(cardH).join(''):emptyH();
+  });
+  // show/hide night market section
+  var nm=document.getElementById('night-market-sec');
+  if(nm)nm.style.display=(db.night&&db.night.length)?'block':'none';
+  updateStats();
+}
+
+function updateStats(){
+  var tot=db.daily.length+db.shop.length+db.bundles.length+(db.night?db.night.length:0);
+  var all=[].concat(db.daily,db.shop,db.bundles,db.night||[]);
+  var sold=all.filter(function(i){return i.sold;}).length;
+  document.getElementById('hs-list').textContent=tot;
+  document.getElementById('hs-sold').textContent=sold;
+  var repsEl=document.getElementById('hs-reps');
+  if(repsEl)repsEl.textContent=db.reps?db.reps.length:0;
+}
+
+// REPS
+function renderReps(){
+  var g=document.getElementById('reps-grid');
+  if(!g)return;
+  document.getElementById('rep-count').textContent=db.reps.length+' REVIEWS';
+  if(!db.reps.length){
+    g.innerHTML='<div style="grid-column:1/-1;padding:80px 20px;text-align:center;"><div style="font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.18em;">NO REVIEWS YET</div></div>';
+    return;
+  }
+  var html='';
+  for(var i=0;i<db.reps.length;i++){
+    var r=db.reps[i];
+    var stars='';for(var j=0;j<(r.stars||5);j++)stars+='<span class="rstar">&#9733;</span>';
+    var imgHtml=r.img?'<div style="margin-bottom:10px;height:100px;overflow:hidden;border:1px solid var(--rim);"><img src="'+r.img+'" style="width:100%;height:100%;object-fit:cover;"/></div>':'';
+    html+='<div class="rc">'+imgHtml+'<div class="rstars">'+stars+'</div><div class="rtxt">&quot;'+esc(r.text)+'&quot;</div><div class="rfrom">&#8212; <span>'+esc(r.from)+'</span></div></div>';
+  }
+  g.innerHTML=html;
+}
+
+// ORDER
+function openOrder(item){
+  if(!item)return;
+  cur=item;
+  document.getElementById('mo-n').textContent=cur.name||'';
+  document.getElementById('mo-p').textContent='PKR '+parseInt(cur.price||0).toLocaleString();
+  document.getElementById('omodal').classList.add('on');
+  if(window.VoidSFX) window.VoidSFX.modalOpen();
+}
+function openVP(vp,pkr){openOrder({id:'vp_'+vp,name:vp.toLocaleString()+' Valorant Points',price:pkr});}
+function closeOv(id){document.getElementById(id).classList.remove('on');if(window.VoidSFX)window.VoidSFX.modalClose();}
+
+function cancelOrder(oid){if(!confirm('Cancel this order?'))return;if(!confirm('Permanently remove? Cannot be undone.'))return;db.orders=db.orders.filter(function(o){return o.id!==oid;});sv();renderOrders();toast('Order removed');}
+// Delegated listener for all card clicks, order buttons, cancel, status
+document.addEventListener('click',function(e){
+  // cancel order button
+  if(e.target.classList.contains('cancel-ord-btn')){
+    var oid=parseInt(e.target.getAttribute('data-id'));
+    if(!confirm('Cancel this order?'))return;
+    if(!confirm('Permanently remove? Cannot be undone.'))return;
+    db.orders=db.orders.filter(function(o){return o.id!==oid;});
+    sv();renderOrders();toast('Order removed');
+    return;
+  }
+  // status update buttons
+  if(e.target.getAttribute('data-sid')){
+    var sid=parseInt(e.target.getAttribute('data-sid'));
+    var st=e.target.getAttribute('data-st');
+    updateOrderStatus(sid,st);
+    return;
+  }
+  // card order button - go to product page
+  var orderBtn=e.target.closest('.card-order-btn');
+  if(orderBtn){
+    e.stopPropagation();
+    var cid=parseInt(orderBtn.getAttribute('data-cid'));
+    var itm=window.cardMap&&window.cardMap[cid];
+    if(itm&&!itm.sold)openProductPage(itm);
+    return;
+  }
+  // whole card click - go to product page
+  var card=e.target.closest('.card');
+  if(card&&!card.classList.contains('sold')&&!e.target.closest('button')){
+    var cid2=parseInt(card.getAttribute('data-cid'));
+    var itm2=window.cardMap&&window.cardMap[cid2];
+    if(itm2&&!itm2.sold)openProductPage(itm2);
+  }
+});
+
+// PRODUCT PAGE
+function openProductPage(item){
+  window._prevPage='home';
+  window._currentProduct=item;
+  renderProductPage(item);
+  showPage('product');
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
+  window.scrollTo(0,0);
+}
+
+function renderProductPage(item){
+  var el=document.getElementById('prod-content');
+  if(!el)return;
+  var extraList='';
+  if(item.extraSkins&&item.extraSkins.length){
+    extraList='<div style="margin-top:16px;">'
+      +'<div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.12em;margin-bottom:8px;">ALSO INCLUDES</div>'
+      +'<div style="display:flex;flex-direction:column;gap:4px;">'
+      +item.extraSkins.map(function(s){
+        return '<div style="font-size:12px;font-family:var(--mono);color:var(--t2);padding:5px 10px;background:var(--s2);border:1px solid var(--rim);">+ '+esc(s)+'</div>';
+      }).join('')
+      +'</div></div>';
+  }
+    var prodSrc=item.imgProd&&item.imgProd.trim()?item.imgProd:(item.img&&item.img.trim()?item.img:'');
+  var imgHtml=prodSrc
+    ?'<img src="'+esc(prodSrc)+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;display:block;image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast;" onerror="this.parentElement.innerHTML=\'<div style=\\\'display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--mono);font-size:48px;color:rgba(255,255,255,0.04);\\\'>◈</div>\';"/>'
+    :'<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--mono);font-size:48px;color:rgba(255,255,255,0.04);">◈</div>';
+  var badge=item.sold?'<span style="color:var(--red);border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">SOLD</span>'
+    :item.featured?'<span style="color:var(--blue2);border:1px solid rgba(79,112,255,0.25);background:rgba(79,112,255,0.07);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">FEATURED</span>'
+    :'<span style="color:var(--green);border:1px solid rgba(34,197,94,0.2);background:rgba(34,197,94,0.05);font-size:9px;font-family:var(--mono);padding:2px 8px;letter-spacing:0.1em;">AVAILABLE</span>';
+  el.innerHTML=
+    // full-width image on top, details row below
+    '<div style="display:flex;flex-direction:column;gap:1px;background:var(--rim);">'
+    +'<div style="background:#05060f;width:100%;aspect-ratio:1000/560;position:relative;overflow:hidden;">'+imgHtml+'</div>'
+    +'<div style="background:var(--s1);padding:24px 28px;display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;">'
+    // left: name + stats
+    +'<div style="flex:1;min-width:200px;">'
+    +'<div style="margin-bottom:10px;">'+badge+'</div>'
+    +'<div style="font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-bottom:3px;">'+esc(item.name)+'</div>'
+    +'<div style="font-size:11px;font-family:var(--mono);color:var(--t4);letter-spacing:0.06em;margin-bottom:16px;">'+esc(item.collection||'')+'</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:0;">'
+    +(item.account?'<div style="padding:6px 16px 6px 0;margin-right:16px;border-right:1px solid var(--rim);"><div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:2px;">ACCOUNT</div><div style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(item.account)+'</div></div>':'')
+    +(item.region?'<div style="padding:6px 16px 6px 0;margin-right:16px;border-right:1px solid var(--rim);"><div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:2px;">REGION</div><div style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(item.region)+'</div></div>':'')
+    +(item.rank?'<div style="padding:6px 16px 6px 0;margin-right:16px;border-right:1px solid var(--rim);"><div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:2px;">RANK</div><div style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(item.rank)+'</div></div>':'')
+    +(item.level?'<div style="padding:6px 0;"><div style="font-size:9px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:2px;">LEVEL</div><div style="font-size:12px;font-family:var(--mono);color:var(--t2);">'+esc(String(item.level))+'</div></div>':'')
+    +'</div>'
+    +(item.extraSkins&&item.extraSkins.length?extraList:'')
+    +'</div>'
+    // right: price + button
+    +'<div style="flex-shrink:0;text-align:right;">'
+    +'<div style="font-size:10px;font-family:var(--mono);color:var(--t4);letter-spacing:0.1em;margin-bottom:4px;">PRICE</div>'
+    +'<div style="font-size:32px;font-weight:700;margin-bottom:4px;">PKR '+parseInt(item.price||0).toLocaleString()+'</div>'
+    +'<div style="font-size:9px;font-family:var(--mono);color:var(--t4);margin-bottom:16px;letter-spacing:0.06em;">FAST DELIVERY · VERIFIED ACCOUNT</div>'
+    +(item.sold?'<div style="font-size:12px;font-family:var(--mono);color:var(--red);">THIS ITEM HAS BEEN SOLD</div>'
+      :'<button class="btn-m" onclick="openOrder(window._currentProduct)" style="padding:10px 32px;font-size:11px;width:auto;">PLACE ORDER</button>')
+    +'</div>'
+    +'</div>'
+    +'</div>';
+}
+
+function submitOrder(){
+  const name=document.getElementById('on').value.trim();
+  const contact=document.getElementById('oc').value.trim();
+  const pay=document.getElementById('op').value;
+  if(!name||!contact||!pay){toast('Fill all required fields');return;}
+  const num='VM-'+String(Date.now()).slice(-6);
+  db.orders.push({id:Date.now(),num,item:cur?.name,price:cur?.price,name,contact,payment:pay,notes:document.getElementById('onotes').value,time:new Date().toLocaleString()});
+  sv();closeOv('omodal');
+  ['on','oc','onotes'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('op').value='';
+  document.getElementById('s-num').textContent='#'+num;
+  document.getElementById('suc').classList.add('on');
+  if(window.VoidSFX) setTimeout(function(){ window.VoidSFX.orderSuccess(); }, 100);
+}
+
+// ADMIN
+let seq='';
+document.addEventListener('keydown',e=>{
+  if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
+  seq+=e.key;if(seq.length>4)seq=seq.slice(-4);
+  if(seq==='7777'){document.getElementById('admin').classList.toggle('on');seq='';}
+  // FIX: Make tabs/modals closable by pressing Esc[cite: 1]
+  if (e.key === 'Escape') {
+    closeOv('omodal');
+    closeOv('suc');
+    document.getElementById('admin').classList.remove('on');
+    document.getElementById('promo-popup').style.display = 'none';
+  }
+});
+
+function aLogin(){
+  if(document.getElementById('a-pw').value===PW){
+    document.getElementById('a-login').style.display='none';
+    const m=document.getElementById('a-main');m.style.display='flex';m.style.flexDirection='column';
+    document.getElementById('a-st').textContent='UNLOCKED';
+    document.getElementById('a-st').style.color='var(--blue2)';
+    renderManage();renderOrders();renderRepsA();
+  }else toast('Wrong password');
+}
+
+function aTab(id,btn){
+  document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  document.querySelectorAll('.asec').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const el=document.getElementById('a-'+id);
+  if(el){el.classList.add('on');el.style.display='flex';}
+  if(id==='manage')renderManage();
+  if(id==='orders')renderOrders();
+  if(id==='reps-a')renderRepsA();
+  if(id==='about-a')loadAboutAdmin();
+  if(id==='settings-a')loadSettings();
+}
+
+function prevImg(inputId,previewId){
+  var url=document.getElementById(inputId).value.trim();
+  var wrap=document.getElementById(previewId);
+  if(!wrap)return;
+  var img=wrap.querySelector('img');
+  if(!url){wrap.style.display='none';if(img)img.src='';return;}
+  if(img){
+    img.onload=function(){wrap.style.display='block';};
+    img.onerror=function(){wrap.style.display='none';img.src='';};
+    img.src=url;
+    if(img.complete&&img.naturalWidth>0)wrap.style.display='block';
+  }
+}
+function addL(){
+  const name=document.getElementById('aa-n').value.trim();
+  const price=document.getElementById('aa-p').value;
+  if(!name||!price){toast('Name and price required');return;}
+  const extraSkins=document.getElementById('aa-extra').value.trim();
+  var regEl=document.getElementById('aa-reg');
+  const item={
+    id:Date.now(),name,
+    collection:document.getElementById('aa-c').value.trim(),
+    price:parseInt(price),
+    account:document.getElementById('aa-a').value,
+    region:regEl?regEl.value:'TR',
+    rank:document.getElementById('aa-r').value.trim(),
+    level:document.getElementById('aa-lvl').value.trim(),
+    img:document.getElementById('aa-i').value.trim(),
+    imgProd:document.getElementById('aa-ip').value.trim(),
+    featured:document.getElementById('aa-f').value==='1',
+    extraSkins:extraSkins?extraSkins.split('\n').map(s=>s.trim()).filter(Boolean):[],
+    sold:false
+  };
+  var targetSec=document.getElementById('aa-s').value;
+  db[targetSec].push(item);
+  sv();renderAll();renderManage();
+  ['aa-n','aa-c','aa-p','aa-r','aa-i','aa-ip','aa-lvl','aa-extra'].forEach(i=>document.getElementById(i).value='');
+  ['aa-prev-card','aa-prev-prod'].forEach(id=>{var el=document.getElementById(id);if(el)el.style.display='none';});
+  toast('Listing added');
+}
+
+function renderManage(){
+  const all=[...db.daily.map(i=>({...i,_s:'daily'})),...db.shop.map(i=>({...i,_s:'shop'})),...db.bundles.map(i=>({...i,_s:'bundles'}))];
+  const el=document.getElementById('ml');
+  el.innerHTML=all.length?all.map(item=>`<div class="arow"><div class="arow-i"><div class="arow-n">${esc(item.name)}</div><div class="arow-m">${item._s.toUpperCase()} · PKR ${parseInt(item.price||0).toLocaleString()} · ${item.sold?'SOLD':'LIVE'}</div></div><div class="aacts"><button class="ab e" onclick="startE('${item._s}',${item.id})">EDIT</button><button class="ab sv${item.sold?' sold':''}" onclick="togSold('${item._s}',${item.id})">${item.sold?'UNSELL':'SELL'}</button><button class="ab dl" onclick="delL('${item._s}',${item.id})">DEL</button></div></div>`).join(''):'<div style="font-size:10px;font-family:var(--mono);color:var(--t4);padding:8px;">No listings yet.</div>';
+}
+
+function startE(sec,id){
+  eSec=sec;eId=id;
+  const item=db[sec].find(i=>i.id===id);if(!item)return;
+  document.getElementById('e-lbl').textContent='EDITING: '+item.name;
+  document.getElementById('e-n').value=item.name||'';
+  document.getElementById('e-c').value=item.collection||'';
+  document.getElementById('e-p').value=item.price||'';
+  document.getElementById('e-a').value=item.account||'';
+  document.getElementById('e-r').value=item.rank||'';
+  document.getElementById('e-i').value=item.img||'';
+  document.getElementById('e-ip').value=item.imgProd||'';
+  prevImg('e-i','e-prev-card');
+  prevImg('e-ip','e-prev-prod');
+  // Hide all tabs and sections, show edit section
+  document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.asec').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const editSec=document.getElementById('a-edit');
+  editSec.style.display='flex';
+  editSec.classList.add('on');
+}
+
+function saveE(){
+  if(!eSec||!eId)return;
+  const item=db[eSec].find(i=>i.id===eId);if(!item)return;
+  item.name=document.getElementById('e-n').value.trim()||item.name;
+  item.collection=document.getElementById('e-c').value.trim();
+  item.price=parseInt(document.getElementById('e-p').value)||item.price;
+  item.account=document.getElementById('e-a').value.trim();
+  item.rank=document.getElementById('e-r').value.trim();
+  item.img=document.getElementById('e-i').value.trim();
+  item.imgProd=document.getElementById('e-ip').value.trim();
+  sv();renderAll();
+  // restore manage view
+  document.querySelectorAll('.asec').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  document.querySelectorAll('.atb').forEach(t=>t.classList.remove('on'));
+  const manSec=document.getElementById('a-manage');manSec.style.display='flex';manSec.classList.add('on');
+  document.querySelectorAll('.atb')[1].classList.add('on');
+  renderManage();
+  toast('Saved');
+}
+
+function togSold(sec,id){const item=db[sec].find(i=>i.id===id);if(item){item.sold=!item.sold;sv();renderAll();renderManage();}}
+function delL(sec,id){db[sec]=db[sec].filter(i=>i.id!==id);sv();renderAll();renderManage();toast('Deleted');}
+
+function renderOrders(){
+  const el=document.getElementById('ol');
+  if(!db.orders.length){
+    el.innerHTML='<div style="font-size:10px;font-family:var(--mono);color:var(--t4);padding:8px;">No orders yet.</div>';
+    return;
+  }
+  var html='';
+  var reversed=[].concat(db.orders).reverse();
+  for(var i=0;i<reversed.length;i++){
+    var o=reversed[i];
+    html+='<div class="orow" style="margin-bottom:6px;">'
+      +'<div class="orh"><span class="orn">#'+o.num+'</span><span class="ort">'+o.time+'</span></div>'
+      +'<div class="ori">'+esc(o.item||'')+'</div>'
+      +'<div class="ord">'
+      +'NAME: '+esc(o.name)+'<br>'
+      +'CONTACT: '+esc(o.contact)+'<br>'
+      +'PAYMENT: '+esc(o.payment)+'<br>'
+      +'PRICE: PKR '+parseInt(o.price||0).toLocaleString()
+      +(o.notes?'<br>NOTES: '+esc(o.notes):'')
+      +'</div>'
+      +'<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">'
+      +'<button class="ab cancel-ord-btn" style="padding:3px 6px;font-size:8px;" data-id="'+o.id+'">CANCEL</button>'
+      +'<button class="ab" style="padding:3px 6px;font-size:8px;color:var(--gold);border-color:rgba(245,158,11,0.2);" data-sid="'+o.id+'" data-st="Pending">PENDING</button>'
+      +'<button class="ab" style="padding:3px 6px;font-size:8px;color:var(--blue2);border-color:rgba(79,112,255,0.2);" data-sid="'+o.id+'" data-st="Processing">PROCESSING</button>'
+      +'<button class="ab" style="padding:3px 6px;font-size:8px;color:var(--green);border-color:rgba(34,197,94,0.2);" data-sid="'+o.id+'" data-st="Delivered">DELIVERED</button>'
+      +'</div>'
+      +'</div>';
+  }
+  el.innerHTML=html;
+}
+
+function updateOrderStatus(id,status){
+  const order=db.orders.find(o=>o.id===id);
+  if(order){order.status=status;sv();renderOrders();toast('Status: '+status);}
+}
+var _repImgData=null;
+function loadRepImg(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    _repImgData=ev.target.result;
+    document.getElementById('rep-img-thumb').src=_repImgData;
+    document.getElementById('rep-img-preview').style.display='block';
+    document.getElementById('rep-img-box').style.display='none';
+  };
+  r.readAsDataURL(f);
+}
+function clearRepImg(){
+  _repImgData=null;
+  document.getElementById('rep-img-preview').style.display='none';
+  document.getElementById('rep-img-box').style.display='flex';
+  document.getElementById('r-img-inp').value='';
+}
+function addRep(){
+  var from=document.getElementById('r-f').value.trim();
+  var text=document.getElementById('r-t').value.trim();
+  if(!from||!text){toast('Fill all fields');return;}
+  db.reps.push({id:Date.now(),from,text,stars:parseInt(document.getElementById('r-s').value)||5,img:_repImgData||null});
+  sv();renderRepsA();renderReps();
+  document.getElementById('r-f').value='';document.getElementById('r-t').value='';
+  clearRepImg();
+  toast('Rep added');
+}
+function renderRepsA(){
+  document.getElementById('r-list').innerHTML=db.reps.map(r=>`<div class="arow"><div class="arow-i"><div class="arow-n">${esc(r.from)}</div><div class="arow-m">${'★'.repeat(r.stars)} · ${esc(r.text.slice(0,38))}...</div></div><div class="aacts"><button class="ab dl" onclick="delRep(${r.id})">DEL</button></div></div>`).join('');
+}
+function delRep(id){db.reps=db.reps.filter(r=>r.id!==id);sv();renderRepsA();renderReps();}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);}
+
+// SETTINGS
+function loadSettings(){
+  const s=db.settings||{};
+  const exp=document.getElementById('st-expiry');
+  if(exp&&s.limitedExpiry){const d=new Date(s.limitedExpiry);exp.value=d.toISOString().slice(0,16);}
+  const ti=document.getElementById('st-title');if(ti)ti.value=s.title||'VOID MARKET — Valorant Skins';
+  const su=document.getElementById('st-sub');if(su)su.value=s.sub||'Verified & trusted. Updated daily.';
+  const vpDefs={375:800,825:1700,1700:3350,2925:5600,4325:8200,8900:16000};
+  const vp=s.vp||{};
+  Object.entries(vpDefs).forEach(([amt,def])=>{
+    const el=document.getElementById('vp-'+amt);
+    if(el)el.value=vp[amt]||def;
+  });
+}
+function saveSettings(){
+  const expVal=document.getElementById('st-expiry').value;
+  const vpDefs=[375,825,1700,2925,4325,8900];
+  const vp={};
+  vpDefs.forEach(amt=>{
+    const el=document.getElementById('vp-'+amt);
+    if(el&&el.value)vp[amt]=parseInt(el.value);
+  });
+  db.settings=Object.assign(db.settings||{},{
+    limitedExpiry:expVal?new Date(expVal).toISOString():null,
+    title:document.getElementById('st-title').value.trim()||'VOID MARKET — Valorant Skins',
+    sub:document.getElementById('st-sub').value.trim(),
+    vp,
+  });
+  sv();applySettings();applyVPPrices();toast('Settings saved');
+}
+function applySettings(){
+  const s=db.settings||{};
+  if(s.title)document.title=s.title;
+  const subEl=document.getElementById('hero-sub-txt');
+  if(subEl&&s.sub)subEl.innerHTML=s.sub;
+}
+function applyVPPrices(){
+  const s=db.settings||{};
+  const vp=s.vp||{};
+  const map={375:0,825:1,1700:2,2925:3,4325:4,8900:5};
+  const cards=document.querySelectorAll('.vpc');
+  Object.entries(map).forEach(([amt,idx])=>{
+    if(vp[amt]&&cards[idx]){
+      const priceEl=cards[idx].querySelector('.vp-p');
+      if(priceEl)priceEl.textContent='PKR '+parseInt(vp[amt]).toLocaleString();
+    }
+  });
+}
+
+// ABOUT EDIT
+function loadAboutAdmin(){
+  const a=db.about||{};
+  document.getElementById('ab-name').value=a.name||'VOID MARKET';
+  document.getElementById('ab-bio').value=a.bio||'';
+  document.getElementById('ab-contact').value=a.contact||'';
+  document.getElementById('ab-delivery').value=a.delivery||'24H';
+}
+function saveAbout(){
+  db.about={
+    name:document.getElementById('ab-name').value.trim()||'VOID MARKET',
+    bio:document.getElementById('ab-bio').value.trim(),
+    contact:document.getElementById('ab-contact').value.trim(),
+    delivery:document.getElementById('ab-delivery').value.trim()||'24H',
+  };
+  sv();renderAbout();toast('About page updated');
+}
+function renderAbout(){
+  const a=db.about||{};
+  const nameEl=document.getElementById('about-name-txt');
+  const bioEl=document.getElementById('about-bio-txt');
+  const contactEl=document.getElementById('about-contact-txt');
+  const delEl=document.getElementById('about-del-txt');
+  if(nameEl)nameEl.textContent=a.name||'VOID MARKET';
+  if(bioEl)bioEl.textContent=a.bio||'Trusted Valorant skin account seller. We check shops daily and bring you the best skins at the cheapest prices using Turkish region VP. Every account is verified before listing.';
+  if(contactEl)contactEl.textContent=a.contact||'Place an order and include your Discord or WhatsApp — we will reach out to you directly.';
+  if(delEl)delEl.textContent=a.delivery||'24H';
+}
+
+
+// PROMO POPUP
+function showPopup(item){
+  if(!item)return;
+  document.getElementById('popup-name').textContent=item.name;
+  document.getElementById('popup-price').textContent='PKR '+parseInt(item.price||0).toLocaleString();
+  document.getElementById('popup-desc').textContent=item.collection?(item.collection+' Collection'):'';
+  // set image
+  var imgWrap=document.getElementById('popup-img-wrap');
+  if(imgWrap){
+    if(item.img){
+            imgWrap.innerHTML='<img src="'+esc(item.img)+'" style="width:100%;height:100%;object-fit:cover;">';
+    } else {
+      imgWrap.innerHTML='<div style="font-family:var(--mono);font-size:36px;color:rgba(255,255,255,0.04);">◈</div>';
+    }
+  }
+  var btn=document.getElementById('popup-btn');
+  btn.onclick=function(){document.getElementById('promo-popup').style.display='none';openProductPage(item);};
+  var p=document.getElementById('promo-popup');
+  p.style.display='block';
+  p.style.animation='none';
+  p.offsetHeight; // reflow
+  p.style.animation='slideInRight 0.35s ease';
+}
+function checkAutoPopup(){
+  const all=[...db.daily,...db.shop,...db.bundles];
+  const featured=all.find(i=>i.featured&&!i.sold);
+  if(featured){setTimeout(function(){showPopup(featured);},3000);}
+}
+
+// ORDER TRACKING
+function showTracker(){
+  const num=document.getElementById('track-input').value.trim().toUpperCase();
+  const result=document.getElementById('track-result');
+  if(!num){result.innerHTML='<div style="color:var(--t4);">Enter an order number</div>';return;}
+  const clean=num.replace('#','');
+  const order=db.orders.find(function(o){return o.num===clean||o.num===num;});
+  if(!order){
+    result.innerHTML='<div style="color:var(--t4);font-family:var(--mono);font-size:11px;">Order not found. Check your number.</div>';
+    return;
+  }
+  const st=order.status||'Pending';
+  const colors={Pending:'var(--gold)',Processing:'var(--blue2)',Delivered:'var(--green)',Cancelled:'var(--red)'};
+  const col=colors[st]||'var(--t2)';
+  result.innerHTML=
+    '<div style="border:1px solid var(--rim2);padding:14px;">'
+    +'<div style="font-size:9px;font-family:var(--mono);color:var(--t4);margin-bottom:8px;">ORDER FOUND</div>'
+    +'<div style="font-size:16px;font-weight:600;margin-bottom:4px;">'+esc(order.item||'')+'</div>'
+    +'<div style="font-size:11px;font-family:var(--mono);color:'+col+';margin-bottom:10px;letter-spacing:0.08em;">STATUS: '+st+'</div>'
+    +'<div style="font-size:10px;font-family:var(--mono);color:var(--t3);line-height:1.8;">'
+    +'ORDER: #'+order.num+'<br>'
+    +'NAME: '+esc(order.name)+'<br>'
+    +'PRICE: PKR '+parseInt(order.price||0).toLocaleString()+'<br>'
+    +'DATE: '+order.time
+    +'</div>'
+    +'</div>';
+}
+
+// EXPOSE functions to window so onclick="" attributes work
+window.cosmicTrigger = function(type){
+  if(window.CosmicEvents) window.CosmicEvents.trigger(type);
+  toast(type.toUpperCase()+' triggered');
+};
+window.cosmicSetEnabled = function(on){
+  if(window.CosmicEvents) window.CosmicEvents.setEnabled(on);
+  var st = document.getElementById('cosmic-status');
+  if(st) st.textContent = 'STATUS: '+(on?'AUTO (ON)':'DISABLED');
+  toast('Cosmic events '+(on?'enabled':'disabled'));
+};
+
+window.showPage=showPage;
+window.setNav=setNav;
+window.openVP=openVP;
+window.openOrder=openOrder;
+window.closeOv=closeOv;
+window.submitOrder=submitOrder;
+window.closeSuccess=typeof closeSuccess !== "undefined" ? closeSuccess : null;
+window.aLogin=aLogin;
+window.aTab=aTab;
+window.addL=addL;
+window.startE=startE;
+window.saveE=saveE;
+window.togSold=togSold;
+window.delL=delL;
+window.updateOrderStatus=updateOrderStatus;
+window.addRep=addRep;
+window.delRep=delRep;
+window.saveAbout=saveAbout;
+window.saveSettings=saveSettings;
+window.showTracker=showTracker;
+window.loadRepImg=loadRepImg;
+window.clearRepImg=clearRepImg;
+window.openProductPage=openProductPage;
+window.scrollToSection=typeof scrollToSection!=="undefined"?scrollToSection:null;
+
+// INIT
+initDB();
+</script>
+</body>
+</html>
